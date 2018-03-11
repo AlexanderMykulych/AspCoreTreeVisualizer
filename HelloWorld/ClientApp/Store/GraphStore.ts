@@ -8,6 +8,7 @@ import { BasePoint } from "../Model/BasePoint";
 import { Node } from "../Model/SyncfusionGraph/Node";
 import { Connector } from "../Model/SyncfusionGraph/Connector";
 import { connect } from "http2";
+import { Dependency } from "../Model/Dependency";
 
 type GraphContext = ActionContext<RootState, RootState>;
 
@@ -17,59 +18,56 @@ export const graphModule = {
 	state: {
 		Graphs: [{
 			Name: "Graph1",
-			Start: {
-				Name: "Start Point",
-				To: [{
-					Name: "Connect1",
-					End: {
-						Name: "Second Point"
-					}
+			Points: [
+				{
+					Name: "Start"
 				}, {
-					Name: "Connect2",
-					End: {
-						Name: "Point 2"
-					}
+					Name: "Point2"
 				}, {
-					Name: "Connect3",
-					End: {
-						Name: "point 3",
-						To: [{
-							Name: "Con",
-							End: {
-								Name: "point 3.1"
-							}
-						}]
-					}
-				}]
-			}
-		}, {
-				Name: "Graph2",
-				Start: {
-					Name: "Start Point",
-					To: [{
-						Name: "Connect1",
-						End: {
-							Name: "Second Point"
-						}
-					}, {
-						Name: "Connect2",
-						End: {
-							Name: "Point 2"
-						}
-					}, {
-						Name: "Connect3",
-						End: {
-							Name: "point 3",
-							To: [{
-								Name: "Con",
-								End: {
-									Name: "point 3.1"
-								}
-							}]
-						}
-					}]
+					Name: "Point3"
+				}, {
+					Name: "Point4"
+				}, {
+					Name: "Point5"
+				}, {
+					Name: "Point6"
+				}, {
+					Name: "Point7"
 				}
-			}]
+			],
+			Dependencies: [
+				{
+					Start: "Start",
+					Name: "C1",
+					End: "Point2"
+				},
+				{
+					Start: "Point2",
+					Name: "C2",
+					End: "Point3"
+				},
+				{
+					Start: "Point2",
+					Name: "C3",
+					End: "Point4"
+				},
+				{
+					Start: "Start",
+					Name: "C4",
+					End: "Point5"
+				},
+				{
+					Start: "Point5",
+					Name: "C5",
+					End: "Point6"
+				},
+				{
+					Start: "Start",
+					Name: "C6",
+					End: "Point7"
+				}
+			]
+		}]
 	},
 	getters: {
 		getGraph(state: RootState) {
@@ -88,51 +86,27 @@ export const graphModule = {
 			return (graph: Graph) => {
 				return {
 					Name: graph.Name,
-					Nodes: graphModule.getters.getAllNodesByPoint(state)(graph.Start),
-					Connectors: graphModule.getters.getAllConnectorsByPoint(state)(graph.Start)
+					Nodes: graph.Points,
+					Connectors: _.map(graph.Dependencies, function (con) {
+						return {
+							name: con.Name,
+							sourceNode: con.Start,
+							targetNode: con.End
+						}
+					})
 				};
-			};
-		},
-		getAllNodesByPoint: function (state: RootState) {
-			return (point: BasePoint) => {
-				var nodes: Array<Node> = [];
-				if (point == null) {
-					return nodes;
-				}
-				nodes.push({
-					name: point.Name
-				});
-				for (var i in point.To) {
-					var dep = point.To[i];
-					var toNodes = graphModule.getters.getAllNodesByPoint(state)(dep.End);
-					nodes = _.concat(nodes, toNodes);
-				}
-				return nodes;
-			};
-		},
-		getAllConnectorsByPoint: function (state: RootState) {
-			return (point: BasePoint) => {
-				var connectors: Array<Connector> = [];
-				if (point == null || point.To == null) {
-					return connectors;
-				}
-				for (var i in point.To) {
-					var dep = point.To[i];
-					connectors.push({
-						name: dep.Name,
-						sourceNode: point.Name,
-						targetNode: dep.End.Name
-					});
-					var toConnectors = graphModule.getters.getAllConnectorsByPoint(state)(dep.End);
-					connectors = _.concat(connectors, toConnectors);
-				}
-				return connectors;
 			};
 		}
 	},
 	mutations: {
 		addGraph(state: RootState, item: Graph) {
 			state.Graphs.push(item);
+		},
+		addPoint(state: RootState, item: { graph: string, point: BasePoint }) {
+			state.Graphs.filter(x => x.Name === item.graph)[0].Points.push(item.point);
+		},
+		addDependency(state: RootState, item: { graph: string, dep: Dependency }) {
+			state.Graphs.filter(x => x.Name === item.graph)[0].Dependencies.push(item.dep);
 		}
 	}
 };
@@ -146,3 +120,5 @@ export const getSyncfusionGraphByName = read(graphModule.getters.getSyncfusionGr
 export const getSyncfusiongGraphByGraph = read(graphModule.getters.getSyncfusiongGraphByGraph);
 
 export const addGraph = commit(graphModule.mutations.addGraph);
+export const addPoint = commit(graphModule.mutations.addPoint);
+export const addDependency = commit(graphModule.mutations.addDependency);

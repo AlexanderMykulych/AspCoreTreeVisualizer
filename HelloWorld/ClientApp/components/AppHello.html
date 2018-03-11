@@ -11,9 +11,8 @@
         </div>
         <div class="container-fluid">
             <div v-for="graph in diagrams" class="row">
-                <characteristic-diagram :graph="graph" classes="col" height="600" />
+                <characteristic-diagram :graph="graph" classes="col" height="600" @on-add-node="addNode" @on-add-connection="addConnection" />
             </div>
         </div>
-        <add-depend-modal-window />
     </div>
 </template>

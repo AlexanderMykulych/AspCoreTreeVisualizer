@@ -14807,3 +14807,9 @@ be a descendant of the grid when it is being dragged.
 .user .user-settings label {
   color: #666;
 }
+
+@media (min-width: 576px) {
+	.modal-width {
+		max-width: 800px;
+	}
+}

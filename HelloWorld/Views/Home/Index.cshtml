@@ -17,7 +17,6 @@
                 "lodash": "dist/lodash.js",
                 "axios": "dist/axios.js",
                 "syncfusion": "dist/diagram-core.js",
-                "jquery": "dist/jquery.js",
                 "jsrender": "dist/jsrender.js",
                 "jquery-validation": "dist/jquery.easing.js",
                 "vuex": "dist/vuex.js",
@@ -25,11 +24,11 @@
                 "sweet-modal-vue": "dist/sweet-modal-vue.js"
             }
         });
-
         $.get("dist/app-templates.html").done(function (data) {
             $('#app-templates').append(data);
 
             SystemJS.import('@mainUrl').then(function (m) {
+                SystemJS.amdDefine("jquery", [], () => $);
                 SystemJS.import('index');
             });
         });

@@ -1,19 +1,30 @@
 ﻿import Vue from "vue";
 declare const ej: any;
 
-var bus = new Vue();
-
 //export default addDependPoint;
-export default function() {
+export default function(option?: any) {
 	var func = (function (base: any) {
 		ej.datavisualization.Diagram.extend(AddDependPoint, base);
 
 		function AddDependPoint(name: string) {
 			base.call(this, name);
+			this.singleAction = true;
+			this.clonedNodes = [];
+			this.cursor = "pointer";
 		}
 		AddDependPoint.prototype.mouseup = function (evt: any) {
-			bus.$emit("add-depend-point");
+			//this._endAction();
+			//this.diagram._pageBackgroundLayer && ej.datavisualization.Diagram.PageUtil._updatePageSize(this.diagram);
+			//this.singleAction && this.diagram.activateTool("select");
+			//delete this.diagramBounds;
+			//this._adjustLines = { lines: [] };
+			//this._undoObject = null;
+			//this._redoObject = null
 			base.prototype.mouseup.call(this, evt);
+			option.bus.$emit("add-depend-point", {
+				nodes: this.diagram.selectionList
+			});
+			
 		};
 		return AddDependPoint;
 	}(ej.datavisualization.Diagram.ToolBase));

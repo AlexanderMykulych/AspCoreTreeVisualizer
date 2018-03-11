@@ -27,7 +27,8 @@
       "node_modules/jquery/dist/jquery.js",
       "node_modules/popper.js/dist/umd/popper.js",
       "node_modules/bootstrap/dist/js/bootstrap.js",
-      "node_modules/systemjs/dist/system.src.js"
+      "node_modules/systemjs/dist/system.src.js",
+      "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
     ],
     "minify": {
       "enabled": true,
@@ -116,17 +117,17 @@
       "renameLocals": false
     }
   },
-  {
-    "outputFileName": "wwwroot/dist/jquery.js",
-    "inputFiles": [
-      "node_modules/jquery/dist/jquery.js"
-    ],
-    "minify": {
-      "enabled": true,
-      "renameLocals": true
-    },
-    "sourceMap": true
-  },
+  //{
+  //  "outputFileName": "wwwroot/dist/jquery.js",
+  //  "inputFiles": [
+  //    "node_modules/jquery/dist/jquery.js"
+  //  ],
+  //  "minify": {
+  //    "enabled": true,
+  //    "renameLocals": true
+  //  },
+  //  "sourceMap": true
+  //},
   {
     "outputFileName": "wwwroot/dist/jquery.easing.js",
     "inputFiles": [
@@ -159,33 +160,5 @@
       "renameLocals": true
     },
     "sourceMap": true
-  },
-  {
-    "outputFileName": "wwwroot/dist/sweet-modal-vue.js",
-    "inputFiles": [
-      "node_modules/sweet-modal-vue/dist/sweet-modal.js"
-    ],
-    "minify": {
-      "enabled": false,
-      "renameLocals": true
-    },
-    "sourceMap": true
-  },
-  //{
-  //  "outputFileName": "wwwroot/dist/diagram-core.js",
-  //  "inputFiles": [
-  //    "node_modules/syncfusion/ej.web.all.min.js"
-  //  ],
-  //  "sourceMap": true
-  //}
-  //{
-  //  "outputFileName": "wwwroot/dist/app-tree.js",
-  //  "inputFiles": [
-  //    "ClientApp/TreeView/*.js"
-  //  ],
-  //  "minify": {
-  //    "enabled": false,
-  //    "renameLocals": false
-  //  }
-  //}
+  }
 ]

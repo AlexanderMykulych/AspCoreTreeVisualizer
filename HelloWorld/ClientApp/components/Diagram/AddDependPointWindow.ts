@@ -1,20 +1,37 @@
 ﻿import Vue from "vue";
-import { SweetModal } from 'sweet-modal-vue';
+declare const $: any;
 
-var bus = new Vue();
 export default Vue.extend({
 	template: "#add-depend-point",
-	components: {
-		SweetModal
+	props: ["show", "id", "startpoints"],
+	computed: {
+		elId() {
+			return "#add-depend-point_" + this.id;
+		}
 	},
-	created() {
-		bus.$on("add-depend-point", function () {
-			debugger;
+	data() {
+		return {
+			point: null
+		};
+	},
+	mounted() {
+		var $this = this;
+		$(this.elId).on('hidden.bs.modal', function () {
+			$this.show = false;
 		});
 	},
 	methods: {
-		open: function () {
-			this.$refs.modal.open()
+		addPoint: function () {
+			this.$emit("addpoint", this.point);
+		}
+	},
+	watch: {
+		show(val) {
+			if (val) {
+				$(this.elId).modal("show");
+			} else {
+				$(this.elId).modal("hide");
+			}
 		}
 	}
 });

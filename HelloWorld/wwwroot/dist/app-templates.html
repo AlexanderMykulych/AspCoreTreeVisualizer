@@ -11,26 +11,26 @@
         </div>
         <div class="container-fluid">
             <div v-for="graph in diagrams" class="row">
-                <characteristic-diagram :graph="graph" classes="col" height="600" />
+                <characteristic-diagram :graph="graph" classes="col" height="600" @on-add-node="addNode" @on-add-connection="addConnection" />
             </div>
         </div>
-        <add-depend-modal-window />
     </div>
 </template>
 <template id="characteristic-diagram">
     <div :class="classes">
         <div class="card border-dark mb-3">
-            <div class="card-header">{{graph.Name}}</div>
+            <div class="card-header">{{diagramId}}</div>
             <div class="card-body">
                 <div class="container-fluid">
                     <div class="row">
                         <!--<div :id="(graph.Name + '_symbolPallette')" class="col-1"></div>-->
-                        <div :id="graph.Name" class="col-9"></div>
-                        <div :id="(graph.Name + '_overview')" class="col-3 card-body"></div>
+                        <div :id="diagramId" class="col-9"></div>
+                        <div :id="(diagramId + '_overview')" class="col-3 card-body"></div>
                     </div>
                 </div>
             </div>
         </div>
+        <add-depend-modal-window :bus="bus" :id="diagramId" :startpoints="selectedNodes" :show.sync="showAddDependModal" @addpoint="addPoint"/>
     </div>
 </template>
 <template id="test-temp">
@@ -44,11 +44,40 @@
 </template>
 
 <template id="add-depend-point">
-    <div>
-        <sweet-modal icon="success" ref="modal" title="New Modal">
-            Success!
-            <!--<sweet-button slot="button">That's fine!</sweet-button>-->
-        </sweet-modal>
-        <button class="btn btn-primary" @click="open">Open sesame!</button>
-    </div>
+	<div class="modal fade" :id="('add-depend-point_' + id)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-width" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Добавить зависимость на характеристику</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="container">
+						<div class="row">
+							<div class="col-5">
+								<ul class="list-group">
+									<li class="list-group-item active">Исходные характеристики</li>
+									<li v-for="point in startpoints" class="list-group-item">{{point}}</li>
+								</ul>
+							</div>
+							<div class="col-7">
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
+										<span class="input-group-text" id="inputGroup-sizing-default">Характеристика</span>
+									</div>
+									<input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="point">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+					<button type="button" class="btn btn-primary" @click="addPoint">Добавить</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>

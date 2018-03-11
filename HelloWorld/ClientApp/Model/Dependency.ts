@@ -1,7 +1,7 @@
 ﻿import { BasePoint } from "./BasePoint";
 
 export interface Dependency {
-	//Start: BasePoint,
+	Start: string,
 	Name?: string; 
-	End: BasePoint;
+	End: string;
 }
