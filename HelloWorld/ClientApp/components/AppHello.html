@@ -1,0 +1,19 @@
+﻿<!-- ClientApp/components/AppHello.html -->
+<template id="app-hello-template">
+    <div>
+        <span>{{message}}</span>
+        <div class="container">
+            <div class="row">
+                <div class="col-2">
+                    <button @click="addGraph">Add Graph</button>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div v-for="graph in diagrams" class="row">
+                <characteristic-diagram :graph="graph" classes="col" height="600" />
+            </div>
+        </div>
+        <add-depend-modal-window />
+    </div>
+</template>

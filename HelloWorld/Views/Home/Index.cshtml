@@ -1,0 +1,37 @@
+﻿@* Views/Home/Index.cshtml *@
+@using Microsoft.AspNetCore.Hosting
+@inject IHostingEnvironment hostingEnv
+@{
+    var vueUrl = hostingEnv.IsDevelopment() ? "dist/vendor2.js" : "dist/vendor2.min.js";
+    var mainUrl = hostingEnv.IsDevelopment() ? "dist/app-bandle.js" : "dist/app-bandle.min.js";
+
+    ViewData["Title"] = "Конструктор дерева обращений";
+}
+<section id="app-templates"></section>
+<div id="app-root">loading..</div>
+@section Scripts{
+    <script>
+        System.config({
+            map: {
+                "vue": "@vueUrl",
+                "lodash": "dist/lodash.js",
+                "axios": "dist/axios.js",
+                "syncfusion": "dist/diagram-core.js",
+                "jquery": "dist/jquery.js",
+                "jsrender": "dist/jsrender.js",
+                "jquery-validation": "dist/jquery.easing.js",
+                "vuex": "dist/vuex.js",
+                "vuex-typescript": "dist/vuex-typescript.js",
+                "sweet-modal-vue": "dist/sweet-modal-vue.js"
+            }
+        });
+
+        $.get("dist/app-templates.html").done(function (data) {
+            $('#app-templates').append(data);
+
+            SystemJS.import('@mainUrl').then(function (m) {
+                SystemJS.import('index');
+            });
+        });
+    </script>
+}

@@ -1,0 +1,57 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TypeScriptToolsVersion>2.6</TypeScriptToolsVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="2.6.362" />
+    <PackageReference Include="BundlerMinifier.Core" Version="2.6.362" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="2.7.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
+    <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.6.362" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\components\AppHello.ts" />
+    <TypeScriptCompile Include="ClientApp\components\CharacteristicDiagram.ts" />
+    <TypeScriptCompile Include="ClientApp\components\SyncTest.ts" />
+    <TypeScriptCompile Include="ClientApp\components\TestVue.ts" />
+    <TypeScriptCompile Include="ClientApp\index.ts" />
+    <TypeScriptCompile Include="ClientApp\Model\Characteristic.ts" />
+    <TypeScriptCompile Include="ClientApp\Model\CharacteristicPoint.ts" />
+    <TypeScriptCompile Include="ClientApp\Model\CharacteristicValue.ts" />
+    <TypeScriptCompile Include="ClientApp\Model\Graph.ts" />
+    <TypeScriptCompile Include="ClientApp\Model\BasePoint.ts" />
+    <TypeScriptCompile Include="ClientApp\Model\Dependency.ts" />
+    <TypeScriptCompile Include="ClientApp\Model\RootState.ts" />
+    <TypeScriptCompile Include="ClientApp\Model\SyncfusionGraph\Connector.ts" />
+    <TypeScriptCompile Include="ClientApp\Model\SyncfusionGraph\Graph.ts" />
+    <TypeScriptCompile Include="ClientApp\Model\SyncfusionGraph\Node.ts" />
+    <TypeScriptCompile Include="ClientApp\Store\GraphStore.ts" />
+    <TypeScriptCompile Include="ClientApp\Store\RootStore.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\syncfusion\index.d.ts" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+
+</Project>

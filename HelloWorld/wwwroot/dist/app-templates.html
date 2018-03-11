@@ -1,0 +1,54 @@
+<!-- ClientApp/components/AppHello.html -->
+<template id="app-hello-template">
+    <div>
+        <span>{{message}}</span>
+        <div class="container">
+            <div class="row">
+                <div class="col-2">
+                    <button @click="addGraph">Add Graph</button>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div v-for="graph in diagrams" class="row">
+                <characteristic-diagram :graph="graph" classes="col" height="600" />
+            </div>
+        </div>
+        <add-depend-modal-window />
+    </div>
+</template>
+<template id="characteristic-diagram">
+    <div :class="classes">
+        <div class="card border-dark mb-3">
+            <div class="card-header">{{graph.Name}}</div>
+            <div class="card-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!--<div :id="(graph.Name + '_symbolPallette')" class="col-1"></div>-->
+                        <div :id="graph.Name" class="col-9"></div>
+                        <div :id="(graph.Name + '_overview')" class="col-3 card-body"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<template id="test-temp">
+    <div id="watch-example">
+        <p>
+            Задайте вопрос, на который можно ответить "да" или "нет":
+            <input v-model="question">
+        </p>
+        <p>{{ answer }}</p>
+    </div>
+</template>
+
+<template id="add-depend-point">
+    <div>
+        <sweet-modal icon="success" ref="modal" title="New Modal">
+            Success!
+            <!--<sweet-button slot="button">That's fine!</sweet-button>-->
+        </sweet-modal>
+        <button class="btn btn-primary" @click="open">Open sesame!</button>
+    </div>
+</template>
