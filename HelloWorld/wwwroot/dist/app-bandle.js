@@ -1,20 +1,43 @@
-System.register("components/Diagram/AddDependPointWindow", ["vue", "lodash"], function (exports_1, context_1) {
+System.register("components/Diagram/RuleControll", ["vue"], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var vue_1, lodash_1;
+    var vue_1;
     return {
         setters: [
             function (vue_1_1) {
                 vue_1 = vue_1_1;
-            },
-            function (lodash_1_1) {
-                lodash_1 = lodash_1_1;
             }
         ],
         execute: function () {
             exports_1("default", vue_1.default.extend({
+                template: "#rule-controll"
+            }));
+        }
+    };
+});
+System.register("components/Diagram/AddDependPointWindow", ["vue", "lodash", "components/Diagram/RuleControll"], function (exports_2, context_2) {
+    "use strict";
+    var __moduleName = context_2 && context_2.id;
+    var vue_2, lodash_1, RuleControll_1;
+    return {
+        setters: [
+            function (vue_2_1) {
+                vue_2 = vue_2_1;
+            },
+            function (lodash_1_1) {
+                lodash_1 = lodash_1_1;
+            },
+            function (RuleControll_1_1) {
+                RuleControll_1 = RuleControll_1_1;
+            }
+        ],
+        execute: function () {
+            exports_2("default", vue_2.default.extend({
                 template: "#add-depend-point",
                 props: ["show", "id", "startpoints", "characteristics"],
+                components: {
+                    RuleControll: RuleControll_1.default
+                },
                 computed: {
                     elId: function () {
                         return "#add-depend-point_" + this.id;
@@ -63,9 +86,9 @@ System.register("components/Diagram/AddDependPointWindow", ["vue", "lodash"], fu
         }
     };
 });
-System.register("components/Diagram/AddDependedPoint", [], function (exports_2, context_2) {
+System.register("components/Diagram/AddDependedPoint", [], function (exports_3, context_3) {
     "use strict";
-    var __moduleName = context_2 && context_2.id;
+    var __moduleName = context_3 && context_3.id;
     //export default addDependPoint;
     function default_1(option) {
         var func = (function (base) {
@@ -105,16 +128,16 @@ System.register("components/Diagram/AddDependedPoint", [], function (exports_2, 
         addDependPoint.pathData = "M14.613,10c0,0.23-0.188,0.419-0.419,0.419H10.42v3.774c0,0.23-0.189,0.42-0.42,0.42s-0.419-0.189-0.419-0.42v-3.774H5.806c-0.23,0-0.419-0.189-0.419-0.419s0.189-0.419,0.419-0.419h3.775V5.806c0-0.23,0.189-0.419,0.419-0.419s0.42,0.189,0.42,0.419v3.775h3.774C14.425,9.581,14.613,9.77,14.613,10 M17.969,10c0,4.401-3.567,7.969-7.969,7.969c-4.402,0-7.969-3.567-7.969-7.969c0-4.402,3.567-7.969,7.969-7.969C14.401,2.031,17.969,5.598,17.969,10 M17.13,10c0-3.932-3.198-7.13-7.13-7.13S2.87,6.068,2.87,10c0,3.933,3.198,7.13,7.13,7.13S17.13,13.933,17.13,10";
         return addDependPoint;
     }
-    exports_2("default", default_1);
+    exports_3("default", default_1);
     return {
         setters: [],
         execute: function () {
         }
     };
 });
-System.register("Model/PointType", [], function (exports_3, context_3) {
+System.register("Model/PointType", [], function (exports_4, context_4) {
     "use strict";
-    var __moduleName = context_3 && context_3.id;
+    var __moduleName = context_4 && context_4.id;
     var PointType;
     return {
         setters: [],
@@ -124,18 +147,18 @@ System.register("Model/PointType", [], function (exports_3, context_3) {
                 PointType[PointType["characteristic"] = 1] = "characteristic";
                 PointType[PointType["aggregator"] = 2] = "aggregator";
             })(PointType || (PointType = {}));
-            exports_3("PointType", PointType);
+            exports_4("PointType", PointType);
         }
     };
 });
-System.register("components/CharacteristicDiagram", ["vue", "lodash", "syncfusion", "components/Diagram/AddDependPointWindow", "components/Diagram/AddDependedPoint", "Model/PointType"], function (exports_4, context_4) {
+System.register("components/CharacteristicDiagram", ["vue", "lodash", "syncfusion", "components/Diagram/AddDependPointWindow", "components/Diagram/AddDependedPoint", "Model/PointType"], function (exports_5, context_5) {
     "use strict";
-    var __moduleName = context_4 && context_4.id;
-    var vue_2, lodash_2, AddDependPointWindow_1, AddDependedPoint_1, PointType_1, constraints;
+    var __moduleName = context_5 && context_5.id;
+    var vue_3, lodash_2, AddDependPointWindow_1, AddDependedPoint_1, PointType_1, constraints;
     return {
         setters: [
-            function (vue_2_1) {
-                vue_2 = vue_2_1;
+            function (vue_3_1) {
+                vue_3 = vue_3_1;
             },
             function (lodash_2_1) {
                 lodash_2 = lodash_2_1;
@@ -154,12 +177,12 @@ System.register("components/CharacteristicDiagram", ["vue", "lodash", "syncfusio
         ],
         execute: function () {
             constraints = ej.datavisualization.Diagram.DiagramConstraints.Default | ej.datavisualization.Diagram.DiagramConstraints.FloatElements;
-            exports_4("default", vue_2.default.extend({
+            exports_5("default", vue_3.default.extend({
                 template: "#characteristic-diagram",
                 props: ["graph", "classes", "height", "characteristics"],
                 data: function () {
                     return {
-                        bus: new vue_2.default(),
+                        bus: new vue_3.default(),
                         showAddDependModal: false,
                         selectedNodes: []
                     };
@@ -258,7 +281,6 @@ System.register("components/CharacteristicDiagram", ["vue", "lodash", "syncfusio
                             node: {
                                 width: 65,
                                 height: 65,
-                                fillColor: "darkcyan",
                                 labels: [{
                                         name: "label1",
                                         bold: true,
@@ -344,16 +366,7 @@ System.register("components/CharacteristicDiagram", ["vue", "lodash", "syncfusio
         }
     };
 });
-System.register("Model/Dependency", [], function (exports_5, context_5) {
-    "use strict";
-    var __moduleName = context_5 && context_5.id;
-    return {
-        setters: [],
-        execute: function () {
-        }
-    };
-});
-System.register("Model/BasePoint", [], function (exports_6, context_6) {
+System.register("Model/Dependency", [], function (exports_6, context_6) {
     "use strict";
     var __moduleName = context_6 && context_6.id;
     return {
@@ -362,7 +375,7 @@ System.register("Model/BasePoint", [], function (exports_6, context_6) {
         }
     };
 });
-System.register("Model/Graph", [], function (exports_7, context_7) {
+System.register("Model/BasePoint", [], function (exports_7, context_7) {
     "use strict";
     var __moduleName = context_7 && context_7.id;
     return {
@@ -371,7 +384,7 @@ System.register("Model/Graph", [], function (exports_7, context_7) {
         }
     };
 });
-System.register("Model/CharacteristicValue", [], function (exports_8, context_8) {
+System.register("Model/Graph", [], function (exports_8, context_8) {
     "use strict";
     var __moduleName = context_8 && context_8.id;
     return {
@@ -380,7 +393,7 @@ System.register("Model/CharacteristicValue", [], function (exports_8, context_8)
         }
     };
 });
-System.register("Model/Characteristic", [], function (exports_9, context_9) {
+System.register("Model/CharacteristicValue", [], function (exports_9, context_9) {
     "use strict";
     var __moduleName = context_9 && context_9.id;
     return {
@@ -389,7 +402,7 @@ System.register("Model/Characteristic", [], function (exports_9, context_9) {
         }
     };
 });
-System.register("Model/RootState", [], function (exports_10, context_10) {
+System.register("Model/Characteristic", [], function (exports_10, context_10) {
     "use strict";
     var __moduleName = context_10 && context_10.id;
     return {
@@ -398,7 +411,7 @@ System.register("Model/RootState", [], function (exports_10, context_10) {
         }
     };
 });
-System.register("Model/SyncfusionGraph/Node", [], function (exports_11, context_11) {
+System.register("Model/RootState", [], function (exports_11, context_11) {
     "use strict";
     var __moduleName = context_11 && context_11.id;
     return {
@@ -407,7 +420,7 @@ System.register("Model/SyncfusionGraph/Node", [], function (exports_11, context_
         }
     };
 });
-System.register("Model/SyncfusionGraph/Connector", [], function (exports_12, context_12) {
+System.register("Model/SyncfusionGraph/Node", [], function (exports_12, context_12) {
     "use strict";
     var __moduleName = context_12 && context_12.id;
     return {
@@ -416,7 +429,7 @@ System.register("Model/SyncfusionGraph/Connector", [], function (exports_12, con
         }
     };
 });
-System.register("Model/SyncfusionGraph/Graph", [], function (exports_13, context_13) {
+System.register("Model/SyncfusionGraph/Connector", [], function (exports_13, context_13) {
     "use strict";
     var __moduleName = context_13 && context_13.id;
     return {
@@ -425,9 +438,18 @@ System.register("Model/SyncfusionGraph/Graph", [], function (exports_13, context
         }
     };
 });
-System.register("Store/GraphStore", ["vuex-typescript", "lodash", "Model/PointType"], function (exports_14, context_14) {
+System.register("Model/SyncfusionGraph/Graph", [], function (exports_14, context_14) {
     "use strict";
     var __moduleName = context_14 && context_14.id;
+    return {
+        setters: [],
+        execute: function () {
+        }
+    };
+});
+System.register("Store/GraphStore", ["vuex-typescript", "lodash", "Model/PointType"], function (exports_15, context_15) {
+    "use strict";
+    var __moduleName = context_15 && context_15.id;
     var vuex_typescript_1, lodash_3, PointType_2, graphModule, _a, read, commit, readGraph, readGraphCount, getSyncfusionGraphByName, getSyncfusiongGraphByGraph, getCharacteristicsList, addGraph, addPoint, addDependency;
     return {
         setters: [
@@ -442,7 +464,7 @@ System.register("Store/GraphStore", ["vuex-typescript", "lodash", "Model/PointTy
             }
         ],
         execute: function () {
-            exports_14("graphModule", graphModule = {
+            exports_15("graphModule", graphModule = {
                 namespaced: true,
                 state: {
                     Graphs: [{
@@ -528,25 +550,25 @@ System.register("Store/GraphStore", ["vuex-typescript", "lodash", "Model/PointTy
                 }
             });
             _a = vuex_typescript_1.getStoreAccessors("graph"), read = _a.read, commit = _a.commit;
-            exports_14("readGraph", readGraph = read(graphModule.getters.getGraph));
-            exports_14("readGraphCount", readGraphCount = read(graphModule.getters.graphCount));
-            exports_14("getSyncfusionGraphByName", getSyncfusionGraphByName = read(graphModule.getters.getSyncfusionGraphByName));
-            exports_14("getSyncfusiongGraphByGraph", getSyncfusiongGraphByGraph = read(graphModule.getters.getSyncfusiongGraphByGraph));
-            exports_14("getCharacteristicsList", getCharacteristicsList = read(graphModule.getters.getCharacteristicsList));
-            exports_14("addGraph", addGraph = commit(graphModule.mutations.addGraph));
-            exports_14("addPoint", addPoint = commit(graphModule.mutations.addPoint));
-            exports_14("addDependency", addDependency = commit(graphModule.mutations.addDependency));
+            exports_15("readGraph", readGraph = read(graphModule.getters.getGraph));
+            exports_15("readGraphCount", readGraphCount = read(graphModule.getters.graphCount));
+            exports_15("getSyncfusionGraphByName", getSyncfusionGraphByName = read(graphModule.getters.getSyncfusionGraphByName));
+            exports_15("getSyncfusiongGraphByGraph", getSyncfusiongGraphByGraph = read(graphModule.getters.getSyncfusiongGraphByGraph));
+            exports_15("getCharacteristicsList", getCharacteristicsList = read(graphModule.getters.getCharacteristicsList));
+            exports_15("addGraph", addGraph = commit(graphModule.mutations.addGraph));
+            exports_15("addPoint", addPoint = commit(graphModule.mutations.addPoint));
+            exports_15("addDependency", addDependency = commit(graphModule.mutations.addDependency));
         }
     };
 });
-System.register("Store/RootStore", ["vue", "vuex", "Store/GraphStore"], function (exports_15, context_15) {
+System.register("Store/RootStore", ["vue", "vuex", "Store/GraphStore"], function (exports_16, context_16) {
     "use strict";
-    var __moduleName = context_15 && context_15.id;
-    var vue_3, vuex_1, GraphStore_1, createStore;
+    var __moduleName = context_16 && context_16.id;
+    var vue_4, vuex_1, GraphStore_1, createStore;
     return {
         setters: [
-            function (vue_3_1) {
-                vue_3 = vue_3_1;
+            function (vue_4_1) {
+                vue_4 = vue_4_1;
             },
             function (vuex_1_1) {
                 vuex_1 = vuex_1_1;
@@ -556,8 +578,8 @@ System.register("Store/RootStore", ["vue", "vuex", "Store/GraphStore"], function
             }
         ],
         execute: function () {
-            vue_3.default.use(vuex_1.default);
-            exports_15("createStore", createStore = function () {
+            vue_4.default.use(vuex_1.default);
+            exports_16("createStore", createStore = function () {
                 return new vuex_1.default.Store({
                     modules: {
                         graph: GraphStore_1.graphModule
@@ -567,14 +589,14 @@ System.register("Store/RootStore", ["vue", "vuex", "Store/GraphStore"], function
         }
     };
 });
-System.register("components/AppHello", ["vue", "components/CharacteristicDiagram", "Store/RootStore", "Store/GraphStore", "Model/PointType"], function (exports_16, context_16) {
+System.register("components/AppHello", ["vue", "components/CharacteristicDiagram", "Store/RootStore", "Store/GraphStore", "Model/PointType"], function (exports_17, context_17) {
     "use strict";
-    var __moduleName = context_16 && context_16.id;
-    var vue_4, CharacteristicDiagram_1, RootStore_1, graph, PointType_3, store;
+    var __moduleName = context_17 && context_17.id;
+    var vue_5, CharacteristicDiagram_1, RootStore_1, graph, PointType_3, store;
     return {
         setters: [
-            function (vue_4_1) {
-                vue_4 = vue_4_1;
+            function (vue_5_1) {
+                vue_5 = vue_5_1;
             },
             function (CharacteristicDiagram_1_1) {
                 CharacteristicDiagram_1 = CharacteristicDiagram_1_1;
@@ -591,7 +613,7 @@ System.register("components/AppHello", ["vue", "components/CharacteristicDiagram
         ],
         execute: function () {
             store = RootStore_1.createStore();
-            exports_16("default", vue_4.default.extend({
+            exports_17("default", vue_5.default.extend({
                 template: '#app-hello-template',
                 store: store,
                 data: function () {
@@ -640,14 +662,14 @@ System.register("components/AppHello", ["vue", "components/CharacteristicDiagram
         }
     };
 });
-System.register("index", ["vue", "components/AppHello"], function (exports_17, context_17) {
+System.register("index", ["vue", "components/AppHello"], function (exports_18, context_18) {
     "use strict";
-    var __moduleName = context_17 && context_17.id;
-    var vue_5, AppHello_1, v;
+    var __moduleName = context_18 && context_18.id;
+    var vue_6, AppHello_1, v;
     return {
         setters: [
-            function (vue_5_1) {
-                vue_5 = vue_5_1;
+            function (vue_6_1) {
+                vue_6 = vue_6_1;
             },
             function (AppHello_1_1) {
                 AppHello_1 = AppHello_1_1;
@@ -656,7 +678,7 @@ System.register("index", ["vue", "components/AppHello"], function (exports_17, c
         execute: function () {
             //Vuex plugin
             //Root Component
-            v = new vue_5.default({
+            v = new vue_6.default({
                 el: "#app-root",
                 template: '<AppHello/>',
                 //render: h => h(AppHelloComponent),
@@ -667,14 +689,14 @@ System.register("index", ["vue", "components/AppHello"], function (exports_17, c
         }
     };
 });
-System.register("components/TestVue", ["vue", "lodash", "axios"], function (exports_18, context_18) {
+System.register("components/TestVue", ["vue", "lodash", "axios"], function (exports_19, context_19) {
     "use strict";
-    var __moduleName = context_18 && context_18.id;
-    var vue_6, lodash_4, axios_1;
+    var __moduleName = context_19 && context_19.id;
+    var vue_7, lodash_4, axios_1;
     return {
         setters: [
-            function (vue_6_1) {
-                vue_6 = vue_6_1;
+            function (vue_7_1) {
+                vue_7 = vue_7_1;
             },
             function (lodash_4_1) {
                 lodash_4 = lodash_4_1;
@@ -684,7 +706,7 @@ System.register("components/TestVue", ["vue", "lodash", "axios"], function (expo
             }
         ],
         execute: function () {
-            exports_18("default", vue_6.default.extend({
+            exports_19("default", vue_7.default.extend({
                 template: "#test-temp",
                 data: function () {
                     return {
@@ -722,9 +744,9 @@ System.register("components/TestVue", ["vue", "lodash", "axios"], function (expo
         }
     };
 });
-System.register("Model/CharacteristicPoint", [], function (exports_19, context_19) {
+System.register("Model/CharacteristicPoint", [], function (exports_20, context_20) {
     "use strict";
-    var __moduleName = context_19 && context_19.id;
+    var __moduleName = context_20 && context_20.id;
     return {
         setters: [],
         execute: function () {

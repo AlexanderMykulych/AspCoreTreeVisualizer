@@ -64,11 +64,30 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-5">
-								<ul class="list-group">
-									<li class="list-group-item active">Исходные характеристики</li>
-									<li v-for="point in startpoints" class="list-group-item">{{point}}</li>
-								</ul>
+								<div id="accordion">
+									<div class="card text-white bg-dark mb-3">
+										<div class="card-header">
+											Исходные характеристики
+										</div>
+									</div>
+									<div class="card" v-for="(point, index) in startpoints">
+										<div class="card-header" id="headingOne">
+											<h5 class="mb-0">
+												<button class="btn btn-link" data-toggle="collapse" :data-target="'#collapseOne_' + index" aria-expanded="true" aria-controls="collapseOne">
+													{{point}}
+												</button>
+											</h5>
+										</div>
+										<div :id="'collapseOne_' + index" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+											<div class="card-body">
+												<rule-controll />
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
+
+
 							<div class="col-7">
 								<div class="container">
 									<div class="row">
@@ -107,6 +126,24 @@
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
 					<button type="button" class="btn btn-primary" @click="addPoint">Добавить</button>
 				</div>
+			</div>
+		</div>
+	</div>
+</template>
+<template id="rule-controll">
+	<div>
+		<nav>
+			<div class="nav nav-tabs" id="nav-tab" role="tablist">
+				<a class="nav-item nav-link active" id="nav-value-tab" data-toggle="tab" href="#nav-value" role="tab" aria-controls="nav-home" aria-selected="true">Значения</a>
+				<a class="nav-item nav-link" id="nav-role-tab" data-toggle="tab" href="#nav-role" role="tab" aria-controls="nav-profile" aria-selected="false">Роли</a>
+			</div>
+		</nav>
+		<div class="tab-content" id="nav-tabContent">
+			<div class="tab-pane fade show active" id="nav-value" role="tabpanel" aria-labelledby="nav-value-tab">
+				test value
+			</div>
+			<div class="tab-pane fade" id="nav-role" role="tabpanel" aria-labelledby="nav-role-tab">
+				test role
 			</div>
 		</div>
 	</div>

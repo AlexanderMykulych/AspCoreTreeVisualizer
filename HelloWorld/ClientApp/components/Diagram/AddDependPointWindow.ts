@@ -1,10 +1,14 @@
 ﻿import Vue from "vue";
 import _ from 'lodash';
+import RuleControll from "./RuleControll";
 declare const $: any;
 
 export default Vue.extend({
 	template: "#add-depend-point",
 	props: ["show", "id", "startpoints", "characteristics"],
+	components: {
+		RuleControll
+	},
 	computed: {
 		elId() {
 			return "#add-depend-point_" + this.id;

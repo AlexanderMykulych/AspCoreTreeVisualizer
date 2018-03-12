@@ -110,8 +110,6 @@ export default Vue.extend({
 				node: {
 					width: 65,
 					height: 65,
-					fillColor: "darkcyan",
-					
 					labels: [{
 						name: "label1",
 						bold: true,
