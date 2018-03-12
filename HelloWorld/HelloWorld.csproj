@@ -18,6 +18,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <ItemGroup>
+    <None Include="wwwroot\image\start.png" />
+  </ItemGroup>
+  <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\AppHello.ts" />
     <TypeScriptCompile Include="ClientApp\components\CharacteristicDiagram.ts" />
     <TypeScriptCompile Include="ClientApp\components\SyncTest.ts" />

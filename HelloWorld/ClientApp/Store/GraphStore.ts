@@ -9,6 +9,7 @@ import { Node } from "../Model/SyncfusionGraph/Node";
 import { Connector } from "../Model/SyncfusionGraph/Connector";
 import { connect } from "http2";
 import { Dependency } from "../Model/Dependency";
+import { PointType } from "../Model/PointType";
 
 type GraphContext = ActionContext<RootState, RootState>;
 
@@ -20,54 +21,39 @@ export const graphModule = {
 			Name: "Graph1",
 			Points: [
 				{
-					Name: "Start"
-				}, {
-					Name: "Point2"
-				}, {
-					Name: "Point3"
-				}, {
-					Name: "Point4"
-				}, {
-					Name: "Point5"
-				}, {
-					Name: "Point6"
-				}, {
-					Name: "Point7"
+					name: "Start",
+					labels: [{
+						text: "Start Point"
+					}],
+					offsetX: 500,
+					offsetY: 60,
+					Options: {
+						type: PointType.start
+					}
 				}
 			],
-			Dependencies: [
-				{
-					Start: "Start",
-					Name: "C1",
-					End: "Point2"
-				},
-				{
-					Start: "Point2",
-					Name: "C2",
-					End: "Point3"
-				},
-				{
-					Start: "Point2",
-					Name: "C3",
-					End: "Point4"
-				},
-				{
-					Start: "Start",
-					Name: "C4",
-					End: "Point5"
-				},
-				{
-					Start: "Point5",
-					Name: "C5",
-					End: "Point6"
-				},
-				{
-					Start: "Start",
-					Name: "C6",
-					End: "Point7"
-				}
-			]
-		}]
+			Dependencies: []
+		}],
+		Characteristics: [
+			{
+				Name: "Char 1",
+				Values: [{
+					Name: "Char 1. Value 1"
+				}, {
+					Name: "Char 1. Value 2"
+				}]
+			},
+			{
+				Name: "Char 2",
+				Values: [{
+					Name: "Char 2. Value 1"
+				}, {
+					Name: "Char 2. Value 2"
+				}, {
+					Name: "Char 2. Value 3"
+				}]
+			}
+		]
 	},
 	getters: {
 		getGraph(state: RootState) {
@@ -96,6 +82,9 @@ export const graphModule = {
 					})
 				};
 			};
+		},
+		getCharacteristicsList(state: RootState) {
+			return state.Characteristics;
 		}
 	},
 	mutations: {
@@ -118,6 +107,7 @@ export const readGraph = read(graphModule.getters.getGraph);
 export const readGraphCount = read(graphModule.getters.graphCount);
 export const getSyncfusionGraphByName = read(graphModule.getters.getSyncfusionGraphByName);
 export const getSyncfusiongGraphByGraph = read(graphModule.getters.getSyncfusiongGraphByGraph);
+export const getCharacteristicsList = read(graphModule.getters.getCharacteristicsList);
 
 export const addGraph = commit(graphModule.mutations.addGraph);
 export const addPoint = commit(graphModule.mutations.addPoint);

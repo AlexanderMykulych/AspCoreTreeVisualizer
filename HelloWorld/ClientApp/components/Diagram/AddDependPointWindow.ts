@@ -1,9 +1,10 @@
 ﻿import Vue from "vue";
+import _ from 'lodash';
 declare const $: any;
 
 export default Vue.extend({
 	template: "#add-depend-point",
-	props: ["show", "id", "startpoints"],
+	props: ["show", "id", "startpoints", "characteristics"],
 	computed: {
 		elId() {
 			return "#add-depend-point_" + this.id;
@@ -11,7 +12,9 @@ export default Vue.extend({
 	},
 	data() {
 		return {
-			point: null
+			point: null,
+			selectedCharacteristic: null,
+			togglesValues: []
 		};
 	},
 	mounted() {
@@ -22,7 +25,17 @@ export default Vue.extend({
 	},
 	methods: {
 		addPoint: function () {
-			this.$emit("addpoint", this.point);
+			var point = _.merge({
+					name: this.point
+				},
+				{
+					options: {
+						Characteristic: this.selectedCharacteristic,
+						Values: this.togglesValues
+					}
+				}
+			);
+			this.$emit("addpoint", point);
 		}
 	},
 	watch: {
@@ -32,6 +45,9 @@ export default Vue.extend({
 			} else {
 				$(this.elId).modal("hide");
 			}
+		},
+		selectedCharacteristic(val) {
+			this.togglesValues = [];
 		}
 	}
 });

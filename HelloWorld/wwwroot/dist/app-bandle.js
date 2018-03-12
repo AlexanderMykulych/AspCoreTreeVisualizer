@@ -1,17 +1,20 @@
-System.register("components/Diagram/AddDependPointWindow", ["vue"], function (exports_1, context_1) {
+System.register("components/Diagram/AddDependPointWindow", ["vue", "lodash"], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var vue_1;
+    var vue_1, lodash_1;
     return {
         setters: [
             function (vue_1_1) {
                 vue_1 = vue_1_1;
+            },
+            function (lodash_1_1) {
+                lodash_1 = lodash_1_1;
             }
         ],
         execute: function () {
             exports_1("default", vue_1.default.extend({
                 template: "#add-depend-point",
-                props: ["show", "id", "startpoints"],
+                props: ["show", "id", "startpoints", "characteristics"],
                 computed: {
                     elId: function () {
                         return "#add-depend-point_" + this.id;
@@ -19,7 +22,9 @@ System.register("components/Diagram/AddDependPointWindow", ["vue"], function (ex
                 },
                 data: function () {
                     return {
-                        point: null
+                        point: null,
+                        selectedCharacteristic: null,
+                        togglesValues: []
                     };
                 },
                 mounted: function () {
@@ -30,7 +35,15 @@ System.register("components/Diagram/AddDependPointWindow", ["vue"], function (ex
                 },
                 methods: {
                     addPoint: function () {
-                        this.$emit("addpoint", this.point);
+                        var point = lodash_1.default.merge({
+                            name: this.point
+                        }, {
+                            options: {
+                                Characteristic: this.selectedCharacteristic,
+                                Values: this.togglesValues
+                            }
+                        });
+                        this.$emit("addpoint", point);
                     }
                 },
                 watch: {
@@ -41,6 +54,9 @@ System.register("components/Diagram/AddDependPointWindow", ["vue"], function (ex
                         else {
                             $(this.elId).modal("hide");
                         }
+                    },
+                    selectedCharacteristic: function (val) {
+                        this.togglesValues = [];
                     }
                 }
             }));
@@ -96,17 +112,33 @@ System.register("components/Diagram/AddDependedPoint", [], function (exports_2, 
         }
     };
 });
-System.register("components/CharacteristicDiagram", ["vue", "lodash", "syncfusion", "components/Diagram/AddDependPointWindow", "components/Diagram/AddDependedPoint"], function (exports_3, context_3) {
+System.register("Model/PointType", [], function (exports_3, context_3) {
     "use strict";
     var __moduleName = context_3 && context_3.id;
-    var vue_2, lodash_1, AddDependPointWindow_1, AddDependedPoint_1, constraints;
+    var PointType;
+    return {
+        setters: [],
+        execute: function () {
+            (function (PointType) {
+                PointType[PointType["start"] = 0] = "start";
+                PointType[PointType["characteristic"] = 1] = "characteristic";
+                PointType[PointType["aggregator"] = 2] = "aggregator";
+            })(PointType || (PointType = {}));
+            exports_3("PointType", PointType);
+        }
+    };
+});
+System.register("components/CharacteristicDiagram", ["vue", "lodash", "syncfusion", "components/Diagram/AddDependPointWindow", "components/Diagram/AddDependedPoint", "Model/PointType"], function (exports_4, context_4) {
+    "use strict";
+    var __moduleName = context_4 && context_4.id;
+    var vue_2, lodash_2, AddDependPointWindow_1, AddDependedPoint_1, PointType_1, constraints;
     return {
         setters: [
             function (vue_2_1) {
                 vue_2 = vue_2_1;
             },
-            function (lodash_1_1) {
-                lodash_1 = lodash_1_1;
+            function (lodash_2_1) {
+                lodash_2 = lodash_2_1;
             },
             function (_1) {
             },
@@ -115,13 +147,16 @@ System.register("components/CharacteristicDiagram", ["vue", "lodash", "syncfusio
             },
             function (AddDependedPoint_1_1) {
                 AddDependedPoint_1 = AddDependedPoint_1_1;
+            },
+            function (PointType_1_1) {
+                PointType_1 = PointType_1_1;
             }
         ],
         execute: function () {
             constraints = ej.datavisualization.Diagram.DiagramConstraints.Default | ej.datavisualization.Diagram.DiagramConstraints.FloatElements;
-            exports_3("default", vue_2.default.extend({
+            exports_4("default", vue_2.default.extend({
                 template: "#characteristic-diagram",
-                props: ["graph", "classes", "height"],
+                props: ["graph", "classes", "height", "characteristics"],
                 data: function () {
                     return {
                         bus: new vue_2.default(),
@@ -147,22 +182,53 @@ System.register("components/CharacteristicDiagram", ["vue", "lodash", "syncfusio
                     }
                 },
                 methods: {
-                    addPoint: function (pointName) {
+                    addPoint: function (point) {
                         var _this = this;
                         var $this = this;
+                        var pointName = point.name;
+                        var firstSelectedNode = this.diagram.findNode(this.selectedNodes[0]);
+                        var endPoint = pointName;
                         this.$emit("on-add-node", {
                             graph: this.diagramId,
-                            point: {
-                                Name: pointName
-                            }
+                            point: lodash_2.default.merge({
+                                name: pointName,
+                                offsetX: firstSelectedNode.offsetX,
+                                offsetY: firstSelectedNode.offsetY + 200,
+                                Options: {
+                                    type: PointType_1.PointType.characteristic
+                                }
+                            }, point.options)
                         });
-                        lodash_1.default.forEach(this.selectedNodes, function (node) {
+                        if (this.selectedNodes.length > 1) {
+                            var andPointName = "AND_" + pointName;
+                            endPoint = andPointName;
+                            this.$emit("on-add-node", {
+                                graph: this.diagramId,
+                                point: {
+                                    name: andPointName,
+                                    offsetX: firstSelectedNode.offsetX,
+                                    offsetY: firstSelectedNode.offsetY + 100,
+                                    Options: {
+                                        type: PointType_1.PointType.aggregator
+                                    }
+                                }
+                            });
+                            $this.$emit("on-add-connection", {
+                                graph: this.diagramId,
+                                dep: {
+                                    Start: endPoint,
+                                    End: pointName,
+                                    Name: endPoint + "_" + pointName
+                                }
+                            });
+                        }
+                        lodash_2.default.forEach(this.selectedNodes, function (node) {
                             $this.$emit("on-add-connection", {
                                 graph: _this.diagramId,
                                 dep: {
                                     Start: node,
-                                    End: pointName,
-                                    Name: node + "_" + pointName
+                                    End: endPoint,
+                                    Name: node + "_" + endPoint
                                 }
                             });
                         });
@@ -188,19 +254,23 @@ System.register("components/CharacteristicDiagram", ["vue", "lodash", "syncfusio
                         height: this.heightPx,
                         nodes: this.graph.Nodes,
                         connectors: this.graph.Connectors,
-                        layout: {
-                            type: ej.datavisualization.Diagram.LayoutTypes.HierarchicalTree
-                        },
                         defaultSettings: {
                             node: {
-                                width: 100,
-                                height: 40,
+                                width: 65,
+                                height: 65,
                                 fillColor: "darkcyan",
                                 labels: [{
                                         name: "label1",
                                         bold: true,
-                                        fontColor: "white"
-                                    }]
+                                        fontColor: "black",
+                                        horizontalAlignment: ej.datavisualization.Diagram.HorizontalAlignment.Right,
+                                        verticalAlignment: ej.datavisualization.Diagram.VerticalAlignment.Bottom,
+                                        offset: {
+                                            y: 1.2,
+                                            x: 0.8
+                                        }
+                                    }],
+                                borderWidth: 0
                             },
                             connector: {
                                 segments: [{
@@ -208,19 +278,38 @@ System.register("components/CharacteristicDiagram", ["vue", "lodash", "syncfusio
                                     }]
                             }
                         },
-                        nodeTemplate: function (diagram, node) {
-                            node.name = node.Name;
-                            node.labels[0].text = node.name;
+                        scrollSettings: {
+                            horizontalOffset: 0,
+                            verticalOffset: 0,
+                            zoomFactor: 0.2
                         },
-                        //connectorTemplate(diagram, connector) {
-                        //	connector.name = connector.Name;
-                        //	connector.sourceNode = connector.Start;
-                        //	connector.targetNode = connector.End;
-                        //},
+                        enableAutoScroll: true,
+                        pageSettings: {
+                            scrollLimit: "infinity"
+                        },
                         selectedItems: {
                             userHandles: [AddDependedPoint_1.default({
                                     bus: this.bus
                                 })]
+                        },
+                        nodeTemplate: function (diagram, node) {
+                            if (node.Options) {
+                                var type = node.Options.type;
+                                switch (type) {
+                                    case PointType_1.PointType.start:
+                                        node.fillColor = "#29c15f";
+                                        node.shape = "ellipse";
+                                        break;
+                                    case PointType_1.PointType.characteristic:
+                                        node.fillColor = "#2085c9";
+                                        node.shape = "rectangle";
+                                        break;
+                                    case PointType_1.PointType.aggregator:
+                                        node.fillColor = "#ec7e0d";
+                                        node.shape = "ellipse";
+                                        break;
+                                }
+                            }
                         }
                     });
                     $(this.diagramOverviewElId).ejOverview({
@@ -235,31 +324,27 @@ System.register("components/CharacteristicDiagram", ["vue", "lodash", "syncfusio
                 watch: {
                     graph: function (val) {
                         var diagram = this.diagram;
-                        lodash_1.default.filter(val.Nodes, function (node) {
-                            return !lodash_1.default.find(diagram.nodes, function (x) { return x.Name === node.Name; });
+                        lodash_2.default.filter(val.Nodes, function (node) {
+                            return !lodash_2.default.find(diagram.nodes(), function (x) { return x.name === node.name; });
+                        })
+                            .forEach(function (x) {
+                            return diagram.add(lodash_2.default.merge(x, {
+                                labels: [{
+                                        text: x.name
+                                    }]
+                            }));
+                        });
+                        lodash_2.default.filter(val.Connectors, function (con) {
+                            return !lodash_2.default.find(diagram.connectors(), function (x) { return x.name === con.name; });
                         })
                             .forEach(function (x) { return diagram.add(x); });
-                        lodash_1.default.filter(val.Connectors, function (con) {
-                            return !lodash_1.default.find(diagram.connectors, function (x) { return x.name === con.name; });
-                        })
-                            .forEach(function (x) { return diagram.add(x); });
-                        diagram.layout();
                     }
                 }
             }));
         }
     };
 });
-System.register("Model/Dependency", [], function (exports_4, context_4) {
-    "use strict";
-    var __moduleName = context_4 && context_4.id;
-    return {
-        setters: [],
-        execute: function () {
-        }
-    };
-});
-System.register("Model/BasePoint", [], function (exports_5, context_5) {
+System.register("Model/Dependency", [], function (exports_5, context_5) {
     "use strict";
     var __moduleName = context_5 && context_5.id;
     return {
@@ -268,7 +353,7 @@ System.register("Model/BasePoint", [], function (exports_5, context_5) {
         }
     };
 });
-System.register("Model/Graph", [], function (exports_6, context_6) {
+System.register("Model/BasePoint", [], function (exports_6, context_6) {
     "use strict";
     var __moduleName = context_6 && context_6.id;
     return {
@@ -277,7 +362,7 @@ System.register("Model/Graph", [], function (exports_6, context_6) {
         }
     };
 });
-System.register("Model/RootState", [], function (exports_7, context_7) {
+System.register("Model/Graph", [], function (exports_7, context_7) {
     "use strict";
     var __moduleName = context_7 && context_7.id;
     return {
@@ -286,7 +371,7 @@ System.register("Model/RootState", [], function (exports_7, context_7) {
         }
     };
 });
-System.register("Model/SyncfusionGraph/Node", [], function (exports_8, context_8) {
+System.register("Model/CharacteristicValue", [], function (exports_8, context_8) {
     "use strict";
     var __moduleName = context_8 && context_8.id;
     return {
@@ -295,7 +380,7 @@ System.register("Model/SyncfusionGraph/Node", [], function (exports_8, context_8
         }
     };
 });
-System.register("Model/SyncfusionGraph/Connector", [], function (exports_9, context_9) {
+System.register("Model/Characteristic", [], function (exports_9, context_9) {
     "use strict";
     var __moduleName = context_9 && context_9.id;
     return {
@@ -304,7 +389,7 @@ System.register("Model/SyncfusionGraph/Connector", [], function (exports_9, cont
         }
     };
 });
-System.register("Model/SyncfusionGraph/Graph", [], function (exports_10, context_10) {
+System.register("Model/RootState", [], function (exports_10, context_10) {
     "use strict";
     var __moduleName = context_10 && context_10.id;
     return {
@@ -313,75 +398,90 @@ System.register("Model/SyncfusionGraph/Graph", [], function (exports_10, context
         }
     };
 });
-System.register("Store/GraphStore", ["vuex-typescript", "lodash"], function (exports_11, context_11) {
+System.register("Model/SyncfusionGraph/Node", [], function (exports_11, context_11) {
     "use strict";
     var __moduleName = context_11 && context_11.id;
-    var vuex_typescript_1, lodash_2, graphModule, _a, read, commit, readGraph, readGraphCount, getSyncfusionGraphByName, getSyncfusiongGraphByGraph, addGraph, addPoint, addDependency;
+    return {
+        setters: [],
+        execute: function () {
+        }
+    };
+});
+System.register("Model/SyncfusionGraph/Connector", [], function (exports_12, context_12) {
+    "use strict";
+    var __moduleName = context_12 && context_12.id;
+    return {
+        setters: [],
+        execute: function () {
+        }
+    };
+});
+System.register("Model/SyncfusionGraph/Graph", [], function (exports_13, context_13) {
+    "use strict";
+    var __moduleName = context_13 && context_13.id;
+    return {
+        setters: [],
+        execute: function () {
+        }
+    };
+});
+System.register("Store/GraphStore", ["vuex-typescript", "lodash", "Model/PointType"], function (exports_14, context_14) {
+    "use strict";
+    var __moduleName = context_14 && context_14.id;
+    var vuex_typescript_1, lodash_3, PointType_2, graphModule, _a, read, commit, readGraph, readGraphCount, getSyncfusionGraphByName, getSyncfusiongGraphByGraph, getCharacteristicsList, addGraph, addPoint, addDependency;
     return {
         setters: [
             function (vuex_typescript_1_1) {
                 vuex_typescript_1 = vuex_typescript_1_1;
             },
-            function (lodash_2_1) {
-                lodash_2 = lodash_2_1;
+            function (lodash_3_1) {
+                lodash_3 = lodash_3_1;
+            },
+            function (PointType_2_1) {
+                PointType_2 = PointType_2_1;
             }
         ],
         execute: function () {
-            exports_11("graphModule", graphModule = {
+            exports_14("graphModule", graphModule = {
                 namespaced: true,
                 state: {
                     Graphs: [{
                             Name: "Graph1",
                             Points: [
                                 {
-                                    Name: "Start"
-                                }, {
-                                    Name: "Point2"
-                                }, {
-                                    Name: "Point3"
-                                }, {
-                                    Name: "Point4"
-                                }, {
-                                    Name: "Point5"
-                                }, {
-                                    Name: "Point6"
-                                }, {
-                                    Name: "Point7"
+                                    name: "Start",
+                                    labels: [{
+                                            text: "Start Point"
+                                        }],
+                                    offsetX: 500,
+                                    offsetY: 60,
+                                    Options: {
+                                        type: PointType_2.PointType.start
+                                    }
                                 }
                             ],
-                            Dependencies: [
-                                {
-                                    Start: "Start",
-                                    Name: "C1",
-                                    End: "Point2"
-                                },
-                                {
-                                    Start: "Point2",
-                                    Name: "C2",
-                                    End: "Point3"
-                                },
-                                {
-                                    Start: "Point2",
-                                    Name: "C3",
-                                    End: "Point4"
-                                },
-                                {
-                                    Start: "Start",
-                                    Name: "C4",
-                                    End: "Point5"
-                                },
-                                {
-                                    Start: "Point5",
-                                    Name: "C5",
-                                    End: "Point6"
-                                },
-                                {
-                                    Start: "Start",
-                                    Name: "C6",
-                                    End: "Point7"
-                                }
-                            ]
-                        }]
+                            Dependencies: []
+                        }],
+                    Characteristics: [
+                        {
+                            Name: "Char 1",
+                            Values: [{
+                                    Name: "Char 1. Value 1"
+                                }, {
+                                    Name: "Char 1. Value 2"
+                                }]
+                        },
+                        {
+                            Name: "Char 2",
+                            Values: [{
+                                    Name: "Char 2. Value 1"
+                                }, {
+                                    Name: "Char 2. Value 2"
+                                }, {
+                                    Name: "Char 2. Value 3"
+                                }]
+                        }
+                    ]
                 },
                 getters: {
                     getGraph: function (state) {
@@ -392,7 +492,7 @@ System.register("Store/GraphStore", ["vuex-typescript", "lodash"], function (exp
                     },
                     getSyncfusionGraphByName: function (state) {
                         return function (name) {
-                            var graph = lodash_2.default.first(state.Graphs.filter(function (x) { return x.Name === name; }));
+                            var graph = lodash_3.default.first(state.Graphs.filter(function (x) { return x.Name === name; }));
                             return graphModule.getters.getSyncfusiongGraphByGraph(state)(graph);
                         };
                     },
@@ -401,7 +501,7 @@ System.register("Store/GraphStore", ["vuex-typescript", "lodash"], function (exp
                             return {
                                 Name: graph.Name,
                                 Nodes: graph.Points,
-                                Connectors: lodash_2.default.map(graph.Dependencies, function (con) {
+                                Connectors: lodash_3.default.map(graph.Dependencies, function (con) {
                                     return {
                                         name: con.Name,
                                         sourceNode: con.Start,
@@ -410,6 +510,9 @@ System.register("Store/GraphStore", ["vuex-typescript", "lodash"], function (exp
                                 })
                             };
                         };
+                    },
+                    getCharacteristicsList: function (state) {
+                        return state.Characteristics;
                     }
                 },
                 mutations: {
@@ -425,19 +528,20 @@ System.register("Store/GraphStore", ["vuex-typescript", "lodash"], function (exp
                 }
             });
             _a = vuex_typescript_1.getStoreAccessors("graph"), read = _a.read, commit = _a.commit;
-            exports_11("readGraph", readGraph = read(graphModule.getters.getGraph));
-            exports_11("readGraphCount", readGraphCount = read(graphModule.getters.graphCount));
-            exports_11("getSyncfusionGraphByName", getSyncfusionGraphByName = read(graphModule.getters.getSyncfusionGraphByName));
-            exports_11("getSyncfusiongGraphByGraph", getSyncfusiongGraphByGraph = read(graphModule.getters.getSyncfusiongGraphByGraph));
-            exports_11("addGraph", addGraph = commit(graphModule.mutations.addGraph));
-            exports_11("addPoint", addPoint = commit(graphModule.mutations.addPoint));
-            exports_11("addDependency", addDependency = commit(graphModule.mutations.addDependency));
+            exports_14("readGraph", readGraph = read(graphModule.getters.getGraph));
+            exports_14("readGraphCount", readGraphCount = read(graphModule.getters.graphCount));
+            exports_14("getSyncfusionGraphByName", getSyncfusionGraphByName = read(graphModule.getters.getSyncfusionGraphByName));
+            exports_14("getSyncfusiongGraphByGraph", getSyncfusiongGraphByGraph = read(graphModule.getters.getSyncfusiongGraphByGraph));
+            exports_14("getCharacteristicsList", getCharacteristicsList = read(graphModule.getters.getCharacteristicsList));
+            exports_14("addGraph", addGraph = commit(graphModule.mutations.addGraph));
+            exports_14("addPoint", addPoint = commit(graphModule.mutations.addPoint));
+            exports_14("addDependency", addDependency = commit(graphModule.mutations.addDependency));
         }
     };
 });
-System.register("Store/RootStore", ["vue", "vuex", "Store/GraphStore"], function (exports_12, context_12) {
+System.register("Store/RootStore", ["vue", "vuex", "Store/GraphStore"], function (exports_15, context_15) {
     "use strict";
-    var __moduleName = context_12 && context_12.id;
+    var __moduleName = context_15 && context_15.id;
     var vue_3, vuex_1, GraphStore_1, createStore;
     return {
         setters: [
@@ -453,7 +557,7 @@ System.register("Store/RootStore", ["vue", "vuex", "Store/GraphStore"], function
         ],
         execute: function () {
             vue_3.default.use(vuex_1.default);
-            exports_12("createStore", createStore = function () {
+            exports_15("createStore", createStore = function () {
                 return new vuex_1.default.Store({
                     modules: {
                         graph: GraphStore_1.graphModule
@@ -463,10 +567,10 @@ System.register("Store/RootStore", ["vue", "vuex", "Store/GraphStore"], function
         }
     };
 });
-System.register("components/AppHello", ["vue", "components/CharacteristicDiagram", "Store/RootStore", "Store/GraphStore"], function (exports_13, context_13) {
+System.register("components/AppHello", ["vue", "components/CharacteristicDiagram", "Store/RootStore", "Store/GraphStore", "Model/PointType"], function (exports_16, context_16) {
     "use strict";
-    var __moduleName = context_13 && context_13.id;
-    var vue_4, CharacteristicDiagram_1, RootStore_1, graph, store;
+    var __moduleName = context_16 && context_16.id;
+    var vue_4, CharacteristicDiagram_1, RootStore_1, graph, PointType_3, store;
     return {
         setters: [
             function (vue_4_1) {
@@ -480,11 +584,14 @@ System.register("components/AppHello", ["vue", "components/CharacteristicDiagram
             },
             function (graph_1) {
                 graph = graph_1;
+            },
+            function (PointType_3_1) {
+                PointType_3 = PointType_3_1;
             }
         ],
         execute: function () {
             store = RootStore_1.createStore();
-            exports_13("default", vue_4.default.extend({
+            exports_16("default", vue_4.default.extend({
                 template: '#app-hello-template',
                 store: store,
                 data: function () {
@@ -496,6 +603,9 @@ System.register("components/AppHello", ["vue", "components/CharacteristicDiagram
                     diagrams: function () {
                         var _this = this;
                         return graph.readGraph(this.$store).map(function (x) { return graph.getSyncfusiongGraphByGraph(_this.$store)(x); });
+                    },
+                    characteristics: function () {
+                        return graph.getCharacteristicsList(this.$store);
                     }
                 },
                 methods: {
@@ -503,7 +613,15 @@ System.register("components/AppHello", ["vue", "components/CharacteristicDiagram
                         graph.addGraph(this.$store, {
                             Name: "Graph" + (graph.readGraphCount(this.$store) + 1),
                             Points: [{
-                                    Name: "Start"
+                                    name: "Start",
+                                    offsetX: 500,
+                                    offsetY: 20,
+                                    labels: [{
+                                            text: "Start Point"
+                                        }],
+                                    Options: {
+                                        type: PointType_3.PointType.start
+                                    }
                                 }],
                             Dependencies: []
                         });
@@ -522,9 +640,9 @@ System.register("components/AppHello", ["vue", "components/CharacteristicDiagram
         }
     };
 });
-System.register("index", ["vue", "components/AppHello"], function (exports_14, context_14) {
+System.register("index", ["vue", "components/AppHello"], function (exports_17, context_17) {
     "use strict";
-    var __moduleName = context_14 && context_14.id;
+    var __moduleName = context_17 && context_17.id;
     var vue_5, AppHello_1, v;
     return {
         setters: [
@@ -549,24 +667,24 @@ System.register("index", ["vue", "components/AppHello"], function (exports_14, c
         }
     };
 });
-System.register("components/TestVue", ["vue", "lodash", "axios"], function (exports_15, context_15) {
+System.register("components/TestVue", ["vue", "lodash", "axios"], function (exports_18, context_18) {
     "use strict";
-    var __moduleName = context_15 && context_15.id;
-    var vue_6, lodash_3, axios_1;
+    var __moduleName = context_18 && context_18.id;
+    var vue_6, lodash_4, axios_1;
     return {
         setters: [
             function (vue_6_1) {
                 vue_6 = vue_6_1;
             },
-            function (lodash_3_1) {
-                lodash_3 = lodash_3_1;
+            function (lodash_4_1) {
+                lodash_4 = lodash_4_1;
             },
             function (axios_1_1) {
                 axios_1 = axios_1_1;
             }
         ],
         execute: function () {
-            exports_15("default", vue_6.default.extend({
+            exports_18("default", vue_6.default.extend({
                 template: "#test-temp",
                 data: function () {
                     return {
@@ -582,7 +700,7 @@ System.register("components/TestVue", ["vue", "lodash", "axios"], function (expo
                     }
                 },
                 methods: {
-                    getAnswer: lodash_3.default.debounce(function () {
+                    getAnswer: lodash_4.default.debounce(function () {
                         if (this.question.indexOf('?') === -1) {
                             this.answer = 'Вопросы обычно заканчиваются вопросительным знаком. ;-)';
                             return;
@@ -591,7 +709,7 @@ System.register("components/TestVue", ["vue", "lodash", "axios"], function (expo
                         var vm = this;
                         axios_1.default.get('https://yesno.wtf/api')
                             .then(function (response) {
-                            vm.answer = lodash_3.default.capitalize(response.data.answer);
+                            vm.answer = lodash_4.default.capitalize(response.data.answer);
                         })
                             .catch(function (error) {
                             vm.answer = 'Ошибка! Не могу связаться с API. ' + error;
@@ -604,27 +722,9 @@ System.register("components/TestVue", ["vue", "lodash", "axios"], function (expo
         }
     };
 });
-System.register("Model/Characteristic", [], function (exports_16, context_16) {
+System.register("Model/CharacteristicPoint", [], function (exports_19, context_19) {
     "use strict";
-    var __moduleName = context_16 && context_16.id;
-    return {
-        setters: [],
-        execute: function () {
-        }
-    };
-});
-System.register("Model/CharacteristicValue", [], function (exports_17, context_17) {
-    "use strict";
-    var __moduleName = context_17 && context_17.id;
-    return {
-        setters: [],
-        execute: function () {
-        }
-    };
-});
-System.register("Model/CharacteristicPoint", [], function (exports_18, context_18) {
-    "use strict";
-    var __moduleName = context_18 && context_18.id;
+    var __moduleName = context_19 && context_19.id;
     return {
         setters: [],
         execute: function () {

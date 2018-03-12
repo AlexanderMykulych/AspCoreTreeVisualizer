@@ -12,6 +12,6 @@
                 </div>
             </div>
         </div>
-        <add-depend-modal-window :bus="bus" :id="diagramId" :startpoints="selectedNodes" :show.sync="showAddDependModal" @addpoint="addPoint"/>
+        <add-depend-modal-window :bus="bus" :id="diagramId" :startpoints="selectedNodes" :show.sync="showAddDependModal" @addpoint="addPoint" :characteristics="characteristics"/>
     </div>
 </template>

@@ -6,6 +6,7 @@ import { createStore } from "../Store/RootStore";
 import * as graph from "../Store/GraphStore";
 import { BasePoint } from "../Model/BasePoint";
 import { Dependency } from "../Model/Dependency";
+import { PointType } from "../Model/PointType";
 
 
 var store = createStore();
@@ -20,6 +21,9 @@ export default Vue.extend({
 	computed: {
 		diagrams: function () {
 			return graph.readGraph(this.$store).map(x => graph.getSyncfusiongGraphByGraph(this.$store)(x));
+		},
+		characteristics: function () {
+			return graph.getCharacteristicsList(this.$store);
 		}
 	},
 	methods: {
@@ -27,7 +31,15 @@ export default Vue.extend({
 			graph.addGraph(this.$store, {
 				Name: "Graph" + (graph.readGraphCount(this.$store) + 1),
 				Points: [{
-					Name: "Start"
+					name: "Start",
+					offsetX: 500,
+					offsetY: 20,
+					labels: [{
+						text: "Start Point"
+					}],
+					Options: {
+						type: PointType.start
+					}
 				}],
 				Dependencies: []
 			});

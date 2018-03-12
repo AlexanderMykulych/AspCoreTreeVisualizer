@@ -4,12 +4,13 @@ import "syncfusion";
 import addDependModalWindow from "./Diagram/AddDependPointWindow";
 import createAddDependPointHandler from "./Diagram/AddDependedPoint";
 import { connect } from "http2";
+import { PointType } from "../Model/PointType";
 declare const ej: any;
 var constraints = ej.datavisualization.Diagram.DiagramConstraints.Default | ej.datavisualization.Diagram.DiagramConstraints.FloatElements;
 
 export default Vue.extend({
 	template: "#characteristic-diagram",
-	props: ["graph", "classes", "height"],
+	props: ["graph", "classes", "height", "characteristics"],
 	data() {
 		return {
 			bus: new Vue(),
@@ -35,21 +36,52 @@ export default Vue.extend({
 		}
 	},
 	methods: {
-		addPoint(pointName) {
-			var $this = this;
+		addPoint(point) {
+			var $this = this
+			var pointName = point.name;
+			var firstSelectedNode = this.diagram.findNode(this.selectedNodes[0]);
+			var endPoint = pointName;
 			this.$emit("on-add-node", {
 				graph: this.diagramId,
-				point: {
-					Name: pointName
-				}
+				point: _.merge({
+					name: pointName,
+					offsetX: firstSelectedNode.offsetX,
+					offsetY: firstSelectedNode.offsetY + 200,
+					Options: {
+						type: PointType.characteristic
+					}
+				}, point.options)
 			});
+			if (this.selectedNodes.length > 1) {
+				var andPointName = "AND_" + pointName;
+				endPoint = andPointName;
+				this.$emit("on-add-node", {
+					graph: this.diagramId,
+					point: {
+						name: andPointName,
+						offsetX: firstSelectedNode.offsetX,
+						offsetY: firstSelectedNode.offsetY + 100,
+						Options: {
+							type: PointType.aggregator
+						}
+					}
+				});
+				$this.$emit("on-add-connection", {
+					graph: this.diagramId,
+					dep: {
+						Start: endPoint,
+						End: pointName,
+						Name: endPoint + "_" + pointName
+					}
+				});
+			}
 			_.forEach(this.selectedNodes, node => {
 				$this.$emit("on-add-connection", {
 					graph: this.diagramId,
 					dep: {
 						Start: node,
-						End: pointName,
-						Name: node + "_" + pointName
+						End: endPoint,
+						Name: node + "_" + endPoint
 					}
 				});
 			});
@@ -74,19 +106,24 @@ export default Vue.extend({
 			height: this.heightPx,
 			nodes: this.graph.Nodes,
 			connectors: this.graph.Connectors,
-			layout: {
-				type: ej.datavisualization.Diagram.LayoutTypes.HierarchicalTree
-			},
 			defaultSettings: {
 				node: {
-					width: 100,
-					height: 40,
+					width: 65,
+					height: 65,
 					fillColor: "darkcyan",
+					
 					labels: [{
 						name: "label1",
 						bold: true,
-						fontColor: "white"
-					}]
+						fontColor: "black",
+						horizontalAlignment: ej.datavisualization.Diagram.HorizontalAlignment.Right,
+						verticalAlignment: ej.datavisualization.Diagram.VerticalAlignment.Bottom,
+						offset: {
+							y: 1.2,
+							x: 0.8
+						}
+					}],
+					borderWidth: 0
 				},
 				connector: {
 					segments: [{
@@ -94,19 +131,38 @@ export default Vue.extend({
 					}]
 				}
 			},
-			nodeTemplate(diagram, node) {
-				node.name = node.Name;
-				node.labels[0].text = node.name;
+			scrollSettings: {
+				horizontalOffset: 0,
+				verticalOffset: 0,
+				zoomFactor: 0.2
 			},
-			//connectorTemplate(diagram, connector) {
-			//	connector.name = connector.Name;
-			//	connector.sourceNode = connector.Start;
-			//	connector.targetNode = connector.End;
-			//},
+			enableAutoScroll: true,
+			pageSettings: {
+				scrollLimit: "infinity"
+			},
 			selectedItems: {
 				userHandles: [createAddDependPointHandler({
 					bus: this.bus
 				})]
+			},
+			nodeTemplate(diagram, node) {
+				if (node.Options) {
+					var type = node.Options.type;
+					switch (type) {
+						case PointType.start:
+							node.fillColor = "#29c15f";
+							node.shape = "ellipse";
+							break;
+						case PointType.characteristic:
+							node.fillColor = "#2085c9";
+							node.shape = "rectangle";
+							break;
+						case PointType.aggregator:
+							node.fillColor = "#ec7e0d";
+							node.shape = "ellipse";
+							break;
+					}
+				}
 			}
 		});
 		$(this.diagramOverviewElId).ejOverview({
@@ -123,16 +179,22 @@ export default Vue.extend({
 			var diagram = this.diagram;
 
 			_.filter(val.Nodes, function (node) {
-				return !_.find(diagram.nodes, x => x.Name === node.Name);
+				return !_.find(diagram.nodes(), x => x.name === node.name);
 			})
-			.forEach(x => diagram.add(x));
+				.forEach(x =>
+					diagram.add(
+						_.merge(x, {
+							labels: [{
+								text: x.name
+							}]
+						})
+					)
+				);
 
 			_.filter(val.Connectors, function (con) {
-				return !_.find(diagram.connectors, x => x.name === con.name);
+				return !_.find(diagram.connectors(), x => x.name === con.name);
 			})
 				.forEach(x => diagram.add(x));
-
-			diagram.layout();
 		}
 	}
 });

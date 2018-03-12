@@ -1,5 +1,12 @@
 ﻿import { Dependency } from "./Dependency";
+import { PointType } from "./PointType";
 
 export interface BasePoint {
-	Name: string;
+	name: string;
+	offsetX: any;
+	offsetY: any;
+	Options: {
+		type: PointType;
+	},
+	labels?: any
 }

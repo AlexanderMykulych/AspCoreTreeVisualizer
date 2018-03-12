@@ -11,7 +11,14 @@
         </div>
         <div class="container-fluid">
             <div v-for="graph in diagrams" class="row">
-                <characteristic-diagram :graph="graph" classes="col" height="600" @on-add-node="addNode" @on-add-connection="addConnection" />
+                <characteristic-diagram
+					:graph="graph"
+					classes="col"
+					height="600"
+					@on-add-node="addNode"
+					@on-add-connection="addConnection"
+					:characteristics="characteristics"
+				/>
             </div>
         </div>
     </div>
@@ -30,7 +37,7 @@
                 </div>
             </div>
         </div>
-        <add-depend-modal-window :bus="bus" :id="diagramId" :startpoints="selectedNodes" :show.sync="showAddDependModal" @addpoint="addPoint"/>
+        <add-depend-modal-window :bus="bus" :id="diagramId" :startpoints="selectedNodes" :show.sync="showAddDependModal" @addpoint="addPoint" :characteristics="characteristics"/>
     </div>
 </template>
 <template id="test-temp">
@@ -63,11 +70,34 @@
 								</ul>
 							</div>
 							<div class="col-7">
-								<div class="input-group mb-3">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroup-sizing-default">Характеристика</span>
+								<div class="container">
+									<div class="row">
+										<div class="col">
+											<div class="input-group mb-3">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="inputGroup-sizing-default">Характеристика</span>
+												</div>
+												<input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="point">
+											</div>
+										</div>
 									</div>
-									<input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="point">
+									<div class="row">
+										<div class="col">
+											<div class="input-group mb-3">
+												<select class="custom-select" id="inputGroupSelect01" v-model="selectedCharacteristic">
+													<option v-for="char in characteristics" :value="char">{{char.Name}}</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col" v-if="selectedCharacteristic != null">
+											<div class="form-check" v-for="(char, index) in selectedCharacteristic.Values">
+												<input type="checkbox" class="form-check-input" v-model="togglesValues" :id="'checkbox_' + index" :value="char">
+												<label class="form-check-label" :for="'checkbox_' + index">{{char.Name}}</label>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>

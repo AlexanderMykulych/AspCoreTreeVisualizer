@@ -11,7 +11,14 @@
         </div>
         <div class="container-fluid">
             <div v-for="graph in diagrams" class="row">
-                <characteristic-diagram :graph="graph" classes="col" height="600" @on-add-node="addNode" @on-add-connection="addConnection" />
+                <characteristic-diagram
+					:graph="graph"
+					classes="col"
+					height="600"
+					@on-add-node="addNode"
+					@on-add-connection="addConnection"
+					:characteristics="characteristics"
+				/>
             </div>
         </div>
     </div>
