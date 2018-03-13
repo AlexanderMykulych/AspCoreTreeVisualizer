@@ -2,6 +2,19 @@
 import _ from 'lodash';
 import RuleControll from "./RuleControll";
 declare const $: any;
+declare const Object: any;
+
+
+function getDefaultData() {
+	return {
+		point: null,
+		required: false,
+		defaultValue: null,
+		selectedCharacteristic: null,
+		togglesValues: [],
+		rules: []
+	};
+};
 
 export default Vue.extend({
 	template: "#add-depend-point",
@@ -14,21 +27,13 @@ export default Vue.extend({
 			return "#add-depend-point_" + this.id;
 		}
 	},
-	data() {
-		return {
-			point: null,
-			selectedCharacteristic: null,
-			togglesValues: []
-		};
-	},
+	data: getDefaultData,
 	mounted() {
-		var $this = this;
-		$(this.elId).on('hidden.bs.modal', function () {
-			$this.show = false;
-		});
+		$(this.elId)
+			.on('hidden.bs.modal', () => this.show = false);
 	},
 	methods: {
-		addPoint: function () {
+		addPoint() {
 			var point = _.merge({
 					name: this.point
 				},
@@ -39,19 +44,33 @@ export default Vue.extend({
 					}
 				}
 			);
-			this.$emit("addpoint", point);
+			this.$emit("addpoint", {
+				rules: this.rules,
+				point: point
+			});
+			this.clearData();
+		},
+		clearData() {
+			Object.assign(this.$data, getDefaultData());
+		},
+		onRuleChange(val) {
+			var index = val.index;
+			Vue.set(this.rules, index, val);
 		}
 	},
 	watch: {
 		show(val) {
 			if (val) {
 				$(this.elId).modal("show");
+				this.togglesValues = [];
 			} else {
 				$(this.elId).modal("hide");
 			}
 		},
-		selectedCharacteristic(val) {
-			this.togglesValues = [];
+		togglesValues(values) {
+			if (values == null || values.length === 0) {
+				this.defaultValue = null;
+			}
 		}
 	}
 });

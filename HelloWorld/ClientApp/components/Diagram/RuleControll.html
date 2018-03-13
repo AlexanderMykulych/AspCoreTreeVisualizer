@@ -8,7 +8,16 @@
 		</nav>
 		<div class="tab-content" id="nav-tabContent">
 			<div class="tab-pane fade show active" id="nav-value" role="tabpanel" aria-labelledby="nav-value-tab">
-				test value
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<div class="form-check" v-for="(char, index) in point.Values">
+								<input type="checkbox" class="form-check-input" v-model="togglesValues" :id="'rule_value_checkbox_' + index" :value="char">
+								<label class="form-check-label" :for="'rule_value_checkbox_' + index">{{char.Name}}</label>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="tab-pane fade" id="nav-role" role="tabpanel" aria-labelledby="nav-role-tab">
 				test role

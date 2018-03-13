@@ -15,7 +15,8 @@ export default Vue.extend({
 		return {
 			bus: new Vue(),
 			showAddDependModal: false,
-			selectedNodes: []
+			selectedNodes: [],
+			offsetYMargin: 250
 		};
 	},
 	computed: {
@@ -36,69 +37,97 @@ export default Vue.extend({
 		}
 	},
 	methods: {
-		addPoint(point) {
-			var $this = this
+		addDependentPoint(options) {
+			var point = options.point;
+			var rules = options.rules;
 			var pointName = point.name;
-			var firstSelectedNode = this.diagram.findNode(this.selectedNodes[0]);
+			var firstSelectedNode = this.selectedNodes[0];
+			var offsetX = firstSelectedNode.offsetX;
+			var offsetY = firstSelectedNode.offsetY;
 			var endPoint = pointName;
-			this.$emit("on-add-node", {
-				graph: this.diagramId,
-				point: _.merge({
-					name: pointName,
-					offsetX: firstSelectedNode.offsetX,
-					offsetY: firstSelectedNode.offsetY + 200,
-					Options: {
-						type: PointType.characteristic
-					}
-				}, point.options)
-			});
+
+			this.addPoint(_.merge({
+				name: pointName,
+				offsetX: offsetX,
+				offsetY: offsetY + this.offsetYMargin,
+				Options: {
+					type: PointType.characteristic
+				},
+				labels: [{
+					text: pointName
+				}]
+			}, point.options));
+
 			if (this.selectedNodes.length > 1) {
 				var andPointName = "AND_" + pointName;
 				endPoint = andPointName;
-				this.$emit("on-add-node", {
-					graph: this.diagramId,
-					point: {
-						name: andPointName,
-						offsetX: firstSelectedNode.offsetX,
-						offsetY: firstSelectedNode.offsetY + 100,
-						Options: {
-							type: PointType.aggregator
-						}
+				this.addPoint({
+					name: andPointName,
+					offsetX: offsetX,
+					offsetY: offsetY + this.offsetYMargin / 2,
+					Options: {
+						type: PointType.aggregator
 					}
 				});
-				$this.$emit("on-add-connection", {
-					graph: this.diagramId,
-					dep: {
-						Start: endPoint,
-						End: pointName,
-						Name: endPoint + "_" + pointName
-					}
+				this.addConnection({
+					Start: endPoint,
+					End: pointName,
+					Name: endPoint + "_" + pointName
 				});
 			}
 			_.forEach(this.selectedNodes, node => {
-				$this.$emit("on-add-connection", {
-					graph: this.diagramId,
-					dep: {
-						Start: node,
-						End: endPoint,
-						Name: node + "_" + endPoint
-					}
+				this.addConnection({
+					Start: node.name,
+					End: endPoint,
+					Name: node.name + "_" + endPoint,
+					Rules: rules
 				});
 			});
 			this.showAddDependModal = false;
+		},
+		addConnection(options) {
+			this.$emit("on-add-connection", {
+				graph: this.diagramId,
+				dep: options
+			});
+		},
+		addPoint(options) {
+			this.$emit("on-add-node", {
+				graph: this.diagramId,
+				point: options
+			});
+		},
+		openAddDependModal(option?: any) {
+			var selected = this.diagram.selectionList[0];
+			var selectedNodes = [];
+			if (selected._type === "node") {
+				selectedNodes = [selected.name];
+			} else if (selected.type === "pseudoGroup") {
+				selectedNodes = selected.children;
+			}
+			this.selectedNodes = _.map(selectedNodes, x => this.diagram.findNode(x));
+			this.showAddDependModal = true;
+		},
+		updateNodeProp: function () {
+			var mem = _.memoize(function (memArgs) {
+				return _.debounce(function (args) {
+					var node = _.find(this.graph.Nodes, node => node.name === args.element.name);
+					if (node) {
+						this.$emit("node-prop-change", {
+							graph: this.graph.Name,
+							name: node.name,
+							propName: args.propertyName,
+							newValue: args.element[args.propertyName]
+						});
+					}
+				}, 500);
+			}, args => args.propertyName);
+			mem.apply(this, arguments).apply(this, arguments);
 		}
 	},
 	mounted() {
 		var $this = this;
-		this.bus.$on("add-depend-point", function (option?: any) {
-			var selected = $this.diagram.selectionList[0];
-			if (selected.type === "basic") {
-				$this.selectedNodes = [selected.name];
-			} else if (selected.type === "pseudoGroup") {
-				$this.selectedNodes = selected.children;
-			}
-			$this.showAddDependModal = true;
-		});
+		this.bus.$on("add-depend-point", (options?: any) => this.openAddDependModal(options));
 		$(this.diagramElId).ejDiagram({
 			enableContextMenu: false,
 			constraints,
@@ -161,6 +190,13 @@ export default Vue.extend({
 							break;
 					}
 				}
+			},
+			propertyChange(args) {
+				if (args.elementType === "node") {
+					if (_.includes(["offsetX", "offsetY"], args.propertyName)) {
+						$this.updateNodeProp(args);
+					}
+				}
 			}
 		});
 		$(this.diagramOverviewElId).ejOverview({
@@ -175,7 +211,6 @@ export default Vue.extend({
 	watch: {
 		graph(val) {
 			var diagram = this.diagram;
-
 			_.filter(val.Nodes, function (node) {
 				return !_.find(diagram.nodes(), x => x.name === node.name);
 			})
@@ -188,7 +223,6 @@ export default Vue.extend({
 						})
 					)
 				);
-
 			_.filter(val.Connectors, function (con) {
 				return !_.find(diagram.connectors(), x => x.name === con.name);
 			})

@@ -13,13 +13,6 @@ export default function(option?: any) {
 			this.cursor = "pointer";
 		}
 		AddDependPoint.prototype.mouseup = function (evt: any) {
-			//this._endAction();
-			//this.diagram._pageBackgroundLayer && ej.datavisualization.Diagram.PageUtil._updatePageSize(this.diagram);
-			//this.singleAction && this.diagram.activateTool("select");
-			//delete this.diagramBounds;
-			//this._adjustLines = { lines: [] };
-			//this._undoObject = null;
-			//this._redoObject = null
 			base.prototype.mouseup.call(this, evt);
 			option.bus.$emit("add-depend-point", {
 				nodes: this.diagram.selectionList

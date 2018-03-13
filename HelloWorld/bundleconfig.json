@@ -67,6 +67,17 @@
     "sourceMap": true
   },
   {
+    "outputFileName": "wwwroot/dist/vuex-persist.js",
+    "inputFiles": [
+      "node_modules/vuex-persist/dist/index.js"
+    ],
+    "minify": {
+      "enabled": false,
+      "renameLocals": false
+    },
+    "sourceMap": true
+  },
+  {
     "outputFileName": "wwwroot/dist/lodash.js",
     "inputFiles": [
       "node_modules/lodash/lodash.js"

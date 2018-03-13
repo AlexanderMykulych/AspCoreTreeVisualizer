@@ -1,6 +1,7 @@
 ﻿// ClientApp/components/AppHello.ts
 import Vue from "vue";
 import Vuex from "vuex";
+import _ from "lodash";
 import CharacteristicDiagram from "./CharacteristicDiagram";
 import { createStore } from "../Store/RootStore";
 import * as graph from "../Store/GraphStore";
@@ -49,6 +50,9 @@ export default Vue.extend({
 		},
 		addConnection: function (connect: { graph: string, dep: Dependency }) {
 			graph.addDependency(this.$store, connect);
+		},
+		onNodePropChange: function (options: { graph: string, name: string, propName: string, newValue: any }) {
+			graph.changeNodeProperty(this.$store, options);
 		}
 	},
     components: {

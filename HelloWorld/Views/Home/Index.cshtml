@@ -10,6 +10,7 @@
 <section id="app-templates"></section>
 <div id="app-root">loading..</div>
 @section Scripts{
+	@*<script>var exports = {};</script>*@
 	<script>
         System.config({
             map: {
@@ -21,14 +22,16 @@
                 "jquery-validation": "dist/jquery.easing.js",
                 "vuex": "dist/vuex.js",
                 "vuex-typescript": "dist/vuex-typescript.js",
-                "sweet-modal-vue": "dist/sweet-modal-vue.js"
+                "sweet-modal-vue": "dist/sweet-modal-vue.js",
+                "vuex-persist": "dist/vuex-persist.js"
             }
         });
         $.get("dist/app-templates.html").done(function (data) {
             $('#app-templates').append(data);
-
-            SystemJS.import('@mainUrl').then(function (m) {
+			SystemJS.import('@mainUrl').then(function (m) {
+				window.Main = m;
                 SystemJS.amdDefine("jquery", [], () => $);
+                SystemJS.amdDefine("lodash.merge", [], () => _.merge);
                 SystemJS.import('index');
             });
         });

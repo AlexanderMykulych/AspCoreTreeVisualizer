@@ -8,5 +8,5 @@ export interface BasePoint {
 	Options: {
 		type: PointType;
 	},
-	labels?: any
+	labels?: any;
 }

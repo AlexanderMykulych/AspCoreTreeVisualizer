@@ -1,4 +1,5 @@
-﻿import { ActionContext, Store, GetterTree } from "vuex";
+﻿import Vue from "vue";
+import { ActionContext, Store, GetterTree } from "vuex";
 import { getStoreAccessors } from "vuex-typescript";
 import { Graph } from "../Model/Graph";
 import { RootState } from "../Model/RootState";
@@ -46,13 +47,37 @@ export const graphModule = {
 			{
 				Name: "Char 2",
 				Values: [{
-					Name: "Char 2. Value 1"
-				}, {
-					Name: "Char 2. Value 2"
-				}, {
-					Name: "Char 2. Value 3"
-				}]
-			}
+						Name: "Char 2. Value 1"
+					}, {
+						Name: "Char 2. Value 2"
+					}, {
+						Name: "Char 2. Value 3"
+					}
+				]
+			},
+			{
+				Name: "Char 3",
+				Values: [{
+						Name: "Char 3. Value 1"
+					}, {
+						Name: "Char 3. Value 2"
+					}, {
+						Name: "Char 3. Value 3"
+					}, {
+						Name: "Char 3. Value 4"
+					}, {
+						Name: "Char 3. Value 5"
+					}, {
+						Name: "Char 3. Value 6"
+					}, {
+						Name: "Char 3. Value 7"
+					}, {
+						Name: "Char 3. Value 8"
+					}, {
+						Name: "Char 3. Value 9"
+					}
+				]
+			},
 		]
 	},
 	getters: {
@@ -74,11 +99,11 @@ export const graphModule = {
 					Name: graph.Name,
 					Nodes: graph.Points,
 					Connectors: _.map(graph.Dependencies, function (con) {
-						return {
+						return _.merge({
 							name: con.Name,
 							sourceNode: con.Start,
 							targetNode: con.End
-						}
+						}, con);
 					})
 				};
 			};
@@ -96,6 +121,11 @@ export const graphModule = {
 		},
 		addDependency(state: RootState, item: { graph: string, dep: Dependency }) {
 			state.Graphs.filter(x => x.Name === item.graph)[0].Dependencies.push(item.dep);
+		},
+		changeNodeProperty(state: RootState, item: { graph: string, name: string, propName: string, newValue: any }) {
+			var points = _.find(state.Graphs, x => x.Name === item.graph).Points;
+			var point = _.find(points, x => x.name === item.name);
+			Vue.set(point, item.propName, item.newValue);
 		}
 	}
 };
@@ -112,3 +142,4 @@ export const getCharacteristicsList = read(graphModule.getters.getCharacteristic
 export const addGraph = commit(graphModule.mutations.addGraph);
 export const addPoint = commit(graphModule.mutations.addPoint);
 export const addDependency = commit(graphModule.mutations.addDependency);
+export const changeNodeProperty = commit(graphModule.mutations.changeNodeProperty);
