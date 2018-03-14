@@ -18,7 +18,7 @@ function getDefaultData() {
 
 export default Vue.extend({
 	template: "#add-depend-point",
-	props: ["show", "id", "startpoints", "characteristics"],
+	props: ["show", "id", "startpoints", "characteristics", "roles"],
 	components: {
 		RuleControll
 	},
@@ -40,7 +40,9 @@ export default Vue.extend({
 				{
 					options: {
 						Characteristic: this.selectedCharacteristic,
-						Values: this.togglesValues
+						Values: this.togglesValues,
+						Required: this.required,
+						DefaultValue: this.defaultValue
 					}
 				}
 			);
@@ -62,7 +64,7 @@ export default Vue.extend({
 		show(val) {
 			if (val) {
 				$(this.elId).modal("show");
-				this.togglesValues = [];
+				this.clearData();
 			} else {
 				$(this.elId).modal("hide");
 			}

@@ -2,10 +2,11 @@
 
 export default Vue.extend({
 	template: "#rule-controll",
-	props: ["point", "index"],
+	props: ["point", "index", "roles"],
 	data() {
 		return {
-			togglesValues: []
+			togglesValues: [],
+			togglesRoles: []
 		};
 	},
 	watch: {
@@ -16,7 +17,7 @@ export default Vue.extend({
 			var value = {
 				Point: this.point,
 				Values: this.togglesValues,
-				Roles: null,
+				Roles: this.togglesRoles,
 				index: this.index
 			};
 			this.$emit("rule-change", value);

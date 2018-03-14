@@ -28,7 +28,7 @@
 										</div>
 										<div :id="'collapseOne_' + index" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
 											<div class="card-body">
-												<rule-controll :point="point" :index="index" @rule-change="onRuleChange"/>
+												<rule-controll :point="point" :index="index" :roles="roles" @rule-change="onRuleChange"/>
 											</div>
 										</div>
 									</div>
@@ -62,7 +62,7 @@
 													<label class="input-group-text" for="selectDefault">Default</label>
 												</div>
 												<select class="form-control" id="selectDefault" v-model="defaultValue">
-													<option v-for="value in togglesValues">{{value.Name}}</option>
+													<option v-for="value in togglesValues" :value="value">{{value.Name}}</option>
 												</select>
 											</div>
 										</div>

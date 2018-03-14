@@ -1,6 +1,7 @@
 ﻿import Vue from "vue";
 import _ from "lodash";
 import "syncfusion";
+import memoizeDebounce from "../mixins/m_lodash";
 import addDependModalWindow from "./Diagram/AddDependPointWindow";
 import createAddDependPointHandler from "./Diagram/AddDependedPoint";
 import { connect } from "http2";
@@ -10,7 +11,7 @@ var constraints = ej.datavisualization.Diagram.DiagramConstraints.Default | ej.d
 
 export default Vue.extend({
 	template: "#characteristic-diagram",
-	props: ["graph", "classes", "height", "characteristics"],
+	props: ["graph", "classes", "height", "characteristics", "roles"],
 	data() {
 		return {
 			bus: new Vue(),
@@ -108,22 +109,35 @@ export default Vue.extend({
 			this.selectedNodes = _.map(selectedNodes, x => this.diagram.findNode(x));
 			this.showAddDependModal = true;
 		},
-		updateNodeProp: function () {
-			var mem = _.memoize(function (memArgs) {
-				return _.debounce(function (args) {
-					var node = _.find(this.graph.Nodes, node => node.name === args.element.name);
-					if (node) {
-						this.$emit("node-prop-change", {
-							graph: this.graph.Name,
-							name: node.name,
-							propName: args.propertyName,
-							newValue: args.element[args.propertyName]
-						});
-					}
-				}, 500);
-			}, args => args.propertyName);
-			mem.apply(this, arguments).apply(this, arguments);
-		}
+		updateNodeProp: memoizeDebounce(function(args) {
+			var node = _.find(this.graph.Nodes, node => node.name === args.element.name);
+			if (node) {
+				this.$emit("node-prop-change", {
+					graph: this.graph.Name,
+					name: node.name,
+					propName: args.propertyName,
+					newValue: args.element[args.propertyName]
+				});
+			}
+		}, 500, x => x.propertyName)
+		//	function () {
+		//	var mem = _.memoize(function (memArgs) {
+		//		var fun = _.debounce(function (args) {
+		//			var node = _.find(this.graph.Nodes, node => node.name === args.element.name);
+		//			if (node) {
+		//				this.$emit("node-prop-change", {
+		//					graph: this.graph.Name,
+		//					name: node.name,
+		//					propName: args.propertyName,
+		//					newValue: args.element[args.propertyName]
+		//				});
+		//			}
+		//		}, 1000);
+		//		window["fun"].push(fun);
+		//		return fun;
+		//	}, args => args.propertyName);
+		//	mem.apply(this, arguments).apply(this, arguments);
+		//}
 	},
 	mounted() {
 		var $this = this;

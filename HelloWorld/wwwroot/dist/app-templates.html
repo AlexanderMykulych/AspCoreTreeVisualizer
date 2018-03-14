@@ -1,45 +1,51 @@
 <!-- ClientApp/components/AppHello.html -->
 <template id="app-hello-template">
-    <div>
-        <span>{{message}}</span>
-        <div class="container">
-            <div class="row">
-                <div class="col-2">
-                    <button @click="addGraph">Add Graph</button>
-                </div>
-            </div>
-        </div>
-        <div class="container-fluid">
-            <div v-for="graph in diagrams" class="row">
-                <characteristic-diagram
-					:graph="graph"
-					classes="col"
-					height="600"
-					@on-add-node="addNode"
-					@on-add-connection="addConnection"
-					:characteristics="characteristics"
-					@node-prop-change="onNodePropChange"
-				/>
-            </div>
-        </div>
-    </div>
+	<div>
+		<span>{{message}}</span>
+		<div class="container">
+			<div class="row">
+				<div class="col-2">
+					<button @click="addGraph">Add Graph</button>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<div v-for="graph in diagrams" class="row">
+				<characteristic-diagram :graph="graph"
+										classes="col"
+										height="600"
+										@on-add-node="addNode"
+										@on-add-connection="addConnection"
+										:characteristics="characteristics"
+				                        @node-prop-change="onNodePropChange" 
+										:roles="roles"/>
+			</div>
+		</div>
+	</div>
 </template>
 <template id="characteristic-diagram">
-    <div :class="classes">
-        <div class="card border-dark mb-3">
-            <div class="card-header">{{diagramId}}</div>
-            <div class="card-body">
-                <div class="container-fluid">
-                    <div class="row">
-                        <!--<div :id="(graph.Name + '_symbolPallette')" class="col-1"></div>-->
-                        <div :id="diagramId" class="col-9"></div>
-                        <div :id="(diagramId + '_overview')" class="col-3 card-body"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <add-depend-modal-window :bus="bus" :id="diagramId" :startpoints="selectedNodes" :show.sync="showAddDependModal" @addpoint="addDependentPoint" :characteristics="characteristics"/>
-    </div>
+	<div :class="classes">
+		<div class="card border-dark mb-3">
+			<div class="card-header">{{diagramId}}</div>
+			<div class="card-body">
+				<div class="container-fluid">
+					<div class="row">
+						<!--<div :id="(graph.Name + '_symbolPallette')" class="col-1"></div>-->
+						<div :id="diagramId" class="col-9"></div>
+						<div :id="(diagramId + '_overview')" class="col-3 card-body"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<add-depend-modal-window
+			:bus="bus"
+			:id="diagramId"
+			:startpoints="selectedNodes"
+			:show.sync="showAddDependModal"
+			@addpoint="addDependentPoint"
+			:characteristics="characteristics"
+			:roles="roles"/>
+	</div>
 </template>
 <template id="test-temp">
     <div id="watch-example">
@@ -81,7 +87,7 @@
 										</div>
 										<div :id="'collapseOne_' + index" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
 											<div class="card-body">
-												<rule-controll :point="point" :index="index" @rule-change="onRuleChange"/>
+												<rule-controll :point="point" :index="index" :roles="roles" @rule-change="onRuleChange"/>
 											</div>
 										</div>
 									</div>
@@ -115,7 +121,7 @@
 													<label class="input-group-text" for="selectDefault">Default</label>
 												</div>
 												<select class="form-control" id="selectDefault" v-model="defaultValue">
-													<option v-for="value in togglesValues">{{value.Name}}</option>
+													<option v-for="value in togglesValues" :value="value">{{value.Name}}</option>
 												</select>
 											</div>
 										</div>
@@ -169,7 +175,16 @@
 				</div>
 			</div>
 			<div class="tab-pane fade" id="nav-role" role="tabpanel" aria-labelledby="nav-role-tab">
-				test role
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<div class="form-check" v-for="(role, index) in roles">
+								<input type="checkbox" class="form-check-input" v-model="togglesRoles" :id="'rule_role_checkbox_' + index" :value="role">
+								<label class="form-check-label" :for="'rule_role_checkbox_' + index">{{role.Name}}</label>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

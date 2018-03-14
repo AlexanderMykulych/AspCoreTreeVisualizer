@@ -6,5 +6,5 @@ export interface CharacteristicPoint extends BasePoint {
 	Characteristic: Characteristic;
 	Values: Array<CharacteristicValue>;
 	Required?: boolean;
-	DefaultValue: Array<CharacteristicValue>;
+	DefaultValue: CharacteristicValue;
 }

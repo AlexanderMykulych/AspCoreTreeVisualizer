@@ -77,7 +77,18 @@ export const graphModule = {
 						Name: "Char 3. Value 9"
 					}
 				]
+			}
+		],
+		Roles: [
+			{
+				Name: "Role 1"
 			},
+			{
+				Name: "Role 2"
+			},
+			{
+				Name: "Role 3"
+			}
 		]
 	},
 	getters: {
@@ -110,6 +121,9 @@ export const graphModule = {
 		},
 		getCharacteristicsList(state: RootState) {
 			return state.Characteristics;
+		},
+		getRoles(state: RootState) {
+			return state.Roles;
 		}
 	},
 	mutations: {
@@ -138,6 +152,7 @@ export const readGraphCount = read(graphModule.getters.graphCount);
 export const getSyncfusionGraphByName = read(graphModule.getters.getSyncfusionGraphByName);
 export const getSyncfusiongGraphByGraph = read(graphModule.getters.getSyncfusiongGraphByGraph);
 export const getCharacteristicsList = read(graphModule.getters.getCharacteristicsList);
+export const getRoles = read(graphModule.getters.getRoles);
 
 export const addGraph = commit(graphModule.mutations.addGraph);
 export const addPoint = commit(graphModule.mutations.addPoint);

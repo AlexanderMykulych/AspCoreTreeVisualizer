@@ -20,11 +20,14 @@ export default Vue.extend({
 		};
 	},
 	computed: {
-		diagrams: function () {
+		diagrams() {
 			return graph.readGraph(this.$store).map(x => graph.getSyncfusiongGraphByGraph(this.$store)(x));
 		},
-		characteristics: function () {
+		characteristics() {
 			return graph.getCharacteristicsList(this.$store);
+		},
+		roles() {
+			return graph.getRoles(this.$store);
 		}
 	},
 	methods: {
