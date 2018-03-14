@@ -59,7 +59,7 @@
 
 <template id="add-depend-point">
 	<div class="modal fade" :id="('add-depend-point_' + id)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered modal-width" role="document">
+		<div class="modal-dialog modal-dialog-centered modal-width modal-large" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLongTitle">Добавить зависимость на характеристику</h5>
@@ -68,7 +68,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<div class="container">
+					<div class="container-fluid">
 						<div class="row">
 							<div class="col-5">
 								<div id="accordion">
@@ -87,7 +87,12 @@
 										</div>
 										<div :id="'collapseOne_' + index" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
 											<div class="card-body">
-												<rule-controll :point="point" :index="index" :roles="roles" @rule-change="onRuleChange"/>
+												<rule-controll
+															   :point="point"
+															   :index="index"
+															   :values="point.Values"
+															   :roles="roles"
+															   @rule-change="onRuleChange"/>
 											</div>
 										</div>
 									</div>
@@ -134,10 +139,13 @@
 									</div>
 									<div class="row">
 										<div class="col" v-if="selectedCharacteristic != null">
-											<div class="form-check" v-for="(char, index) in selectedCharacteristic.Values">
-												<input type="checkbox" class="form-check-input" v-model="togglesValues" :id="'checkbox_' + index" :value="char">
-												<label class="form-check-label" :for="'checkbox_' + index">{{char.Name}}</label>
-											</div>
+											<rule-controll :point="selectedCharacteristic"
+														   index="main"
+														   :values="selectedCharacteristic.Values"
+														   :roles="roles"
+														   @rule-change="onSelectCharRuleChange"
+														   :role-with-detail="true"
+														   :role-detail-values="togglesValues"/>
 										</div>
 									</div>
 								</div>
@@ -157,30 +165,69 @@
 	<div>
 		<nav>
 			<div class="nav nav-tabs" id="nav-tab" role="tablist">
-				<a class="nav-item nav-link active" id="nav-value-tab" data-toggle="tab" href="#nav-value" role="tab" aria-controls="nav-home" aria-selected="true">Значения</a>
-				<a class="nav-item nav-link" id="nav-role-tab" data-toggle="tab" href="#nav-role" role="tab" aria-controls="nav-profile" aria-selected="false">Роли</a>
+				<a class="nav-item nav-link active" :id="'nav-value-tab' + uniq" data-toggle="tab" :href="'#nav-value' + uniq" role="tab" aria-controls="nav-home" aria-selected="true">Значения</a>
+				<a class="nav-item nav-link" :id="'nav-role-tab' + uniq" data-toggle="tab" :href="'#nav-role' + uniq" role="tab" aria-controls="nav-profile" aria-selected="false">Роли</a>
 			</div>
 		</nav>
 		<div class="tab-content" id="nav-tabContent">
-			<div class="tab-pane fade show active" id="nav-value" role="tabpanel" aria-labelledby="nav-value-tab">
+			<div class="tab-pane fade show active" :id="'nav-value' + uniq" role="tabpanel" :aria-labelledby="'nav-value-tab' + uniq">
 				<div class="container">
 					<div class="row">
 						<div class="col">
-							<div class="form-check" v-for="(char, index) in point.Values">
-								<input type="checkbox" class="form-check-input" v-model="togglesValues" :id="'rule_value_checkbox_' + index" :value="char">
-								<label class="form-check-label" :for="'rule_value_checkbox_' + index">{{char.Name}}</label>
+							<div class="form-check" v-for="(char, index) in values">
+								<input type="checkbox" class="form-check-input" v-model="togglesValues" :id="'rule_value_checkbox_' + uniq + index" :value="char">
+								<label class="form-check-label" :for="'rule_value_checkbox_' + uniq + index">{{char.Name}}</label>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="tab-pane fade" id="nav-role" role="tabpanel" aria-labelledby="nav-role-tab">
+			<div class="tab-pane fade" :id="'nav-role' + uniq" role="tabpanel" :aria-labelledby="'nav-role-tab' + uniq">
 				<div class="container">
 					<div class="row">
+						<div class="col input-group">
+							<select class="custom-select" :id="'inputGroup' + uniq" v-model="selectedRole">
+								<option v-for="(role, index) in existsRoles" :value="role" :selected="index == 1 ? '' : 'false'">{{role.Name}}</option>
+							</select>
+							<div class="input-group-append">
+								<button class="btn btn-outline-secondary" type="button" @click="onRoleSelectClick">Вибрать</button>
+							</div>
+						</div>
+					</div>
+					<div class="row">
 						<div class="col">
-							<div class="form-check" v-for="(role, index) in roles">
-								<input type="checkbox" class="form-check-input" v-model="togglesRoles" :id="'rule_role_checkbox_' + index" :value="role">
-								<label class="form-check-label" :for="'rule_role_checkbox_' + index">{{role.Name}}</label>
+							<div class="form-check">
+								<div class="container">
+									<div class="row">
+										<table class="table">
+											<thead>
+												<tr>
+													<th scope="col">Роль</th>
+													<th scope="col" v-if="roleWithDetail">Default</th>
+													<th scope="col" v-if="roleWithDetail">Обязательно</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr v-for="(roleInfo, index) in togglesRoles">
+													<td><div class="d-flex justify-content-center">{{roleInfo.role.Name}}</div></td>
+													<td v-if="roleWithDetail">
+														<div class="input-group mb-3 d-flex justify-content-center" :disabled="roleDetailValues != null && roleDetailValues.length > 0 && roleInfo.IsChecked">
+															<select class="form-control" :id="'role-selectDefault' + uniq" v-model="roleInfo.DefaultValue">
+																<option v-for="value in roleDetailValues" :value="value">{{value.Name}}</option>
+															</select>
+														</div>
+													</td>
+													<td v-if="roleWithDetail"><div class="d-flex justify-content-center"><input type="checkbox" class="form-check-input" v-model="roleInfo.Required" :id="'rule_require_checkbox_' + uniq + index"></div></td>
+													<td>
+														<button type="button" class="close" aria-label="Close" @click="removeRoleByIndex(index)">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>

@@ -14808,8 +14808,6 @@ be a descendant of the grid when it is being dragged.
   color: #666;
 }
 
-@media (min-width: 576px) {
-	.modal-width {
-		max-width: 800px;
-	}
+.modal-large {
+	max-width: 80%;
 }

@@ -1,5 +1,9 @@
-﻿
+﻿import { CharacteristicValue } from "./CharacteristicValue";
+
+
 export interface IRole
 {
-	Name: string
+	Name: string;
+	Required?: boolean;
+	DefaultValue?: CharacteristicValue;
 }

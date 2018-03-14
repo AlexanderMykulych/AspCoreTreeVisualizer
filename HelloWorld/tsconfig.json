@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "noImplicitAny": false,
-    "noEmitOnError": false,
+    "noEmitOnError": true,
     "removeComments": false,
     //"sourceMap": true,
     "target": "es5",

@@ -1,6 +1,6 @@
 ﻿<template id="add-depend-point">
 	<div class="modal fade" :id="('add-depend-point_' + id)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered modal-width" role="document">
+		<div class="modal-dialog modal-dialog-centered modal-width modal-large" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLongTitle">Добавить зависимость на характеристику</h5>
@@ -9,7 +9,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<div class="container">
+					<div class="container-fluid">
 						<div class="row">
 							<div class="col-5">
 								<div id="accordion">
@@ -28,7 +28,12 @@
 										</div>
 										<div :id="'collapseOne_' + index" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
 											<div class="card-body">
-												<rule-controll :point="point" :index="index" :roles="roles" @rule-change="onRuleChange"/>
+												<rule-controll
+															   :point="point"
+															   :index="index"
+															   :values="point.Values"
+															   :roles="roles"
+															   @rule-change="onRuleChange"/>
 											</div>
 										</div>
 									</div>
@@ -75,10 +80,13 @@
 									</div>
 									<div class="row">
 										<div class="col" v-if="selectedCharacteristic != null">
-											<div class="form-check" v-for="(char, index) in selectedCharacteristic.Values">
-												<input type="checkbox" class="form-check-input" v-model="togglesValues" :id="'checkbox_' + index" :value="char">
-												<label class="form-check-label" :for="'checkbox_' + index">{{char.Name}}</label>
-											</div>
+											<rule-controll :point="selectedCharacteristic"
+														   index="main"
+														   :values="selectedCharacteristic.Values"
+														   :roles="roles"
+														   @rule-change="onSelectCharRuleChange"
+														   :role-with-detail="true"
+														   :role-detail-values="togglesValues"/>
 										</div>
 									</div>
 								</div>

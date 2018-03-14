@@ -42,7 +42,8 @@ export default Vue.extend({
 						Characteristic: this.selectedCharacteristic,
 						Values: this.togglesValues,
 						Required: this.required,
-						DefaultValue: this.defaultValue
+						DefaultValue: this.defaultValue,
+						Roles: this.togglesRoles
 					}
 				}
 			);
@@ -58,6 +59,10 @@ export default Vue.extend({
 		onRuleChange(val) {
 			var index = val.index;
 			Vue.set(this.rules, index, val);
+		},
+		onSelectCharRuleChange(val) {
+			this.togglesValues = val.Values;
+			this.togglesRoles = val.Roles;
 		}
 	},
 	watch: {
