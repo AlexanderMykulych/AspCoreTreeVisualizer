@@ -81,14 +81,8 @@ export default Vue.extend({
 				this.selectedNodes = null;
 				return;
 			}
-			var selected = selectedItems[0];
-			var selectedNodes = [];
-			if (selected._type === "node") {
-				selectedNodes = [selected.name];
-			} else if (selected.type === "pseudoGroup") {
-				selectedNodes = selected.children;
-			}
-			this.selectedNodes = _.map(selectedNodes, x => _.find(this.graph.Nodes, y => y.name === x));
+			var selectedNodes = selectedItems.filter(x => x._type === "node");
+			this.selectedNodes = _.map(selectedNodes, (x: any) => _.find(this.graph.Nodes, y => y.name === x.name));
 		},
 		commitPointAndDependency(options) {
 			var points = options.points;
@@ -198,7 +192,7 @@ export default Vue.extend({
 				case PointType.aggregator:
 					return {
 						fillColor: "#ec7e0d",
-						shape: "ec7e0d"
+						shape: "ellipse"
 					}
 			}
 		}

@@ -18,7 +18,7 @@ export default Vue.extend({
 			var result = [];
 			if (this.points) {
 				var startPoint = _.find(this.points, p => p.Options.type === PointType.start);
-				result = this.getVisibleChildrens(startPoint);
+				result = this.getVisibleChildrens(startPoint).filter(x => x.Options.type === PointType.characteristic);
 			}
 			this.$emit("active", result);
 			return result;
@@ -78,7 +78,14 @@ export default Vue.extend({
 					return false;
 				}
 				var deps = this.getPointInDependencies(x);
-				return _.findIndex(deps, dep => this.isDependencyPass(dep)) >= 0;
+				switch (x.Options.type) {
+					case PointType.characteristic:
+					case PointType.start:
+						return _.findIndex(deps, dep => this.isDependencyPass(dep)) >= 0;
+					case PointType.aggregator: {
+						return _.every(deps, dep => this.isDependencyPass(dep));
+					}
+				}
 			});
 			var activeChildrens = [];
 			actives.forEach(x => activeChildrens = _.concat(activeChildrens, this.getVisibleChildrens(x)));
