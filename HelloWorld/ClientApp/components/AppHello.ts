@@ -8,6 +8,7 @@ import * as graph from "../Store/GraphStore";
 import { BasePoint } from "../Model/BasePoint";
 import { Dependency } from "../Model/Dependency";
 import { PointType } from "../Model/PointType";
+import { uniqId } from "../mixins/IdGenerator";
 
 
 var store = createStore();
@@ -20,6 +21,9 @@ export default Vue.extend({
 		};
 	},
 	computed: {
+		test() {
+			return graph.readGraph(this.$store)[0].Points.map(x => x.Label);
+		},
 		diagrams() {
 			return graph.readGraph(this.$store).map(x => graph.getSyncfusiongGraphByGraph(this.$store)(x));
 		},
@@ -35,12 +39,10 @@ export default Vue.extend({
 			graph.addGraph(this.$store, {
 				Name: "Graph" + (graph.readGraphCount(this.$store) + 1),
 				Points: [{
-					name: "Start",
+					name: uniqId(),
 					offsetX: 500,
 					offsetY: 20,
-					labels: [{
-						text: "Start Point"
-					}],
+					Label: "Start",
 					Options: {
 						type: PointType.start
 					}

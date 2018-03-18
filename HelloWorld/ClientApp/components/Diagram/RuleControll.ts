@@ -1,5 +1,6 @@
 ﻿import _ from "lodash";
 import Vue from "vue";
+import { mapActions } from "vuex";
 //При компиляции typescript выскакивает ошибка "не находит свойства togglesRoles" только когда props: Object
 //Обходное решение
 var VueP: any = Vue;
@@ -10,18 +11,21 @@ export default VueP.extend({
 		point: Object,
 		index: [Number, String],
 		roles: Array,
-		values: Array,
 		roleWithDetail: {
 			type: Boolean,
 			default: false
 		},
-		roleDetailValues: Array
+		togglesValues: {
+			type: Array,
+			default: []
+		},
+		togglesRoles: {
+			type: Array,
+			default: []
+		}
 	},
 	data() {
 		return {
-			togglesValues: [],
-			togglesRoles: [],
-			defaultValues: [],
 			selectedRole: null
 		};
 	},
@@ -46,21 +50,22 @@ export default VueP.extend({
 			return this.roles.filter(x =>
 				_.findIndex(this.togglesRoles, (y: any) => y.role.Name == x.Name) < 0
 			);
-		}
-	},
-	watch: {
-		point() {
-			this.togglesValues = [];
-			this.togglesRoles = [];
 		},
-		togglesValues() {
-			var value = {
-				Point: this.point,
-				Values: this.togglesValues,
-				Roles: this.togglesRoles,
-				index: this.index
-			};
-			this.$emit("rule-change", value);
+		sync_togglesValues: {
+			get() {
+				return this.togglesValues;
+			},
+			set(val) {
+				this.$emit("update:togglesValues", val);
+			}
+		},
+		sync_togglesRoles: {
+			get() {
+				return this.togglesRoles;
+			},
+			set(val) {
+				this.$emit("update:togglesRoles", val);
+			}
 		}
 	}
 });

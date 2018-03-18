@@ -1,8 +1,10 @@
 ﻿import { IRole } from "./Role";
+import { BasePoint } from "./BasePoint";
 
 export interface Dependency {
-	Start: string,
-	Name?: string; 
-	End: string;
+	Start: BasePoint,
+	Name: string; 
+	Label?: string;
+	End: BasePoint;
 	Roles?: Array<IRole>;
 }
