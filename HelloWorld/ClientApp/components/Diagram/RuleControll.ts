@@ -17,11 +17,15 @@ export default VueP.extend({
 		},
 		togglesValues: {
 			type: Array,
-			default: []
+			default: function () {
+				return [];
+			}
 		},
 		togglesRoles: {
 			type: Array,
-			default: []
+			default: function () {
+				return [];
+			}
 		}
 	},
 	data() {

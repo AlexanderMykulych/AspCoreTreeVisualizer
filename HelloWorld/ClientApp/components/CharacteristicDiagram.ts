@@ -267,6 +267,7 @@ export default Vue.extend({
 				})]
 			},
 			propertyChange(args) {
+				$this.$emit("propertyChange", args);
 				if (args.elementType === "node") {
 					if (_.includes(["offsetX", "offsetY"], args.propertyName)) {
 						$this.updateNodeProp(args);

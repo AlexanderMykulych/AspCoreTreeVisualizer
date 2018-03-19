@@ -128,8 +128,8 @@ export const graphModule = {
 					Connectors: _.map(graph.Dependencies, function (con) {
 						return _.merge({
 							name: con.Name,
-							sourceNode: con.Start.name,
-							targetNode: con.End.name
+							sourceNode: con.Start ? con.Start.name : null,
+							targetNode: con.End ? con.End.name: null
 						}, con);
 					})
 				};
