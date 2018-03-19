@@ -174,6 +174,10 @@ export const graphModule = {
 			var points = _.find(state.Graphs, x => x.Name === item.graph).Points;
 			var point = _.find(points, x => x.name === item.name);
 			Vue.set(point, item.propName, item.newValue);
+		},
+		removeConnection(state: RootState, options: { graph: string, connectorName: string }) {
+			var graph = _.find(state.Graphs, x => x.Name === options.graph);
+			_.remove(graph.Dependencies, x => x.Name === options.connectorName);
 		}
 	}
 };
@@ -192,3 +196,4 @@ export const addGraph = commit(graphModule.mutations.addGraph);
 export const addPoint = commit(graphModule.mutations.addPoint);
 export const addDependency = commit(graphModule.mutations.addDependency);
 export const changeNodeProperty = commit(graphModule.mutations.changeNodeProperty);
+export const removeConnection = commit(graphModule.mutations.removeConnection);

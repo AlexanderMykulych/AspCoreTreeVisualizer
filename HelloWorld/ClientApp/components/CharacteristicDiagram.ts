@@ -195,6 +195,12 @@ export default Vue.extend({
 						shape: "ellipse"
 					}
 			}
+		},
+		removeConnector(connector) {
+			this.$emit("remove-connection", {
+				graph: this.graph.Name,
+				connectorName: connector.Name
+			});
 		}
 	},
 	mounted() {
@@ -245,6 +251,11 @@ export default Vue.extend({
 			},
 			selectionChange: function (options) {
 				$this.selectionChange(options.selectedItems);
+			},
+			connectorCollectionChange(options) {
+				if (options.changeType === "remove") {
+					$this.removeConnector(options.element);
+				}
 			}
 		});
 		$(this.diagramOverviewElId).ejOverview({

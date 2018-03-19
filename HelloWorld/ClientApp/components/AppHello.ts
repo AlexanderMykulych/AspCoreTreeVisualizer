@@ -35,7 +35,7 @@ export default Vue.extend({
 		}
 	},
 	methods: {
-		addGraph: function () {
+		addGraph() {
 			graph.addGraph(this.$store, {
 				Name: "Graph" + (graph.readGraphCount(this.$store) + 1),
 				Points: [{
@@ -50,14 +50,17 @@ export default Vue.extend({
 				Dependencies: []
 			});
 		},
-		addNode: function (node: { graph: string, point: BasePoint }) {
+		addNode(node: { graph: string, point: BasePoint }) {
 			graph.addPoint(this.$store, node);
 		},
-		addConnection: function (connect: { graph: string, dep: Dependency }) {
+		addConnection(connect: { graph: string, dep: Dependency }) {
 			graph.addDependency(this.$store, connect);
 		},
-		onNodePropChange: function (options: { graph: string, name: string, propName: string, newValue: any }) {
+		onNodePropChange(options: { graph: string, name: string, propName: string, newValue: any }) {
 			graph.changeNodeProperty(this.$store, options);
+		},
+		removeConnection(options: {graph: string, connectorName: string}) {
+			graph.removeConnection(this.$store, options);
 		}
 	},
     components: {
