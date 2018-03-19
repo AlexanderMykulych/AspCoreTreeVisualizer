@@ -70,7 +70,7 @@
 													 :is-modal-window="isModalWindow" />
 						</div>
 						<div class="col">
-							<!--<add-depend-modal-window :bus="bus"
+							<add-depend-modal-window :bus="bus"
 													 :id="diagramId + '_add'"
 													 :dependency="dependSelectedNodes"
 													 :show="showDependModal && addMode"
@@ -79,13 +79,20 @@
 													 :roles="roles"
 													 @close="showDependModal = false"
 													 :is-modal-window="isModalWindow"
-													 :points="graph.Nodes"
-													 />-->
+													 :points="graph.Nodes" />
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
+</template>
+<template id="async-select">
+	<div>
+		<p v-if="userNameLoading">Loading...</p>
+		<p v-else-if="userNameError">Error: {{ userNameError }}</p>
+		<p v-else>Hello {{ userName }} !</p>
+		<button v-on:click="asyncReload('userName')">Reload userName</button>
 	</div>
 </template>
 <template id="add-depend-point">
@@ -149,9 +156,10 @@
 									<div class="row">
 										<div class="col">
 											<div class="input-group mb-3">
-												<select class="custom-select" :id="'inputGroupSelect' + id" v-model="point.Characteristic">
+												<!--<select class="custom-select" :id="'inputGroupSelect' + id" v-model="point.Characteristic">
 													<option v-for="char in characteristics" :key="char.Name" :value="char">{{char.Name}}</option>
-												</select>
+												</select>-->
+												<async-select :id="id" url="/api/characteristic"/>
 											</div>
 										</div>
 									</div>

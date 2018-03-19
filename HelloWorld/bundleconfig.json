@@ -28,10 +28,11 @@
       "node_modules/popper.js/dist/umd/popper.js",
       "node_modules/bootstrap/dist/js/bootstrap.js",
       "node_modules/systemjs/dist/system.src.js",
-      "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+      "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+      "node_modules/select2/dist/select2.min.js"
     ],
     "minify": {
-      "enabled": true,
+      "enabled": false,
       "renameLocals": true
     },
     "sourceMap": true
@@ -165,6 +166,17 @@
     "outputFileName": "wwwroot/dist/vuex-typescript.js",
     "inputFiles": [
       "node_modules/vuex-typescript/dist/index.js"
+    ],
+    "minify": {
+      "enabled": false,
+      "renameLocals": true
+    },
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "wwwroot/dist/vue-async-data-2.js",
+    "inputFiles": [
+      "node_modules/vue-async-data-2/src/main.js"
     ],
     "minify": {
       "enabled": false,

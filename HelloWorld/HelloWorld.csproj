@@ -18,6 +18,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <ItemGroup>
+    <None Include="node_modules\select2\dist\select2.min.js" />
     <None Include="node_modules\vue\types\index.d.ts" />
     <None Include="node_modules\vue\types\options.d.ts" />
     <None Include="node_modules\vue\types\plugin.d.ts" />

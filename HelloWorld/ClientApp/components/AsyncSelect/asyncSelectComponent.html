@@ -1,0 +1,8 @@
+﻿<template id="async-select">
+	<div>
+		<p v-if="userNameLoading">Loading...</p>
+		<p v-else-if="userNameError">Error: {{ userNameError }}</p>
+		<p v-else>Hello {{ userName }} !</p>
+		<button v-on:click="asyncReload('userName')">Reload userName</button>
+	</div>
+</template>

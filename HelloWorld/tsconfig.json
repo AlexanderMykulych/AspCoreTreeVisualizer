@@ -5,6 +5,12 @@
     "removeComments": false,
     //"sourceMap": true,
     "target": "es5",
+    "lib": [
+      "dom",
+      "es2015",
+      "es5",
+      "es6"
+    ],
     "module": "system",
     "outFile": "wwwroot/dist/app-bandle.js",
     "moduleResolution": "node",

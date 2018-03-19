@@ -3,6 +3,7 @@ import _ from 'lodash';
 import RuleControll from "./RuleControll";
 import { uniqId } from "../../mixins/IdGenerator";
 import { PointType } from "../../Model/PointType";
+import AsyncSelect from "../AsyncSelect/AsyncSelectComponent";
 declare const $: any;
 declare const Object: any;
 
@@ -32,7 +33,8 @@ export default Vue.extend({
 	template: "#add-depend-point",
 	props: ["show", "id", "dependency", "characteristics", "roles", "defaultPoint", "defaultDependency", "isModalWindow", "points"],
 	components: {
-		RuleControll
+		RuleControll,
+		AsyncSelect
 	},
 	computed: {
 		elId() {
