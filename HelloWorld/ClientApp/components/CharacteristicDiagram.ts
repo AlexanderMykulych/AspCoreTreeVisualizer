@@ -201,6 +201,12 @@ export default Vue.extend({
 				graph: this.graph.Name,
 				connectorName: connector.Name
 			});
+		},
+		removeNode(node) {
+			this.$emit("remove-node", {
+				graph: this.graph.Name,
+				nodeName: node.name
+			});
 		}
 	},
 	mounted() {
@@ -255,6 +261,11 @@ export default Vue.extend({
 			connectorCollectionChange(options) {
 				if (options.changeType === "remove") {
 					$this.removeConnector(options.element);
+				}
+			},
+			nodeCollectionChange(options) {
+				if (options.changeType === "remove") {
+					$this.removeNode(options.element);
 				}
 			}
 		});

@@ -61,6 +61,9 @@ export default Vue.extend({
 		},
 		removeConnection(options: {graph: string, connectorName: string}) {
 			graph.removeConnection(this.$store, options);
+		},
+		removeNode(options: { graph: string, nodeName: string }) {
+			graph.removeNode(this.$store, options);
 		}
 	},
     components: {

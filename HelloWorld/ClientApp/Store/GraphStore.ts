@@ -178,6 +178,10 @@ export const graphModule = {
 		removeConnection(state: RootState, options: { graph: string, connectorName: string }) {
 			var graph = _.find(state.Graphs, x => x.Name === options.graph);
 			_.remove(graph.Dependencies, x => x.Name === options.connectorName);
+		},
+		removeNode(state: RootState, options: { graph: string, nodeName: string }) {
+			var graph = _.find(state.Graphs, x => x.Name === options.graph);
+			_.remove(graph.Points, x => x.name === options.nodeName);
 		}
 	}
 };
@@ -197,3 +201,4 @@ export const addPoint = commit(graphModule.mutations.addPoint);
 export const addDependency = commit(graphModule.mutations.addDependency);
 export const changeNodeProperty = commit(graphModule.mutations.changeNodeProperty);
 export const removeConnection = commit(graphModule.mutations.removeConnection);
+export const removeNode = commit(graphModule.mutations.removeNode);
