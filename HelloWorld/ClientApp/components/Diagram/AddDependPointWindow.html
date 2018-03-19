@@ -22,7 +22,7 @@
 										<div class="card-header" id="headingOne">
 											<h5 class="mb-0">
 												<button class="btn btn-link" data-toggle="collapse" :data-target="'#collapseOne_' + index + id" aria-expanded="true" aria-controls="collapseOne">
-													{{dep.Start.labels[0].text}}
+													{{dep.Start.Label}}
 												</button>
 											</h5>
 										</div>
@@ -44,7 +44,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-7">
+							<div class="col-7" v-if="!addExistCharacteristic">
 								<div class="container">
 									<div class="row">
 										<div class="col">
@@ -96,10 +96,22 @@
 									</div>
 								</div>
 							</div>
+							<div class="col-7" v-else>
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
+										<span class="input-group-text" id="'inputGroupSelect' + id">Характеристика</span>
+									</div>
+									<select class="custom-select" :id="'inputGroupSelect' + id" v-model="existPoint">
+										<option v-for="point in points" :key="point.name" :value="point">{{point.Label}}</option>
+									</select>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" v-if="!addExistCharacteristic" @click="() => addExistCharacteristic = true">Существующая</button>
+					<button type="button" class="btn btn-primary" v-else @click="() => addExistCharacteristic = false">Новая</button>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
 					<button v-if="!defaultPoint" type="button" class="btn btn-primary" @click="addPoint">Добавить</button>
 					<button v-else type="button" class="btn btn-primary" @click="changePoint">Изменить</button>

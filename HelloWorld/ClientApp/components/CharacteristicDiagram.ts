@@ -207,6 +207,24 @@ export default Vue.extend({
 				graph: this.graph.Name,
 				nodeName: node.name
 			});
+		},
+		connectionChange(options) {
+			var dep: any = {
+				Name: options.element.Name
+			};
+			switch (options.endPoint) {
+				case "targetEndPoint":
+					dep.End = options.connection
+					break;
+				case "sourceEndPoint":
+					return;
+				default:
+					return;
+			}
+			this.$emit("on-add-connection", {
+				graph: this.graph.Name,
+				dep
+			});
 		}
 	},
 	mounted() {
@@ -267,6 +285,9 @@ export default Vue.extend({
 				if (options.changeType === "remove") {
 					$this.removeNode(options.element);
 				}
+			},
+			connectionChange(options) {
+				$this.connectionChange(options);
 			}
 		});
 		$(this.diagramOverviewElId).ejOverview({

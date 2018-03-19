@@ -22,13 +22,15 @@ function getDefaultValue() {
 		},
 		selectedCharacteristic: null,
 		uniqId: uniqId(),
-		offsetYDelta: 250
+		offsetYDelta: 250,
+		addExistCharacteristic: false,
+		existPoint: null
 	};
 }
 
 export default Vue.extend({
 	template: "#add-depend-point",
-	props: ["show", "id", "dependency", "characteristics", "roles", "defaultPoint", "defaultDependency", "isModalWindow"],
+	props: ["show", "id", "dependency", "characteristics", "roles", "defaultPoint", "defaultDependency", "isModalWindow", "points"],
 	components: {
 		RuleControll
 	},
@@ -44,6 +46,9 @@ export default Vue.extend({
 		},
 		modalMaxWidth() {
 			return this.isModalWindow ? "80%" : "100%";
+		},
+		endPoint() {
+			return this.addExistCharacteristic ? this.existPoint : _.merge(this.point, { name: uniqId() });
 		}
 	},
 	data: getDefaultValue,
@@ -61,8 +66,7 @@ export default Vue.extend({
 			var offset = this.getOffsetByDependency(this.dependency);
 
 			var points = [];
-			var point = _.merge(this.point, {
-				name: uniqId(),
+			var point = _.merge(this.endPoint, {
 				offsetX: offset.x,
 				offsetY: offset.y + this.offsetYDelta
 			});

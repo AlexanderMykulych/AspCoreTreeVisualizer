@@ -53,7 +53,7 @@ export default VueP.extend({
 		},
 		sync_togglesValues: {
 			get() {
-				return this.togglesValues;
+				return !_.isArray(this.togglesValues) ? [] : this.togglesValues;
 			},
 			set(val) {
 				this.$emit("update:togglesValues", val);
@@ -61,7 +61,7 @@ export default VueP.extend({
 		},
 		sync_togglesRoles: {
 			get() {
-				return this.togglesRoles;
+				return !_.isArray(this.togglesRoles) ? [] : this.togglesRoles;
 			},
 			set(val) {
 				this.$emit("update:togglesRoles", val);
