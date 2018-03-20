@@ -1,11 +1,10 @@
 ﻿<!-- ClientApp/components/AppHello.html -->
 <template id="app-hello-template">
 	<div>
-		<span>{{message}}</span>
-		<div class="container">
+		<div class="container-fluid">
 			<div class="row">
-				<div class="col-2">
-					<button @click="addGraph">Add Graph</button>
+				<div class="col-1">
+					<button type="button" class="btn btn-primary" @click="addGraphClick">Добавить дерево</button>
 				</div>
 			</div>
 		</div>
@@ -23,5 +22,21 @@
 										@remove-node="removeNode" />
 			</div>
 		</div>
+		<standart-modal-window :show="showAddGraph" @close="() => showAddGraph = false" title="TEST">
+			<div slot="body" class="container-fluid">
+				<div class="row">
+					<div class="col">
+						<div class="input-group mb-3">
+							<select class="custom-select" id="inputGroupSelect_Category" v-model="addedCategory">
+								<option v-for="cat in categories" :key="cat.Id" :value="cat">{{cat.Name}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div slot="footer">
+				<button type="button" class="btn btn-primary" @click="addGraph">Save changes</button>
+			</div>
+		</standart-modal-window>
 	</div>
 </template>

@@ -9,15 +9,20 @@ import { BasePoint } from "../Model/BasePoint";
 import { Dependency } from "../Model/Dependency";
 import { PointType } from "../Model/PointType";
 import { uniqId } from "../mixins/IdGenerator";
-
+import StandartModalWindow from "../components/ModalWindow/Standart/StandartModalWindow";
+import axios from "axios";
+var _Vue: any = Vue;
+var _axios: any = axios;
 
 var store = createStore();
-export default Vue.extend({
+export default _Vue.extend({
 	template: '#app-hello-template',
 	store,
 	data() {
 		return {
-			message: "test message"
+			message: "test message",
+			showAddGraph: false,
+			addedCategory: null
 		};
 	},
 	computed: {
@@ -27,17 +32,56 @@ export default Vue.extend({
 		diagrams() {
 			return graph.readGraph(this.$store).map(x => graph.getSyncfusiongGraphByGraph(this.$store)(x));
 		},
-		characteristics() {
-			return graph.getCharacteristicsList(this.$store);
-		},
 		roles() {
 			return graph.getRoles(this.$store);
+		},
+		characteristicUrl() {
+			return "api/GetCharacteristic";
+		},
+		categoryUrl() {
+			return "api/GetCategory";
+		},
+	},
+	asyncData: {
+		characteristics() {
+			return new Promise((resolve, reject) => {
+				_axios({
+					url: this.characteristicUrl,
+					data: {}
+				})
+				.then(response => resolve(response.data.map(x => {
+						return {
+							Id: x.id,
+							Name: x.name
+						};
+					}))
+				)
+			});
+		},
+		categories() {
+			return new Promise((resolve, reject) => {
+				_axios.get(this.categoryUrl, {
+					data: {},
+					transformResponse: _axios.defaults.transformResponse.concat((data) => {
+						return data.map(x => {
+							return {
+								Id: x.id,
+								Name: x.name
+							};
+						});
+					})
+				})
+					.then(response => resolve(response.data))
+			});
 		}
 	},
 	methods: {
+		addGraphClick() {
+			this.showAddGraph = true;
+		},
 		addGraph() {
 			graph.addGraph(this.$store, {
-				Name: "Graph" + (graph.readGraphCount(this.$store) + 1),
+				Name: "Graph_" + uniqId(),
 				Points: [{
 					name: uniqId(),
 					offsetX: 500,
@@ -45,7 +89,8 @@ export default Vue.extend({
 					Label: "Start",
 					Options: {
 						type: PointType.start
-					}
+					},
+					Category: this.addedCategory
 				}],
 				Dependencies: []
 			});
@@ -67,6 +112,7 @@ export default Vue.extend({
 		}
 	},
     components: {
-		CharacteristicDiagram
+		CharacteristicDiagram,
+		StandartModalWindow
     }
 });

@@ -20,7 +20,7 @@ namespace HelloWorld.Services {
 		[HttpGet]
 		public IEnumerable<Characteristic> Get() {
 			//CharacteristicRepository characteristicRepository = new CharacteristicRepository(_dbConnection);
-			return _repository.GetAll();
+			return _repository.GetAll().Take(20);
 		}
 		[HttpGet("{id}")]
 		public Characteristic Get(String id) {

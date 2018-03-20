@@ -17,6 +17,8 @@
     "vuex": "3.0.1",
     "vuex-typescript": "^3.0.2",
     "vuex-persist": "^1.1.4",
-    "vue-async-data-2": "^0.0.2"
+    "vue-async-data-2": "^0.0.2",
+    "vue-select": "2.4.0",
+    "vue-async-computed": "3.3.1"
   }
 }

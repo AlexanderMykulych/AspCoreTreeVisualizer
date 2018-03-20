@@ -183,5 +183,27 @@
       "renameLocals": true
     },
     "sourceMap": true
+  },
+  {
+    "outputFileName": "wwwroot/dist/vue-select.js",
+    "inputFiles": [
+      "node_modules/vue-select/dist/vue-select.js"
+    ],
+    "minify": {
+      "enabled": false,
+      "renameLocals": true
+    },
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "wwwroot/dist/vue-async-computed.js",
+    "inputFiles": [
+      "node_modules/vue-async-computed/dist/vue-async-computed.js"
+    ],
+    "minify": {
+      "enabled": false,
+      "renameLocals": true
+    },
+    "sourceMap": true
   }
 ]

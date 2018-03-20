@@ -19,21 +19,23 @@ export const graphModule = {
 	namespaced: true,
 
 	state: {
-		Graphs: [{
-			Name: "Graph1",
-			Points: [
-				{
-					name: uniqId(),
-					Label: "Start",
-					offsetX: 500,
-					offsetY: 60,
-					Options: {
-						type: PointType.start
-					}
-				}
-			],
-			Dependencies: []
-		}],
+		Graphs: [
+		//	{
+		//	Name: "Graph1",
+		//	Points: [
+		//		{
+		//			name: uniqId(),
+		//			Label: "Start",
+		//			offsetX: 500,
+		//			offsetY: 60,
+		//			Options: {
+		//				type: PointType.start
+		//			}
+		//		}
+		//	],
+		//	Dependencies: []
+		//}
+		],
 		Characteristics: [
 			{
 				Name: "Char 1",

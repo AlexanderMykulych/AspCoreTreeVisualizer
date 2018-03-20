@@ -27,12 +27,5 @@ namespace HelloWorld.WebApiTest
 				})
 			};
         }
-
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
     }
 }

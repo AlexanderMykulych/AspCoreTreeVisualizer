@@ -1,706 +1,314 @@
 0 info it worked if it ends with ok
 1 verbose cli [ 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Web\\External\\Node.exe',
 1 verbose cli   'C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Web\\External\\node_modules\\npm\\bin\\npm-cli.js',
-1 verbose cli   'install' ]
+1 verbose cli   'install',
+1 verbose cli   'vue-async-computed@3.3.1' ]
 2 info using npm@3.3.4
 3 info using node@v5.4.1
 4 silly loadCurrentTree Starting
 5 silly install loadCurrentTree
 6 silly install readLocalPackageData
-7 silly install normalizeTree
-8 silly loadCurrentTree Finishing
-9 silly loadIdealTree Starting
-10 silly install loadIdealTree
-11 silly cloneCurrentTree Starting
-12 silly install cloneCurrentTreeToIdealTree
-13 silly cloneCurrentTree Finishing
-14 silly loadShrinkwrap Starting
-15 silly install loadShrinkwrap
-16 silly loadShrinkwrap Finishing
-17 silly loadAllDepsIntoIdealTree Starting
-18 silly install loadAllDepsIntoIdealTree
-19 silly fetchNamedPackageData axios
-20 silly mapToRegistry name axios
-21 silly mapToRegistry using default registry
-22 silly mapToRegistry registry https://registry.npmjs.org/
-23 silly mapToRegistry uri https://registry.npmjs.org/axios
-24 verbose request uri https://registry.npmjs.org/axios
-25 verbose request no auth needed
-26 info attempt registry request try #1 at 17:56:53
-27 verbose request id abe289d6133801ab
-28 verbose etag "5aadcf94-1a002"
-29 verbose lastModified Sun, 18 Mar 2018 2:31:48 GMT
-30 http request GET https://registry.npmjs.org/axios
-31 http 304 https://registry.npmjs.org/axios
-32 verbose headers { date: 'Mon, 19 Mar 2018 15:55:34 GMT',
-32 verbose headers   via: '1.1 varnish',
-32 verbose headers   'cache-control': 'max-age=300',
-32 verbose headers   etag: '"5aadcf94-1a002"',
-32 verbose headers   age: '4774',
-32 verbose headers   connection: 'keep-alive',
-32 verbose headers   'x-served-by': 'cache-hhn1543-HHN',
-32 verbose headers   'x-cache': 'HIT',
-32 verbose headers   'x-cache-hits': '26',
-32 verbose headers   'x-timer': 'S1521474935.873044,VS0,VE0',
-32 verbose headers   vary: 'Accept-Encoding, Accept' }
-33 silly get cb [ 304,
-33 silly get   { date: 'Mon, 19 Mar 2018 15:55:34 GMT',
-33 silly get     via: '1.1 varnish',
-33 silly get     'cache-control': 'max-age=300',
-33 silly get     etag: '"5aadcf94-1a002"',
-33 silly get     age: '4774',
-33 silly get     connection: 'keep-alive',
-33 silly get     'x-served-by': 'cache-hhn1543-HHN',
-33 silly get     'x-cache': 'HIT',
-33 silly get     'x-cache-hits': '26',
-33 silly get     'x-timer': 'S1521474935.873044,VS0,VE0',
-33 silly get     vary: 'Accept-Encoding, Accept' } ]
-34 verbose etag https://registry.npmjs.org/axios from cache
-35 verbose get saving axios to C:\Users\A.Mykulych\AppData\Roaming\npm-cache\registry.npmjs.org\axios\.cache.json
-36 silly resolveWithNewModule axios@0.18.0 checking installable status
-37 silly cache add args [ 'axios@0.18.0', null ]
-38 verbose cache add spec axios@0.18.0
-39 silly cache add parsed spec Result {
-39 silly cache add   raw: 'axios@0.18.0',
-39 silly cache add   scope: null,
-39 silly cache add   name: 'axios',
-39 silly cache add   rawSpec: '0.18.0',
-39 silly cache add   spec: '0.18.0',
-39 silly cache add   type: 'version' }
-40 silly addNamed axios@0.18.0
-41 verbose addNamed "0.18.0" is a plain semver version for axios
-42 silly mapToRegistry name axios
+7 silly fetchPackageMetaData vue-async-computed@3.3.1
+8 silly fetchNamedPackageData vue-async-computed
+9 silly mapToRegistry name vue-async-computed
+10 silly mapToRegistry using default registry
+11 silly mapToRegistry registry https://registry.npmjs.org/
+12 silly mapToRegistry uri https://registry.npmjs.org/vue-async-computed
+13 verbose get https://registry.npmjs.org/vue-async-computed not expired, no request
+14 silly install normalizeTree
+15 silly loadCurrentTree Finishing
+16 silly loadIdealTree Starting
+17 silly install loadIdealTree
+18 silly cloneCurrentTree Starting
+19 silly install cloneCurrentTreeToIdealTree
+20 silly cloneCurrentTree Finishing
+21 silly loadShrinkwrap Starting
+22 silly install loadShrinkwrap
+23 silly loadShrinkwrap Finishing
+24 silly loadAllDepsIntoIdealTree Starting
+25 silly install loadAllDepsIntoIdealTree
+26 silly resolveWithNewModule vue-async-computed@3.3.1 checking installable status
+27 silly cache add args [ 'vue-async-computed@3.3.1', null ]
+28 verbose cache add spec vue-async-computed@3.3.1
+29 silly cache add parsed spec Result {
+29 silly cache add   raw: 'vue-async-computed@3.3.1',
+29 silly cache add   scope: null,
+29 silly cache add   name: 'vue-async-computed',
+29 silly cache add   rawSpec: '3.3.1',
+29 silly cache add   spec: '3.3.1',
+29 silly cache add   type: 'version' }
+30 silly addNamed vue-async-computed@3.3.1
+31 verbose addNamed "3.3.1" is a plain semver version for vue-async-computed
+32 silly mapToRegistry name vue-async-computed
+33 silly mapToRegistry using default registry
+34 silly mapToRegistry registry https://registry.npmjs.org/
+35 silly mapToRegistry uri https://registry.npmjs.org/vue-async-computed
+36 verbose addNameVersion registry:https://registry.npmjs.org/vue-async-computed not in flight; fetching
+37 verbose get https://registry.npmjs.org/vue-async-computed not expired, no request
+38 silly cache afterAdd vue-async-computed@3.3.1
+39 verbose afterAdd C:\Users\A.Mykulych\AppData\Roaming\npm-cache\vue-async-computed\3.3.1\package\package.json not in flight; writing
+40 verbose afterAdd C:\Users\A.Mykulych\AppData\Roaming\npm-cache\vue-async-computed\3.3.1\package\package.json written
+41 silly fetchNamedPackageData lodash.merge
+42 silly mapToRegistry name lodash.merge
 43 silly mapToRegistry using default registry
 44 silly mapToRegistry registry https://registry.npmjs.org/
-45 silly mapToRegistry uri https://registry.npmjs.org/axios
-46 verbose addNameVersion registry:https://registry.npmjs.org/axios not in flight; fetching
-47 verbose get https://registry.npmjs.org/axios not expired, no request
-48 silly cache afterAdd axios@0.18.0
-49 verbose afterAdd C:\Users\A.Mykulych\AppData\Roaming\npm-cache\axios\0.18.0\package\package.json not in flight; writing
-50 verbose afterAdd C:\Users\A.Mykulych\AppData\Roaming\npm-cache\axios\0.18.0\package\package.json written
-51 silly fetchNamedPackageData follow-redirects
-52 silly mapToRegistry name follow-redirects
-53 silly mapToRegistry using default registry
-54 silly mapToRegistry registry https://registry.npmjs.org/
-55 silly mapToRegistry uri https://registry.npmjs.org/follow-redirects
-56 silly fetchNamedPackageData is-buffer
-57 silly mapToRegistry name is-buffer
-58 silly mapToRegistry using default registry
-59 silly mapToRegistry registry https://registry.npmjs.org/
-60 silly mapToRegistry uri https://registry.npmjs.org/is-buffer
-61 verbose request uri https://registry.npmjs.org/is-buffer
-62 verbose request no auth needed
-63 info attempt registry request try #1 at 17:56:53
-64 verbose etag "5aacfd4d-564a"
-65 verbose lastModified Sat, 17 Mar 2018 11:34:37 GMT
-66 http request GET https://registry.npmjs.org/is-buffer
-67 verbose request uri https://registry.npmjs.org/follow-redirects
-68 verbose request no auth needed
-69 info attempt registry request try #1 at 17:56:53
-70 verbose etag "5a67d680-ade1"
-71 verbose lastModified Wed, 24 Jan 2018 0:42:40 GMT
-72 http request GET https://registry.npmjs.org/follow-redirects
-73 http 304 https://registry.npmjs.org/follow-redirects
-74 verbose headers { date: 'Mon, 19 Mar 2018 15:55:35 GMT',
-74 verbose headers   via: '1.1 varnish',
-74 verbose headers   'cache-control': 'max-age=300',
-74 verbose headers   etag: '"5a67d680-ade1"',
-74 verbose headers   age: '548',
-74 verbose headers   connection: 'keep-alive',
-74 verbose headers   'x-served-by': 'cache-hhn1543-HHN',
-74 verbose headers   'x-cache': 'HIT',
-74 verbose headers   'x-cache-hits': '4',
-74 verbose headers   'x-timer': 'S1521474935.066388,VS0,VE0',
-74 verbose headers   vary: 'Accept-Encoding, Accept' }
-75 silly get cb [ 304,
-75 silly get   { date: 'Mon, 19 Mar 2018 15:55:35 GMT',
-75 silly get     via: '1.1 varnish',
-75 silly get     'cache-control': 'max-age=300',
-75 silly get     etag: '"5a67d680-ade1"',
-75 silly get     age: '548',
-75 silly get     connection: 'keep-alive',
-75 silly get     'x-served-by': 'cache-hhn1543-HHN',
-75 silly get     'x-cache': 'HIT',
-75 silly get     'x-cache-hits': '4',
-75 silly get     'x-timer': 'S1521474935.066388,VS0,VE0',
-75 silly get     vary: 'Accept-Encoding, Accept' } ]
-76 verbose etag https://registry.npmjs.org/follow-redirects from cache
-77 verbose get saving follow-redirects to C:\Users\A.Mykulych\AppData\Roaming\npm-cache\registry.npmjs.org\follow-redirects\.cache.json
-78 silly resolveWithNewModule follow-redirects@1.4.1 checking installable status
-79 silly cache add args [ 'follow-redirects@^1.3.0', null ]
-80 verbose cache add spec follow-redirects@^1.3.0
-81 silly cache add parsed spec Result {
-81 silly cache add   raw: 'follow-redirects@^1.3.0',
-81 silly cache add   scope: null,
-81 silly cache add   name: 'follow-redirects',
-81 silly cache add   rawSpec: '^1.3.0',
-81 silly cache add   spec: '>=1.3.0-0 <2.0.0-0',
-81 silly cache add   type: 'range' }
-82 silly addNamed follow-redirects@>=1.3.0-0 <2.0.0-0
-83 verbose addNamed ">=1.3.0-0 <2.0.0-0" is a valid semver range for follow-redirects
-84 silly addNameRange { name: 'follow-redirects',
-84 silly addNameRange   range: '>=1.3.0-0 <2.0.0-0',
-84 silly addNameRange   hasData: false }
-85 silly mapToRegistry name follow-redirects
-86 silly mapToRegistry using default registry
-87 silly mapToRegistry registry https://registry.npmjs.org/
-88 silly mapToRegistry uri https://registry.npmjs.org/follow-redirects
-89 verbose addNameRange registry:https://registry.npmjs.org/follow-redirects not in flight; fetching
-90 verbose get https://registry.npmjs.org/follow-redirects not expired, no request
-91 silly addNameRange number 2 { name: 'follow-redirects',
-91 silly addNameRange   range: '>=1.3.0-0 <2.0.0-0',
-91 silly addNameRange   hasData: true }
-92 silly addNameRange versions [ 'follow-redirects',
-92 silly addNameRange   [ '0.0.1',
-92 silly addNameRange     '0.0.2',
-92 silly addNameRange     '0.0.3',
-92 silly addNameRange     '0.0.4',
-92 silly addNameRange     '0.0.5',
-92 silly addNameRange     '0.0.6',
-92 silly addNameRange     '0.0.7',
-92 silly addNameRange     '0.1.0',
-92 silly addNameRange     '0.2.0',
-92 silly addNameRange     '0.3.0',
-92 silly addNameRange     '1.0.0',
-92 silly addNameRange     '1.1.0',
-92 silly addNameRange     '1.2.0',
-92 silly addNameRange     '1.2.1',
-92 silly addNameRange     '1.2.2',
-92 silly addNameRange     '1.2.3',
-92 silly addNameRange     '1.2.4',
-92 silly addNameRange     '1.2.5',
-92 silly addNameRange     '1.2.6',
-92 silly addNameRange     '1.3.0',
-92 silly addNameRange     '1.4.0',
-92 silly addNameRange     '1.4.1' ] ]
-93 silly addNamed follow-redirects@1.4.1
-94 verbose addNamed "1.4.1" is a plain semver version for follow-redirects
-95 silly cache afterAdd follow-redirects@1.4.1
-96 verbose afterAdd C:\Users\A.Mykulych\AppData\Roaming\npm-cache\follow-redirects\1.4.1\package\package.json not in flight; writing
-97 verbose afterAdd C:\Users\A.Mykulych\AppData\Roaming\npm-cache\follow-redirects\1.4.1\package\package.json written
-98 http 304 https://registry.npmjs.org/is-buffer
-99 verbose headers { date: 'Mon, 19 Mar 2018 15:55:35 GMT',
-99 verbose headers   via: '1.1 varnish',
-99 verbose headers   'cache-control': 'max-age=300',
-99 verbose headers   etag: '"5aacfd4d-564a"',
-99 verbose headers   age: '1147',
-99 verbose headers   connection: 'keep-alive',
-99 verbose headers   'x-served-by': 'cache-hhn1523-HHN',
-99 verbose headers   'x-cache': 'HIT',
-99 verbose headers   'x-cache-hits': '46',
-99 verbose headers   'x-timer': 'S1521474935.106320,VS0,VE0',
-99 verbose headers   vary: 'Accept-Encoding, Accept' }
-100 silly get cb [ 304,
-100 silly get   { date: 'Mon, 19 Mar 2018 15:55:35 GMT',
-100 silly get     via: '1.1 varnish',
-100 silly get     'cache-control': 'max-age=300',
-100 silly get     etag: '"5aacfd4d-564a"',
-100 silly get     age: '1147',
-100 silly get     connection: 'keep-alive',
-100 silly get     'x-served-by': 'cache-hhn1523-HHN',
-100 silly get     'x-cache': 'HIT',
-100 silly get     'x-cache-hits': '46',
-100 silly get     'x-timer': 'S1521474935.106320,VS0,VE0',
-100 silly get     vary: 'Accept-Encoding, Accept' } ]
-101 verbose etag https://registry.npmjs.org/is-buffer from cache
-102 verbose get saving is-buffer to C:\Users\A.Mykulych\AppData\Roaming\npm-cache\registry.npmjs.org\is-buffer\.cache.json
-103 silly resolveWithNewModule is-buffer@1.1.6 checking installable status
-104 silly cache add args [ 'is-buffer@^1.1.5', null ]
-105 verbose cache add spec is-buffer@^1.1.5
-106 silly cache add parsed spec Result {
-106 silly cache add   raw: 'is-buffer@^1.1.5',
-106 silly cache add   scope: null,
-106 silly cache add   name: 'is-buffer',
-106 silly cache add   rawSpec: '^1.1.5',
-106 silly cache add   spec: '>=1.1.5-0 <2.0.0-0',
-106 silly cache add   type: 'range' }
-107 silly addNamed is-buffer@>=1.1.5-0 <2.0.0-0
-108 verbose addNamed ">=1.1.5-0 <2.0.0-0" is a valid semver range for is-buffer
-109 silly addNameRange { name: 'is-buffer',
-109 silly addNameRange   range: '>=1.1.5-0 <2.0.0-0',
-109 silly addNameRange   hasData: false }
-110 silly mapToRegistry name is-buffer
-111 silly mapToRegistry using default registry
-112 silly mapToRegistry registry https://registry.npmjs.org/
-113 silly mapToRegistry uri https://registry.npmjs.org/is-buffer
-114 verbose addNameRange registry:https://registry.npmjs.org/is-buffer not in flight; fetching
-115 verbose get https://registry.npmjs.org/is-buffer not expired, no request
-116 silly addNameRange number 2 { name: 'is-buffer', range: '>=1.1.5-0 <2.0.0-0', hasData: true }
-117 silly addNameRange versions [ 'is-buffer',
-117 silly addNameRange   [ '1.0.0',
-117 silly addNameRange     '1.0.1',
-117 silly addNameRange     '1.0.2',
-117 silly addNameRange     '1.1.0',
-117 silly addNameRange     '1.1.1',
-117 silly addNameRange     '1.1.2',
-117 silly addNameRange     '1.1.3',
-117 silly addNameRange     '1.1.4',
-117 silly addNameRange     '1.1.5',
-117 silly addNameRange     '1.1.6',
-117 silly addNameRange     '2.0.0',
-117 silly addNameRange     '2.0.1',
-117 silly addNameRange     '2.0.2' ] ]
-118 silly addNamed is-buffer@1.1.6
-119 verbose addNamed "1.1.6" is a plain semver version for is-buffer
-120 silly cache afterAdd is-buffer@1.1.6
-121 verbose afterAdd C:\Users\A.Mykulych\AppData\Roaming\npm-cache\is-buffer\1.1.6\package\package.json not in flight; writing
-122 verbose afterAdd C:\Users\A.Mykulych\AppData\Roaming\npm-cache\is-buffer\1.1.6\package\package.json written
-123 silly fetchNamedPackageData debug
-124 silly mapToRegistry name debug
-125 silly mapToRegistry using default registry
-126 silly mapToRegistry registry https://registry.npmjs.org/
-127 silly mapToRegistry uri https://registry.npmjs.org/debug
-128 verbose request uri https://registry.npmjs.org/debug
-129 verbose request no auth needed
-130 info attempt registry request try #1 at 17:56:53
-131 verbose etag "5aaf83b8-1952d"
-132 verbose lastModified Mon, 19 Mar 2018 9:32:40 GMT
-133 http request GET https://registry.npmjs.org/debug
-134 http 304 https://registry.npmjs.org/debug
-135 verbose headers { date: 'Mon, 19 Mar 2018 15:55:35 GMT',
-135 verbose headers   via: '1.1 varnish',
-135 verbose headers   'cache-control': 'max-age=300',
-135 verbose headers   etag: '"5aaf83b8-1952d"',
-135 verbose headers   age: '8511',
-135 verbose headers   connection: 'keep-alive',
-135 verbose headers   'x-served-by': 'cache-hhn1545-HHN',
-135 verbose headers   'x-cache': 'HIT',
-135 verbose headers   'x-cache-hits': '812',
-135 verbose headers   'x-timer': 'S1521474935.307697,VS0,VE0',
-135 verbose headers   vary: 'Accept-Encoding, Accept' }
-136 silly get cb [ 304,
-136 silly get   { date: 'Mon, 19 Mar 2018 15:55:35 GMT',
-136 silly get     via: '1.1 varnish',
-136 silly get     'cache-control': 'max-age=300',
-136 silly get     etag: '"5aaf83b8-1952d"',
-136 silly get     age: '8511',
-136 silly get     connection: 'keep-alive',
-136 silly get     'x-served-by': 'cache-hhn1545-HHN',
-136 silly get     'x-cache': 'HIT',
-136 silly get     'x-cache-hits': '812',
-136 silly get     'x-timer': 'S1521474935.307697,VS0,VE0',
-136 silly get     vary: 'Accept-Encoding, Accept' } ]
-137 verbose etag https://registry.npmjs.org/debug from cache
-138 verbose get saving debug to C:\Users\A.Mykulych\AppData\Roaming\npm-cache\registry.npmjs.org\debug\.cache.json
-139 silly resolveWithNewModule debug@3.1.0 checking installable status
-140 silly cache add args [ 'debug@^3.1.0', null ]
-141 verbose cache add spec debug@^3.1.0
-142 silly cache add parsed spec Result {
-142 silly cache add   raw: 'debug@^3.1.0',
-142 silly cache add   scope: null,
-142 silly cache add   name: 'debug',
-142 silly cache add   rawSpec: '^3.1.0',
-142 silly cache add   spec: '>=3.1.0-0 <4.0.0-0',
-142 silly cache add   type: 'range' }
-143 silly addNamed debug@>=3.1.0-0 <4.0.0-0
-144 verbose addNamed ">=3.1.0-0 <4.0.0-0" is a valid semver range for debug
-145 silly addNameRange { name: 'debug', range: '>=3.1.0-0 <4.0.0-0', hasData: false }
-146 silly mapToRegistry name debug
-147 silly mapToRegistry using default registry
-148 silly mapToRegistry registry https://registry.npmjs.org/
-149 silly mapToRegistry uri https://registry.npmjs.org/debug
-150 verbose addNameRange registry:https://registry.npmjs.org/debug not in flight; fetching
-151 verbose get https://registry.npmjs.org/debug not expired, no request
-152 silly addNameRange number 2 { name: 'debug', range: '>=3.1.0-0 <4.0.0-0', hasData: true }
-153 silly addNameRange versions [ 'debug',
-153 silly addNameRange   [ '0.0.1',
-153 silly addNameRange     '0.1.0',
-153 silly addNameRange     '0.2.0',
-153 silly addNameRange     '0.3.0',
-153 silly addNameRange     '0.4.0',
-153 silly addNameRange     '0.4.1',
-153 silly addNameRange     '0.5.0',
-153 silly addNameRange     '0.6.0',
-153 silly addNameRange     '0.7.0',
-153 silly addNameRange     '0.7.1',
-153 silly addNameRange     '0.7.2',
-153 silly addNameRange     '0.7.3',
-153 silly addNameRange     '0.7.4',
-153 silly addNameRange     '0.8.0',
-153 silly addNameRange     '0.8.1',
-153 silly addNameRange     '1.0.0',
-153 silly addNameRange     '1.0.1',
-153 silly addNameRange     '1.0.2',
-153 silly addNameRange     '1.0.3',
-153 silly addNameRange     '1.0.4',
-153 silly addNameRange     '2.0.0',
-153 silly addNameRange     '2.1.0',
-153 silly addNameRange     '2.1.1',
-153 silly addNameRange     '2.1.2',
-153 silly addNameRange     '2.1.3',
-153 silly addNameRange     '2.2.0',
-153 silly addNameRange     '2.3.0',
-153 silly addNameRange     '2.3.1',
-153 silly addNameRange     '2.3.2',
-153 silly addNameRange     '2.3.3',
-153 silly addNameRange     '2.4.0',
-153 silly addNameRange     '2.4.1',
-153 silly addNameRange     '2.4.2',
-153 silly addNameRange     '2.4.3',
-153 silly addNameRange     '2.4.4',
-153 silly addNameRange     '2.4.5',
-153 silly addNameRange     '2.5.0',
-153 silly addNameRange     '2.5.1',
-153 silly addNameRange     '2.5.2',
-153 silly addNameRange     '2.6.0',
-153 silly addNameRange     '2.6.1',
-153 silly addNameRange     '2.6.2',
-153 silly addNameRange     '2.6.3',
-153 silly addNameRange     '2.6.4',
-153 silly addNameRange     '2.6.5',
-153 silly addNameRange     '2.6.6',
-153 silly addNameRange     '2.6.7',
-153 silly addNameRange     '2.6.8',
-153 silly addNameRange     '1.0.5',
-153 silly addNameRange     '3.0.0',
-153 silly addNameRange     '3.0.1',
-153 silly addNameRange     '2.6.9',
-153 silly addNameRange     '3.1.0' ] ]
-154 silly addNamed debug@3.1.0
-155 verbose addNamed "3.1.0" is a plain semver version for debug
-156 silly cache afterAdd debug@3.1.0
-157 verbose afterAdd C:\Users\A.Mykulych\AppData\Roaming\npm-cache\debug\3.1.0\package\package.json not in flight; writing
-158 verbose afterAdd C:\Users\A.Mykulych\AppData\Roaming\npm-cache\debug\3.1.0\package\package.json written
-159 silly fetchNamedPackageData ms
-160 silly mapToRegistry name ms
-161 silly mapToRegistry using default registry
-162 silly mapToRegistry registry https://registry.npmjs.org/
-163 silly mapToRegistry uri https://registry.npmjs.org/ms
-164 verbose request uri https://registry.npmjs.org/ms
-165 verbose request no auth needed
-166 info attempt registry request try #1 at 17:56:54
-167 verbose etag "5aa9402e-498a"
-168 verbose lastModified Wed, 14 Mar 2018 15:30:54 GMT
-169 http request GET https://registry.npmjs.org/ms
-170 http 304 https://registry.npmjs.org/ms
-171 verbose headers { date: 'Mon, 19 Mar 2018 15:55:35 GMT',
-171 verbose headers   via: '1.1 varnish',
-171 verbose headers   'cache-control': 'max-age=300',
-171 verbose headers   etag: '"5aa9402e-498a"',
-171 verbose headers   age: '1323',
-171 verbose headers   connection: 'keep-alive',
-171 verbose headers   'x-served-by': 'cache-hhn1522-HHN',
-171 verbose headers   'x-cache': 'HIT',
-171 verbose headers   'x-cache-hits': '96',
-171 verbose headers   'x-timer': 'S1521474935.495777,VS0,VE0',
-171 verbose headers   vary: 'Accept-Encoding, Accept' }
-172 silly get cb [ 304,
-172 silly get   { date: 'Mon, 19 Mar 2018 15:55:35 GMT',
-172 silly get     via: '1.1 varnish',
-172 silly get     'cache-control': 'max-age=300',
-172 silly get     etag: '"5aa9402e-498a"',
-172 silly get     age: '1323',
-172 silly get     connection: 'keep-alive',
-172 silly get     'x-served-by': 'cache-hhn1522-HHN',
-172 silly get     'x-cache': 'HIT',
-172 silly get     'x-cache-hits': '96',
-172 silly get     'x-timer': 'S1521474935.495777,VS0,VE0',
-172 silly get     vary: 'Accept-Encoding, Accept' } ]
-173 verbose etag https://registry.npmjs.org/ms from cache
-174 verbose get saving ms to C:\Users\A.Mykulych\AppData\Roaming\npm-cache\registry.npmjs.org\ms\.cache.json
-175 silly resolveWithNewModule ms@2.0.0 checking installable status
-176 silly cache add args [ 'ms@2.0.0', null ]
-177 verbose cache add spec ms@2.0.0
-178 silly cache add parsed spec Result {
-178 silly cache add   raw: 'ms@2.0.0',
-178 silly cache add   scope: null,
-178 silly cache add   name: 'ms',
-178 silly cache add   rawSpec: '2.0.0',
-178 silly cache add   spec: '2.0.0',
-178 silly cache add   type: 'version' }
-179 silly addNamed ms@2.0.0
-180 verbose addNamed "2.0.0" is a plain semver version for ms
-181 silly mapToRegistry name ms
-182 silly mapToRegistry using default registry
-183 silly mapToRegistry registry https://registry.npmjs.org/
-184 silly mapToRegistry uri https://registry.npmjs.org/ms
-185 verbose addNameVersion registry:https://registry.npmjs.org/ms not in flight; fetching
-186 verbose get https://registry.npmjs.org/ms not expired, no request
-187 silly cache afterAdd ms@2.0.0
-188 verbose afterAdd C:\Users\A.Mykulych\AppData\Roaming\npm-cache\ms\2.0.0\package\package.json not in flight; writing
-189 verbose afterAdd C:\Users\A.Mykulych\AppData\Roaming\npm-cache\ms\2.0.0\package\package.json written
-190 silly fetchNamedPackageData lodash.merge
-191 silly mapToRegistry name lodash.merge
-192 silly mapToRegistry using default registry
-193 silly mapToRegistry registry https://registry.npmjs.org/
-194 silly mapToRegistry uri https://registry.npmjs.org/lodash.merge
-195 verbose request uri https://registry.npmjs.org/lodash.merge
-196 verbose request no auth needed
-197 info attempt registry request try #1 at 17:56:54
-198 verbose etag "5a913bfa-100b1"
-199 verbose lastModified Sat, 24 Feb 2018 10:18:34 GMT
-200 http request GET https://registry.npmjs.org/lodash.merge
-201 http 304 https://registry.npmjs.org/lodash.merge
-202 verbose headers { date: 'Mon, 19 Mar 2018 15:55:35 GMT',
-202 verbose headers   via: '1.1 varnish',
-202 verbose headers   'cache-control': 'max-age=300',
-202 verbose headers   etag: '"5a913bfa-100b1"',
-202 verbose headers   age: '4200',
-202 verbose headers   connection: 'keep-alive',
-202 verbose headers   'x-served-by': 'cache-hhn1534-HHN',
-202 verbose headers   'x-cache': 'HIT',
-202 verbose headers   'x-cache-hits': '31',
-202 verbose headers   'x-timer': 'S1521474936.659520,VS0,VE0',
-202 verbose headers   vary: 'Accept-Encoding, Accept' }
-203 silly get cb [ 304,
-203 silly get   { date: 'Mon, 19 Mar 2018 15:55:35 GMT',
-203 silly get     via: '1.1 varnish',
-203 silly get     'cache-control': 'max-age=300',
-203 silly get     etag: '"5a913bfa-100b1"',
-203 silly get     age: '4200',
-203 silly get     connection: 'keep-alive',
-203 silly get     'x-served-by': 'cache-hhn1534-HHN',
-203 silly get     'x-cache': 'HIT',
-203 silly get     'x-cache-hits': '31',
-203 silly get     'x-timer': 'S1521474936.659520,VS0,VE0',
-203 silly get     vary: 'Accept-Encoding, Accept' } ]
-204 verbose etag https://registry.npmjs.org/lodash.merge from cache
-205 verbose get saving lodash.merge to C:\Users\A.Mykulych\AppData\Roaming\npm-cache\registry.npmjs.org\lodash.merge\.cache.json
-206 silly resolveWithNewModule lodash.merge@4.6.1 checking installable status
-207 silly cache add args [ 'lodash.merge@^4.6.1', null ]
-208 verbose cache add spec lodash.merge@^4.6.1
-209 silly cache add parsed spec Result {
-209 silly cache add   raw: 'lodash.merge@^4.6.1',
-209 silly cache add   scope: null,
-209 silly cache add   name: 'lodash.merge',
-209 silly cache add   rawSpec: '^4.6.1',
-209 silly cache add   spec: '>=4.6.1-0 <5.0.0-0',
-209 silly cache add   type: 'range' }
-210 silly addNamed lodash.merge@>=4.6.1-0 <5.0.0-0
-211 verbose addNamed ">=4.6.1-0 <5.0.0-0" is a valid semver range for lodash.merge
-212 silly addNameRange { name: 'lodash.merge',
-212 silly addNameRange   range: '>=4.6.1-0 <5.0.0-0',
-212 silly addNameRange   hasData: false }
-213 silly mapToRegistry name lodash.merge
-214 silly mapToRegistry using default registry
-215 silly mapToRegistry registry https://registry.npmjs.org/
-216 silly mapToRegistry uri https://registry.npmjs.org/lodash.merge
-217 verbose addNameRange registry:https://registry.npmjs.org/lodash.merge not in flight; fetching
-218 verbose get https://registry.npmjs.org/lodash.merge not expired, no request
-219 silly addNameRange number 2 { name: 'lodash.merge',
-219 silly addNameRange   range: '>=4.6.1-0 <5.0.0-0',
-219 silly addNameRange   hasData: true }
-220 silly addNameRange versions [ 'lodash.merge',
-220 silly addNameRange   [ '2.0.0',
-220 silly addNameRange     '2.1.0',
-220 silly addNameRange     '2.2.0',
-220 silly addNameRange     '2.2.1',
-220 silly addNameRange     '2.3.0',
-220 silly addNameRange     '2.4.0',
-220 silly addNameRange     '2.4.1',
-220 silly addNameRange     '3.0.0',
-220 silly addNameRange     '3.0.1',
-220 silly addNameRange     '3.0.2',
-220 silly addNameRange     '3.0.3',
-220 silly addNameRange     '3.1.0',
-220 silly addNameRange     '3.2.0',
-220 silly addNameRange     '3.2.1',
-220 silly addNameRange     '3.3.0',
-220 silly addNameRange     '3.3.1',
-220 silly addNameRange     '3.3.2',
-220 silly addNameRange     '4.0.0',
-220 silly addNameRange     '4.0.1',
-220 silly addNameRange     '4.0.2',
-220 silly addNameRange     '4.0.3',
-220 silly addNameRange     '4.0.4',
-220 silly addNameRange     '4.1.0',
-220 silly addNameRange     '4.1.1',
-220 silly addNameRange     '4.2.0',
-220 silly addNameRange     '4.3.0',
-220 silly addNameRange     '4.3.1',
-220 silly addNameRange     '4.3.2',
-220 silly addNameRange     '4.3.3',
-220 silly addNameRange     '4.3.4',
-220 silly addNameRange     '4.3.5',
-220 silly addNameRange     '4.4.0',
-220 silly addNameRange     '4.5.0',
-220 silly addNameRange     '4.5.1',
-220 silly addNameRange     '4.6.0',
-220 silly addNameRange     '4.6.1' ] ]
-221 silly addNamed lodash.merge@4.6.1
-222 verbose addNamed "4.6.1" is a plain semver version for lodash.merge
-223 silly cache afterAdd lodash.merge@4.6.1
-224 verbose afterAdd C:\Users\A.Mykulych\AppData\Roaming\npm-cache\lodash.merge\4.6.1\package\package.json not in flight; writing
-225 verbose afterAdd C:\Users\A.Mykulych\AppData\Roaming\npm-cache\lodash.merge\4.6.1\package\package.json written
-226 silly loadAllDepsIntoIdealTree Finishing
-227 silly idealTree:prePrune asp.net@1.0.0
-227 silly idealTree:prePrune ├── @types/jquery@3.3.1
-227 silly idealTree:prePrune ├── @types/lodash@4.14.104
-227 silly idealTree:prePrune ├── @types/node@9.4.7
-227 silly idealTree:prePrune ├── axios@0.18.0
-227 silly idealTree:prePrune ├── babel-runtime@6.26.0
-227 silly idealTree:prePrune ├── bootstrap@4.0.0
-227 silly idealTree:prePrune ├── core-js@2.5.3
-227 silly idealTree:prePrune ├── debug@3.1.0
-227 silly idealTree:prePrune ├── follow-redirects@1.4.1
-227 silly idealTree:prePrune ├── is-buffer@1.1.6
-227 silly idealTree:prePrune ├── jquery@3.3.1
-227 silly idealTree:prePrune ├── jquery.easing@1.4.1
-227 silly idealTree:prePrune ├── lodash@4.17.5
-227 silly idealTree:prePrune ├── lodash.merge@4.6.1
-227 silly idealTree:prePrune ├── ms@2.0.0
-227 silly idealTree:prePrune ├── popper.js@1.12.9
-227 silly idealTree:prePrune ├── regenerator-runtime@0.11.1
-227 silly idealTree:prePrune ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\select2
-227 silly idealTree:prePrune ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\syncfusion
-227 silly idealTree:prePrune ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\@types\syncfusion
-227 silly idealTree:prePrune ├── systemjs@0.21.0
-227 silly idealTree:prePrune ├── vue@2.5.13
-227 silly idealTree:prePrune ├── vue-async-data-2@0.0.2
-227 silly idealTree:prePrune ├── vuex@3.0.1
-227 silly idealTree:prePrune ├─┬ vuex-persist@1.1.4
-227 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\handlebars
-227 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\inherits
-227 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\interpret
-227 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-buffer
-227 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-dotfile
-227 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-equal-shallow
-227 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-extendable
-227 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-extglob
-227 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-posix-bracket
-227 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-primitive
-227 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\localforage
-227 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\@types\lodash
-227 silly idealTree:prePrune │ ├── lodash.merge@4.6.1
-227 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\@types\marked
-227 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\@types\minimatch
-227 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\@types\mocha
-227 silly idealTree:prePrune │ ├─┬ C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc
-227 silly idealTree:prePrune │ │ ├─┬ C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\has-values
-227 silly idealTree:prePrune │ │ │ └── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\has-values\node_modules\kind-of
-227 silly idealTree:prePrune │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-descriptor
-227 silly idealTree:prePrune │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-odd
-227 silly idealTree:prePrune │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-primitive
-227 silly idealTree:prePrune │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-stream
-227 silly idealTree:prePrune │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-utf8
-227 silly idealTree:prePrune │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-windows
-227 silly idealTree:prePrune │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\lcid
-227 silly idealTree:prePrune │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\load-json-file
-227 silly idealTree:prePrune │ │ ├─┬ C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\object-copy
-227 silly idealTree:prePrune │ │ │ └── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\object-copy\node_modules\define-property
-227 silly idealTree:prePrune │ │ ├─┬ C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\object.pick
-227 silly idealTree:prePrune │ │ │ └── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\object.pick\node_modules\isobject
-227 silly idealTree:prePrune │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\semver
-227 silly idealTree:prePrune │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\signal-exit
-227 silly idealTree:prePrune │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\spdx-expression-parse
-227 silly idealTree:prePrune │ │ └── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\spdx-license-ids
-227 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\rollup
-227 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\typedoc
-227 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\wrappy
-227 silly idealTree:prePrune │ └── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\yn
-227 silly idealTree:prePrune └── vuex-typescript@3.0.2
-228 silly loadIdealTree Finishing
-229 silly currentTree asp.net@1.0.0
-229 silly currentTree ├── @types/jquery@3.3.1
-229 silly currentTree ├── @types/lodash@4.14.104
-229 silly currentTree ├── @types/node@9.4.7
-229 silly currentTree ├── babel-runtime@6.26.0
-229 silly currentTree ├── bootstrap@4.0.0
-229 silly currentTree ├── core-js@2.5.3
-229 silly currentTree ├── jquery@3.3.1
-229 silly currentTree ├── jquery.easing@1.4.1
-229 silly currentTree ├── lodash@4.17.5
-229 silly currentTree ├── lodash.merge@4.6.1
-229 silly currentTree ├── popper.js@1.12.9
-229 silly currentTree ├── regenerator-runtime@0.11.1
-229 silly currentTree ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\select2
-229 silly currentTree ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\syncfusion
-229 silly currentTree ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\@types\syncfusion
-229 silly currentTree ├── systemjs@0.21.0
-229 silly currentTree ├── vue@2.5.13
-229 silly currentTree ├── vue-async-data-2@0.0.2
-229 silly currentTree ├── vuex@3.0.1
-229 silly currentTree ├─┬ vuex-persist@1.1.4
-229 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\handlebars
-229 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\inherits
-229 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\interpret
-229 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-buffer
-229 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-dotfile
-229 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-equal-shallow
-229 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-extendable
-229 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-extglob
-229 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-posix-bracket
-229 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-primitive
-229 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\localforage
-229 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\@types\lodash
-229 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\@types\lodash.merge
-229 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\@types\marked
-229 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\@types\minimatch
-229 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\@types\mocha
-229 silly currentTree │ ├─┬ C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc
-229 silly currentTree │ │ ├─┬ C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\has-values
-229 silly currentTree │ │ │ └── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\has-values\node_modules\kind-of
-229 silly currentTree │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-descriptor
-229 silly currentTree │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-odd
-229 silly currentTree │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-primitive
-229 silly currentTree │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-stream
-229 silly currentTree │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-utf8
-229 silly currentTree │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-windows
-229 silly currentTree │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\lcid
-229 silly currentTree │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\load-json-file
-229 silly currentTree │ │ ├─┬ C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\object-copy
-229 silly currentTree │ │ │ └── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\object-copy\node_modules\define-property
-229 silly currentTree │ │ ├─┬ C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\object.pick
-229 silly currentTree │ │ │ └── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\object.pick\node_modules\isobject
-229 silly currentTree │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\semver
-229 silly currentTree │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\signal-exit
-229 silly currentTree │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\spdx-expression-parse
-229 silly currentTree │ │ └── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\spdx-license-ids
-229 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\rollup
-229 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\typedoc
-229 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\wrappy
-229 silly currentTree │ └── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\yn
-229 silly currentTree └── vuex-typescript@3.0.2
-230 silly idealTree asp.net@1.0.0
-230 silly idealTree ├── @types/jquery@3.3.1
-230 silly idealTree ├── @types/lodash@4.14.104
-230 silly idealTree ├── @types/node@9.4.7
-230 silly idealTree ├── axios@0.18.0
-230 silly idealTree ├── babel-runtime@6.26.0
-230 silly idealTree ├── bootstrap@4.0.0
-230 silly idealTree ├── core-js@2.5.3
-230 silly idealTree ├── debug@3.1.0
-230 silly idealTree ├── follow-redirects@1.4.1
-230 silly idealTree ├── is-buffer@1.1.6
-230 silly idealTree ├── jquery@3.3.1
-230 silly idealTree ├── jquery.easing@1.4.1
-230 silly idealTree ├── lodash@4.17.5
-230 silly idealTree ├── lodash.merge@4.6.1
-230 silly idealTree ├── ms@2.0.0
-230 silly idealTree ├── popper.js@1.12.9
-230 silly idealTree ├── regenerator-runtime@0.11.1
-230 silly idealTree ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\select2
-230 silly idealTree ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\syncfusion
-230 silly idealTree ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\@types\syncfusion
-230 silly idealTree ├── systemjs@0.21.0
-230 silly idealTree ├── vue@2.5.13
-230 silly idealTree ├── vue-async-data-2@0.0.2
-230 silly idealTree ├── vuex@3.0.1
-230 silly idealTree ├─┬ vuex-persist@1.1.4
-230 silly idealTree │ └── lodash.merge@4.6.1
-230 silly idealTree └── vuex-typescript@3.0.2
-231 silly generateActionsToTake Starting
-232 silly install generateActionsToTake
-233 warn checkPermissions Missing write access to C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\lodash.merge
-234 silly rollbackFailedOptional Starting
-235 silly rollbackFailedOptional Finishing
-236 silly runTopLevelLifecycles Starting
-237 silly runTopLevelLifecycles Finishing
-238 silly install printInstalled
-239 warn ENOENT ENOENT: no such file or directory, open 'C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\select2\package.json'
-240 warn ENOENT ENOENT: no such file or directory, open 'C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\@types\syncfusion\package.json'
-241 verbose stack Error: ENOENT: no such file or directory, access 'C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\lodash.merge'
-241 verbose stack     at Error (native)
-242 verbose cwd C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld
-243 error Windows_NT 10.0.16299
-244 error argv "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Web\\External\\Node.exe" "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Web\\External\\node_modules\\npm\\bin\\npm-cli.js" "install"
-245 error node v5.4.1
-246 error npm  v3.3.4
-247 error path C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\lodash.merge
-248 error code ENOENT
-249 error errno -4058
-250 error syscall access
-251 error enoent ENOENT: no such file or directory, access 'C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\lodash.merge'
-251 error enoent This is most likely not a problem with npm itself
-251 error enoent and is related to npm not being able to find a file.
-252 verbose exit [ -4058, true ]
+45 silly mapToRegistry uri https://registry.npmjs.org/lodash.merge
+46 verbose get https://registry.npmjs.org/lodash.merge not expired, no request
+47 silly resolveWithNewModule lodash.merge@4.6.1 checking installable status
+48 silly cache add args [ 'lodash.merge@^4.6.1', null ]
+49 verbose cache add spec lodash.merge@^4.6.1
+50 silly cache add parsed spec Result {
+50 silly cache add   raw: 'lodash.merge@^4.6.1',
+50 silly cache add   scope: null,
+50 silly cache add   name: 'lodash.merge',
+50 silly cache add   rawSpec: '^4.6.1',
+50 silly cache add   spec: '>=4.6.1-0 <5.0.0-0',
+50 silly cache add   type: 'range' }
+51 silly addNamed lodash.merge@>=4.6.1-0 <5.0.0-0
+52 verbose addNamed ">=4.6.1-0 <5.0.0-0" is a valid semver range for lodash.merge
+53 silly addNameRange { name: 'lodash.merge',
+53 silly addNameRange   range: '>=4.6.1-0 <5.0.0-0',
+53 silly addNameRange   hasData: false }
+54 silly mapToRegistry name lodash.merge
+55 silly mapToRegistry using default registry
+56 silly mapToRegistry registry https://registry.npmjs.org/
+57 silly mapToRegistry uri https://registry.npmjs.org/lodash.merge
+58 verbose addNameRange registry:https://registry.npmjs.org/lodash.merge not in flight; fetching
+59 verbose get https://registry.npmjs.org/lodash.merge not expired, no request
+60 silly addNameRange number 2 { name: 'lodash.merge',
+60 silly addNameRange   range: '>=4.6.1-0 <5.0.0-0',
+60 silly addNameRange   hasData: true }
+61 silly addNameRange versions [ 'lodash.merge',
+61 silly addNameRange   [ '2.0.0',
+61 silly addNameRange     '2.1.0',
+61 silly addNameRange     '2.2.0',
+61 silly addNameRange     '2.2.1',
+61 silly addNameRange     '2.3.0',
+61 silly addNameRange     '2.4.0',
+61 silly addNameRange     '2.4.1',
+61 silly addNameRange     '3.0.0',
+61 silly addNameRange     '3.0.1',
+61 silly addNameRange     '3.0.2',
+61 silly addNameRange     '3.0.3',
+61 silly addNameRange     '3.1.0',
+61 silly addNameRange     '3.2.0',
+61 silly addNameRange     '3.2.1',
+61 silly addNameRange     '3.3.0',
+61 silly addNameRange     '3.3.1',
+61 silly addNameRange     '3.3.2',
+61 silly addNameRange     '4.0.0',
+61 silly addNameRange     '4.0.1',
+61 silly addNameRange     '4.0.2',
+61 silly addNameRange     '4.0.3',
+61 silly addNameRange     '4.0.4',
+61 silly addNameRange     '4.1.0',
+61 silly addNameRange     '4.1.1',
+61 silly addNameRange     '4.2.0',
+61 silly addNameRange     '4.3.0',
+61 silly addNameRange     '4.3.1',
+61 silly addNameRange     '4.3.2',
+61 silly addNameRange     '4.3.3',
+61 silly addNameRange     '4.3.4',
+61 silly addNameRange     '4.3.5',
+61 silly addNameRange     '4.4.0',
+61 silly addNameRange     '4.5.0',
+61 silly addNameRange     '4.5.1',
+61 silly addNameRange     '4.6.0',
+61 silly addNameRange     '4.6.1' ] ]
+62 silly addNamed lodash.merge@4.6.1
+63 verbose addNamed "4.6.1" is a plain semver version for lodash.merge
+64 silly cache afterAdd lodash.merge@4.6.1
+65 verbose afterAdd C:\Users\A.Mykulych\AppData\Roaming\npm-cache\lodash.merge\4.6.1\package\package.json not in flight; writing
+66 verbose afterAdd C:\Users\A.Mykulych\AppData\Roaming\npm-cache\lodash.merge\4.6.1\package\package.json written
+67 silly loadAllDepsIntoIdealTree Finishing
+68 silly idealTree:prePrune asp.net@1.0.0
+68 silly idealTree:prePrune ├── @types/jquery@3.3.1
+68 silly idealTree:prePrune ├── @types/lodash@4.14.104
+68 silly idealTree:prePrune ├── @types/node@9.4.7
+68 silly idealTree:prePrune ├── axios@0.18.0
+68 silly idealTree:prePrune ├── babel-runtime@6.26.0
+68 silly idealTree:prePrune ├── bootstrap@4.0.0
+68 silly idealTree:prePrune ├── core-js@2.5.3
+68 silly idealTree:prePrune ├── debug@3.1.0
+68 silly idealTree:prePrune ├── follow-redirects@1.4.1
+68 silly idealTree:prePrune ├── is-buffer@1.1.6
+68 silly idealTree:prePrune ├── jquery@3.3.1
+68 silly idealTree:prePrune ├── jquery.easing@1.4.1
+68 silly idealTree:prePrune ├── lodash@4.17.5
+68 silly idealTree:prePrune ├── lodash.merge@4.6.1
+68 silly idealTree:prePrune ├── ms@2.0.0
+68 silly idealTree:prePrune ├── popper.js@1.12.9
+68 silly idealTree:prePrune ├── regenerator-runtime@0.11.1
+68 silly idealTree:prePrune ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\select2
+68 silly idealTree:prePrune ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\syncfusion
+68 silly idealTree:prePrune ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\@types\syncfusion
+68 silly idealTree:prePrune ├── systemjs@0.21.0
+68 silly idealTree:prePrune ├── vue@2.5.13
+68 silly idealTree:prePrune ├── vue-async-computed@3.3.1
+68 silly idealTree:prePrune ├── vue-async-data-2@0.0.2
+68 silly idealTree:prePrune ├── vue-select@2.4.0
+68 silly idealTree:prePrune ├── vuex@3.0.1
+68 silly idealTree:prePrune ├─┬ vuex-persist@1.1.4
+68 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\handlebars
+68 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\inherits
+68 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\interpret
+68 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-buffer
+68 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-dotfile
+68 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-equal-shallow
+68 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-extendable
+68 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-extglob
+68 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-posix-bracket
+68 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-primitive
+68 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\localforage
+68 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\@types\lodash
+68 silly idealTree:prePrune │ ├── lodash.merge@4.6.1
+68 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\@types\marked
+68 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\@types\minimatch
+68 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\@types\mocha
+68 silly idealTree:prePrune │ ├─┬ C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc
+68 silly idealTree:prePrune │ │ ├─┬ C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\has-values
+68 silly idealTree:prePrune │ │ │ └── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\has-values\node_modules\kind-of
+68 silly idealTree:prePrune │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-descriptor
+68 silly idealTree:prePrune │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-odd
+68 silly idealTree:prePrune │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-primitive
+68 silly idealTree:prePrune │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-stream
+68 silly idealTree:prePrune │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-utf8
+68 silly idealTree:prePrune │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-windows
+68 silly idealTree:prePrune │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\lcid
+68 silly idealTree:prePrune │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\load-json-file
+68 silly idealTree:prePrune │ │ ├─┬ C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\object-copy
+68 silly idealTree:prePrune │ │ │ └── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\object-copy\node_modules\define-property
+68 silly idealTree:prePrune │ │ ├─┬ C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\object.pick
+68 silly idealTree:prePrune │ │ │ └── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\object.pick\node_modules\isobject
+68 silly idealTree:prePrune │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\semver
+68 silly idealTree:prePrune │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\signal-exit
+68 silly idealTree:prePrune │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\spdx-expression-parse
+68 silly idealTree:prePrune │ │ └── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\spdx-license-ids
+68 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\rollup
+68 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\typedoc
+68 silly idealTree:prePrune │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\wrappy
+68 silly idealTree:prePrune │ └── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\yn
+68 silly idealTree:prePrune └── vuex-typescript@3.0.2
+69 silly loadIdealTree Finishing
+70 silly currentTree asp.net@1.0.0
+70 silly currentTree ├── @types/jquery@3.3.1
+70 silly currentTree ├── @types/lodash@4.14.104
+70 silly currentTree ├── @types/node@9.4.7
+70 silly currentTree ├── axios@0.18.0
+70 silly currentTree ├── babel-runtime@6.26.0
+70 silly currentTree ├── bootstrap@4.0.0
+70 silly currentTree ├── core-js@2.5.3
+70 silly currentTree ├── debug@3.1.0
+70 silly currentTree ├── follow-redirects@1.4.1
+70 silly currentTree ├── is-buffer@1.1.6
+70 silly currentTree ├── jquery@3.3.1
+70 silly currentTree ├── jquery.easing@1.4.1
+70 silly currentTree ├── lodash@4.17.5
+70 silly currentTree ├── lodash.merge@4.6.1
+70 silly currentTree ├── ms@2.0.0
+70 silly currentTree ├── popper.js@1.12.9
+70 silly currentTree ├── regenerator-runtime@0.11.1
+70 silly currentTree ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\select2
+70 silly currentTree ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\syncfusion
+70 silly currentTree ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\@types\syncfusion
+70 silly currentTree ├── systemjs@0.21.0
+70 silly currentTree ├── vue@2.5.13
+70 silly currentTree ├── vue-async-data-2@0.0.2
+70 silly currentTree ├── vue-select@2.4.0
+70 silly currentTree ├── vuex@3.0.1
+70 silly currentTree ├─┬ vuex-persist@1.1.4
+70 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\handlebars
+70 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\inherits
+70 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\interpret
+70 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-buffer
+70 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-dotfile
+70 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-equal-shallow
+70 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-extendable
+70 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-extglob
+70 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-posix-bracket
+70 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\is-primitive
+70 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\localforage
+70 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\@types\lodash
+70 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\@types\lodash.merge
+70 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\@types\marked
+70 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\@types\minimatch
+70 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\@types\mocha
+70 silly currentTree │ ├─┬ C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc
+70 silly currentTree │ │ ├─┬ C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\has-values
+70 silly currentTree │ │ │ └── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\has-values\node_modules\kind-of
+70 silly currentTree │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-descriptor
+70 silly currentTree │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-odd
+70 silly currentTree │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-primitive
+70 silly currentTree │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-stream
+70 silly currentTree │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-utf8
+70 silly currentTree │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\is-windows
+70 silly currentTree │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\lcid
+70 silly currentTree │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\load-json-file
+70 silly currentTree │ │ ├─┬ C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\object-copy
+70 silly currentTree │ │ │ └── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\object-copy\node_modules\define-property
+70 silly currentTree │ │ ├─┬ C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\object.pick
+70 silly currentTree │ │ │ └── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\object.pick\node_modules\isobject
+70 silly currentTree │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\semver
+70 silly currentTree │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\signal-exit
+70 silly currentTree │ │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\spdx-expression-parse
+70 silly currentTree │ │ └── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\nyc\node_modules\spdx-license-ids
+70 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\rollup
+70 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\typedoc
+70 silly currentTree │ ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\wrappy
+70 silly currentTree │ └── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\yn
+70 silly currentTree └── vuex-typescript@3.0.2
+71 silly idealTree asp.net@1.0.0
+71 silly idealTree ├── @types/jquery@3.3.1
+71 silly idealTree ├── @types/lodash@4.14.104
+71 silly idealTree ├── @types/node@9.4.7
+71 silly idealTree ├── axios@0.18.0
+71 silly idealTree ├── babel-runtime@6.26.0
+71 silly idealTree ├── bootstrap@4.0.0
+71 silly idealTree ├── core-js@2.5.3
+71 silly idealTree ├── debug@3.1.0
+71 silly idealTree ├── follow-redirects@1.4.1
+71 silly idealTree ├── is-buffer@1.1.6
+71 silly idealTree ├── jquery@3.3.1
+71 silly idealTree ├── jquery.easing@1.4.1
+71 silly idealTree ├── lodash@4.17.5
+71 silly idealTree ├── lodash.merge@4.6.1
+71 silly idealTree ├── ms@2.0.0
+71 silly idealTree ├── popper.js@1.12.9
+71 silly idealTree ├── regenerator-runtime@0.11.1
+71 silly idealTree ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\select2
+71 silly idealTree ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\syncfusion
+71 silly idealTree ├── C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\@types\syncfusion
+71 silly idealTree ├── systemjs@0.21.0
+71 silly idealTree ├── vue@2.5.13
+71 silly idealTree ├── vue-async-computed@3.3.1
+71 silly idealTree ├── vue-async-data-2@0.0.2
+71 silly idealTree ├── vue-select@2.4.0
+71 silly idealTree ├── vuex@3.0.1
+71 silly idealTree ├─┬ vuex-persist@1.1.4
+71 silly idealTree │ └── lodash.merge@4.6.1
+71 silly idealTree └── vuex-typescript@3.0.2
+72 silly generateActionsToTake Starting
+73 silly install generateActionsToTake
+74 warn checkPermissions Missing write access to C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\lodash.merge
+75 silly rollbackFailedOptional Starting
+76 silly rollbackFailedOptional Finishing
+77 silly runTopLevelLifecycles Starting
+78 silly runTopLevelLifecycles Finishing
+79 silly install printInstalled
+80 warn ENOENT ENOENT: no such file or directory, open 'C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\@types\syncfusion\package.json'
+81 warn ENOENT ENOENT: no such file or directory, open 'C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\select2\package.json'
+82 verbose stack Error: ENOENT: no such file or directory, access 'C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\lodash.merge'
+82 verbose stack     at Error (native)
+83 verbose cwd C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld
+84 error Windows_NT 10.0.16299
+85 error argv "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Web\\External\\Node.exe" "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Web\\External\\node_modules\\npm\\bin\\npm-cli.js" "install" "vue-async-computed@3.3.1"
+86 error node v5.4.1
+87 error npm  v3.3.4
+88 error path C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\lodash.merge
+89 error code ENOENT
+90 error errno -4058
+91 error syscall access
+92 error enoent ENOENT: no such file or directory, access 'C:\Dev\Utk\Research frontend\asp net vue\HelloWorld\HelloWorld\node_modules\vuex-persist\node_modules\lodash.merge'
+92 error enoent This is most likely not a problem with npm itself
+92 error enoent and is related to npm not being able to find a file.
+93 verbose exit [ -4058, true ]

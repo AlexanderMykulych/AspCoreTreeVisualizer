@@ -21,7 +21,6 @@ function getDefaultValue() {
 				type: PointType.characteristic
 			}
 		},
-		selectedCharacteristic: null,
 		uniqId: uniqId(),
 		offsetYDelta: 250,
 		addExistCharacteristic: false,
@@ -31,10 +30,9 @@ function getDefaultValue() {
 
 export default Vue.extend({
 	template: "#add-depend-point",
-	props: ["show", "id", "dependency", "characteristics", "roles", "defaultPoint", "defaultDependency", "isModalWindow", "points"],
+	props: ["show", "id", "dependency", "roles", "defaultPoint", "defaultDependency", "isModalWindow", "points", "characteristics"],
 	components: {
-		RuleControll,
-		AsyncSelect
+		RuleControll
 	},
 	computed: {
 		elId() {

@@ -9,4 +9,8 @@ export interface BasePoint {
 		type: PointType;
 	},
 	Label: string;
+	Category: {
+		Id: string,
+		Name: string
+	};
 }
