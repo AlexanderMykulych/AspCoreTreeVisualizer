@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 namespace HelloWorld.Services {
 	[Route("api/[controller]")]
 	public class GetCharacteristicController : Controller {
-		private IDbConnection _dbConnection;
 		private CharacteristicRepository _repository;
 
 		public GetCharacteristicController(CharacteristicRepository repository) {

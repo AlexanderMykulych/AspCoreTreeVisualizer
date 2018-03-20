@@ -4,12 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Models {
-    public class CharacteristicLookupValue {
-        public string Id {
-            get;set;
-        }
-        public string Name {
-            get; set;
-        }
-    }
+	public class CharacteristicLookupValue {
+		public string Id {
+			get; set;
+		}
+		public string Name {
+			get; set;
+		}
+	}
 }

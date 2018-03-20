@@ -11,19 +11,17 @@ namespace HelloWorld.Services
 {
 	[Route("api/[controller]")]
 	public class GetCategoryController : Controller {
-		private IDbConnection _dbConnection;
-		public GetCategoryController(IDbConnection dbConnection) {
-			_dbConnection = dbConnection;
+		private CategoryRepository _repository;
+		public GetCategoryController(CategoryRepository repository) {
+			_repository = repository;
 		}
 		[HttpGet]
 		public IEnumerable<Category> Get() {
-			CategoryRepository categoryRepository = new CategoryRepository(_dbConnection);
-			return categoryRepository.GetAll();
+			return _repository.GetAll();
 		}
 		[HttpGet("{id}")]
 		public Category Get(String id) {
-			CategoryRepository categoryRepository = new CategoryRepository(_dbConnection);
-			return categoryRepository.Get(id);
+			return _repository.Get(id);
 		}
 	}
 }

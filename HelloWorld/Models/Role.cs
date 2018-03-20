@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace HelloWorld.Models {
-    public class Role {
+	public class Role {
 
-    }
+	}
 }

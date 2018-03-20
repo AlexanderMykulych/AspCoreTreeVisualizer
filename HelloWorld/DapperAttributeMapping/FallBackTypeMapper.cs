@@ -19,7 +19,7 @@ namespace DapperAttributeMapping {
 					if (result != null) {
 						return result;
 					}
-				} catch (NotImplementedException nix) {
+				} catch (NotImplementedException) {
 				}
 			}
 			return null;
@@ -37,7 +37,7 @@ namespace DapperAttributeMapping {
 					if (result != null) {
 						return result;
 					}
-				} catch (NotImplementedException nix) {
+				} catch (NotImplementedException) {
 				}
 			}
 			return null;
@@ -51,7 +51,7 @@ namespace DapperAttributeMapping {
 					if (result != null) {
 						return result;
 					}
-				} catch (NotImplementedException nix) {
+				} catch (NotImplementedException) {
 				}
 			}
 			return null;

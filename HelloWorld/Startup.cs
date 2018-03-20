@@ -10,7 +10,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Models;
 using Oracle.ManagedDataAccess.Client;
+using Repositories;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace HelloWorld {
@@ -26,7 +28,9 @@ namespace HelloWorld {
 			var connectionString = Configuration["OracleConnectionString"];
 			services.AddSingleton<IDbConnection>(context => new OracleConnection(connectionString));
 			services.AddSingleton<CharacteristicRepository>();
-			services.AddSwaggerGen(c => {
+            services.AddSingleton<CategoryRepository>();
+            services.AddSingleton<BaseRepository<CharacteristicLookupValue>>();
+            services.AddSwaggerGen(c => {
 				c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
 			});
 			services.AddMvc();
