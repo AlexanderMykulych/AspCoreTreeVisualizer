@@ -1,11 +1,15 @@
 ﻿import Vue from "vue";
 import _ from "lodash";
 import "syncfusion";
-import memoizeDebounce from "../mixins/m_lodash";
+import memoizeDebounce, { difference } from "../mixins/m_lodash";
 import addDependModalWindow from "./Diagram/AddDependPointWindow";
-import createAddDependPointHandler from "./Diagram/AddDependedPoint";
+import createAddDependPointHandler from "./Diagram/Handler/AddDependedPoint";
+import createChangePointSettingHandler from "./Diagram/Handler/ChangePointSettingHandler";
 import { connect } from "http2";
 import { PointType } from "../Model/PointType";
+import { uniqId } from "../mixins/IdGenerator";
+import { BasePoint } from "../Model/BasePoint";
+import testControll from "./Diagram/Test/GraphTestControll";
 declare const ej: any;
 var constraints = ej.datavisualization.Diagram.DiagramConstraints.Default | ej.datavisualization.Diagram.DiagramConstraints.FloatElements;
 
@@ -15,9 +19,13 @@ export default Vue.extend({
 	data() {
 		return {
 			bus: new Vue(),
-			showAddDependModal: false,
+			showDependModal: false,
+			offsetYMargin: 250,
+			addMode: false,
+			diagramInit: false,
 			selectedNodes: [],
-			offsetYMargin: 250
+			isModalWindow: true,
+			IsOverviewActive: true
 		};
 	},
 	computed: {
@@ -34,82 +42,78 @@ export default Vue.extend({
 			return this.diagramElId + "_overview";
 		},
 		diagram() {
-			return $(this.diagramElId).ejDiagram("instance");
+			return this.diagramInit ? $(this.diagramElId).ejDiagram("instance") : null;
+		},
+		firstSelectNode() {
+			return this.selectedNodes && this.selectedNodes.length > 0 ? this.selectedNodes[0] : null;
+		},
+		firstSelectNodeValues() {
+			return this.firstSelectNode ? this.firstSelectNode.Values : null;
+		},
+		firstSelectNodeDependency() {
+			return this.graph && this.firstSelectNode ? this.graph.Connectors.filter(x => x.End.name === this.firstSelectNode.name) : null;
+		},
+		dependSelectedNodes() {
+			return this.selectedNodes ? this.selectedNodes.map(x => {
+				return {
+					Name: uniqId(),
+					Start: x,
+					End: null,
+					Rules: {
+						Values: [],
+						Roles: []
+					}
+				};
+			}) : null;
+		},
+		connectors() {
+			this.graph.Connectors.forEach(x => this.updateConnectorLabel(x));
+			return this.graph.Connectors;
+		},
+		nodes() {
+			this.graph.Nodes.forEach(x => this.updateNodeLabel(x));
+			return this.graph.Nodes;
 		}
 	},
 	methods: {
-		addDependentPoint(options) {
-			var point = options.point;
-			var rules = options.rules;
-			var pointName = point.name;
-			var firstSelectedNode = this.selectedNodes[0];
-			var offsetX = firstSelectedNode.offsetX;
-			var offsetY = firstSelectedNode.offsetY;
-			var endPoint = pointName;
-
-			this.addPoint(_.merge({
-				name: pointName,
-				offsetX: offsetX,
-				offsetY: offsetY + this.offsetYMargin,
-				Options: {
-					type: PointType.characteristic
-				},
-				labels: [{
-					text: pointName
-				}]
-			}, point.options));
-
-			if (this.selectedNodes.length > 1) {
-				var andPointName = "AND_" + pointName;
-				endPoint = andPointName;
-				this.addPoint({
-					name: andPointName,
-					offsetX: offsetX,
-					offsetY: offsetY + this.offsetYMargin / 2,
-					Options: {
-						type: PointType.aggregator
-					}
-				});
-				this.addConnection({
-					Start: endPoint,
-					End: pointName,
-					Name: endPoint + "_" + pointName
-				});
+		selectionChange(selectedItems) {
+			if (!selectedItems || selectedItems.length <= 0) {
+				this.selectedNodes = null;
+				return;
 			}
-			_.forEach(this.selectedNodes, node => {
-				this.addConnection({
-					Start: node.name,
-					End: endPoint,
-					Name: node.name + "_" + endPoint,
-					Rules: rules
-				});
-			});
-			this.showAddDependModal = false;
+			var selectedNodes = selectedItems.filter(x => x._type === "node");
+			this.selectedNodes = _.map(selectedNodes, (x: any) => _.find(this.graph.Nodes, y => y.name === x.name));
 		},
-		addConnection(options) {
+		commitPointAndDependency(options) {
+			var points = options.points;
+			var dependency = options.dependency;
+
+			points.forEach(point => this.commitPoint(point));
+			dependency.forEach(dep => this.commitConnection(dep));
+
+			this.showDependModal = false;
+		},
+		commitConnection(options) {
 			this.$emit("on-add-connection", {
 				graph: this.diagramId,
 				dep: options
 			});
 		},
-		addPoint(options) {
+		commitPoint(options) {
 			this.$emit("on-add-node", {
 				graph: this.diagramId,
 				point: options
 			});
 		},
 		openAddDependModal(option?: any) {
-			var selected = this.diagram.selectionList[0];
-			var selectedNodes = [];
-			if (selected._type === "node") {
-				selectedNodes = [selected.name];
-			} else if (selected.type === "pseudoGroup") {
-				selectedNodes = selected.children;
-			}
-			this.selectedNodes = _.map(selectedNodes, x => this.diagram.findNode(x));
-			this.showAddDependModal = true;
+			this.addMode = true;
+			this.showDependModal = true;
 		},
-		updateNodeProp: memoizeDebounce(function(args) {
+		openChangePointModal(option?: any) {
+			this.addMode = false;
+			this.showDependModal = true;
+		},
+		updateNodeProp: memoizeDebounce(function (args) {
 			var node = _.find(this.graph.Nodes, node => node.name === args.element.name);
 			if (node) {
 				this.$emit("node-prop-change", {
@@ -119,51 +123,125 @@ export default Vue.extend({
 					newValue: args.element[args.propertyName]
 				});
 			}
-		}, 500, x => x.propertyName)
-		//	function () {
-		//	var mem = _.memoize(function (memArgs) {
-		//		var fun = _.debounce(function (args) {
-		//			var node = _.find(this.graph.Nodes, node => node.name === args.element.name);
-		//			if (node) {
-		//				this.$emit("node-prop-change", {
-		//					graph: this.graph.Name,
-		//					name: node.name,
-		//					propName: args.propertyName,
-		//					newValue: args.element[args.propertyName]
-		//				});
-		//			}
-		//		}, 1000);
-		//		window["fun"].push(fun);
-		//		return fun;
-		//	}, args => args.propertyName);
-		//	mem.apply(this, arguments).apply(this, arguments);
-		//}
+		}, 500, x => x.propertyName),
+		updateNodeLabel(node) {
+			if (node.Options) {
+				var property = this.getNodeProperties(node);
+				_.assign(node, property);
+			}
+			if (!node.labels || node.labels.length <= 0) {
+				node.labels = [{
+					name: "label1",
+					bold: true,
+					fontColor: "black",
+					horizontalAlignment: ej.datavisualization.Diagram.HorizontalAlignment.Right,
+					verticalAlignment: ej.datavisualization.Diagram.VerticalAlignment.Bottom,
+					offset: {
+						y: 1.2,
+						x: 0.8
+					},
+					boundaryConstraints: false
+				}];
+			}
+			node.labels[0].text = node.Label;
+		},
+		updateConnectorLabel(connector) {
+			if (!connector.labels || connector.labels.lenght <= 0) {
+				connector.labels = [{
+					name: "label2",
+					bold: true,
+					fontColor: "black",
+					alignment: "center",
+					boundaryConstraints: false,
+					offset: ej.datavisualization.Diagram.Point(0, 0)
+				}];
+			}
+			connector.labels[0].text = connector.Label;
+		},
+		goTest() {
+			this.IsOverviewActive = false;
+		},
+		goOverview() {
+			this.IsOverviewActive = true;
+		},
+		testActiveNode(actives) {
+			if (!_.isArray(actives) || !this.diagram) {
+				return;
+			}
+			this.graph.Nodes.forEach(node => {
+				var active = node.Options.type === PointType.start || _.findIndex(actives, x => x.name === node.name) >= 0;
+				var properties = !this.IsOverviewActive && active ? {
+					fillColor: "#a6f568"
+				} : this.getNodeProperties(node);
+				this.diagram.updateNode(node.name, properties);
+			});
+			
+		},
+		getNodeProperties(node) {
+			switch (node.Options.type) {
+				case PointType.start:
+					return {
+						fillColor: "#29c15f",
+						shape: "ellipse"
+					}
+				case PointType.characteristic:
+					return {
+						fillColor: "#2085c9",
+						shape: "rectangle"
+					}
+				case PointType.aggregator:
+					return {
+						fillColor: "#ec7e0d",
+						shape: "ellipse"
+					}
+			}
+		},
+		removeConnector(connector) {
+			this.$emit("remove-connection", {
+				graph: this.graph.Name,
+				connectorName: connector.Name
+			});
+		},
+		removeNode(node) {
+			this.$emit("remove-node", {
+				graph: this.graph.Name,
+				nodeName: node.name
+			});
+		},
+		connectionChange(options) {
+			var dep: any = {
+				Name: options.element.Name
+			};
+			switch (options.endPoint) {
+				case "targetEndPoint":
+					dep.End = options.connection
+					break;
+				case "sourceEndPoint":
+					return;
+				default:
+					return;
+			}
+			this.$emit("on-add-connection", {
+				graph: this.graph.Name,
+				dep
+			});
+		}
 	},
 	mounted() {
 		var $this = this;
 		this.bus.$on("add-depend-point", (options?: any) => this.openAddDependModal(options));
+		this.bus.$on("change-point", (options?: any) => this.openChangePointModal(options));
 		$(this.diagramElId).ejDiagram({
 			enableContextMenu: false,
 			constraints,
 			width: "100%",
 			height: this.heightPx,
-			nodes: this.graph.Nodes,
-			connectors: this.graph.Connectors,
+			nodes: this.nodes,
+			connectors: this.connectors,
 			defaultSettings: {
 				node: {
 					width: 65,
 					height: 65,
-					labels: [{
-						name: "label1",
-						bold: true,
-						fontColor: "black",
-						horizontalAlignment: ej.datavisualization.Diagram.HorizontalAlignment.Right,
-						verticalAlignment: ej.datavisualization.Diagram.VerticalAlignment.Bottom,
-						offset: {
-							y: 1.2,
-							x: 0.8
-						}
-					}],
 					borderWidth: 0
 				},
 				connector: {
@@ -184,33 +262,33 @@ export default Vue.extend({
 			selectedItems: {
 				userHandles: [createAddDependPointHandler({
 					bus: this.bus
+				}), createChangePointSettingHandler({
+					bus: this.bus
 				})]
 			},
-			nodeTemplate(diagram, node) {
-				if (node.Options) {
-					var type = node.Options.type;
-					switch (type) {
-						case PointType.start:
-							node.fillColor = "#29c15f";
-							node.shape = "ellipse";
-							break;
-						case PointType.characteristic:
-							node.fillColor = "#2085c9";
-							node.shape = "rectangle";
-							break;
-						case PointType.aggregator:
-							node.fillColor = "#ec7e0d";
-							node.shape = "ellipse";
-							break;
-					}
-				}
-			},
 			propertyChange(args) {
+				$this.$emit("propertyChange", args);
 				if (args.elementType === "node") {
 					if (_.includes(["offsetX", "offsetY"], args.propertyName)) {
 						$this.updateNodeProp(args);
 					}
 				}
+			},
+			selectionChange: function (options) {
+				$this.selectionChange(options.selectedItems);
+			},
+			connectorCollectionChange(options) {
+				if (options.changeType === "remove") {
+					$this.removeConnector(options.element);
+				}
+			},
+			nodeCollectionChange(options) {
+				if (options.changeType === "remove") {
+					$this.removeNode(options.element);
+				}
+			},
+			connectionChange(options) {
+				$this.connectionChange(options);
 			}
 		});
 		$(this.diagramOverviewElId).ejOverview({
@@ -218,29 +296,53 @@ export default Vue.extend({
 			width: "100%",
 			height: this.heightPx
 		});
+		this.diagramInit = true;
 	},
 	components: {
-		addDependModalWindow
+		addDependModalWindow,
+		testControll
 	},
 	watch: {
 		graph(val) {
 			var diagram = this.diagram;
-			_.filter(val.Nodes, function (node) {
-				return !_.find(diagram.nodes(), x => x.name === node.name);
-			})
-				.forEach(x =>
-					diagram.add(
-						_.merge(x, {
-							labels: [{
-								text: x.name
-							}]
-						})
-					)
-				);
-			_.filter(val.Connectors, function (con) {
-				return !_.find(diagram.connectors(), x => x.name === con.name);
-			})
-				.forEach(x => diagram.add(x));
+			var nodes = diagram.nodes();
+			var connectors = diagram.connectors();
+			val.Nodes.forEach(x => {
+				this.updateNodeLabel(x);
+				var node = _.find(nodes, (y: any) => y.name === x.name);
+				if (node) {
+					var diffNode = difference(x, node);
+					if (diffNode) {
+						diagram.updateNode(node.name, diffNode);
+					}
+					var diffLabel = difference(x.labels[0], node.labels[0]);
+					if (diffLabel) {
+						diagram.updateLabel(node.name, node.labels[0], diffLabel);
+					}
+				} else {
+					diagram.add(x)
+				}
+			});
+			val.Connectors.forEach(x => {
+				this.updateConnectorLabel(x);
+				var conn = _.find(connectors, (y: any) => y.name === x.Name);
+				if (conn) {
+					var diffConn = difference(x, conn);
+					if (diffConn) {
+						diagram.updateConnector(conn.name, diffConn);
+					}
+					if (conn.labels.length > 0) {
+						var diffLabel = difference(x.labels[0], conn.labels[0]);
+						if (diffLabel) {
+							diagram.updateLabel(conn.name, conn.labels[0], diffLabel);
+						}
+					} else {
+						diagram.addLabel(conn.name, x.labels[0]);
+					}
+				} else {
+					diagram.add(x)
+				}
+			});
 		}
 	}
 });

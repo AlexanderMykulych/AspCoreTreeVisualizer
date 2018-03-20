@@ -17,8 +17,10 @@
 										@on-add-node="addNode"
 										@on-add-connection="addConnection"
 										:characteristics="characteristics"
-				                        @node-prop-change="onNodePropChange" 
-										:roles="roles"/>
+										@node-prop-change="onNodePropChange"
+										:roles="roles"
+										@remove-connection="removeConnection"
+										@remove-node="removeNode" />
 			</div>
 		</div>
 	</div>
@@ -26,40 +28,69 @@
 <template id="characteristic-diagram">
 	<div :class="classes">
 		<div class="card border-dark mb-3">
-			<div class="card-header">{{diagramId}}</div>
+			<div class="card-header container-fluid">
+				<div class="row">
+					<div class="col-1">{{diagramId}}</div>
+					<div class="col"></div>
+					<div class="col-1">
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" :id="'modal-check-id' + diagramId" v-model="isModalWindow">
+							<label class="custom-control-label" :for="'modal-check-id' + diagramId">Модальне вікно</label>
+						</div>
+					</div>
+					<div class="col-2">
+						<button type="button" class="btn btn-primary" @click="goTest" v-if="IsOverviewActive">Тестування</button>
+						<button type="button" class="btn btn-primary" @click="goOverview" v-else>Огляд</button>
+					</div>
+				</div>
+			</div>
 			<div class="card-body">
 				<div class="container-fluid">
 					<div class="row">
-						<!--<div :id="(graph.Name + '_symbolPallette')" class="col-1"></div>-->
 						<div :id="diagramId" class="col-9"></div>
-						<div :id="(diagramId + '_overview')" class="col-3 card-body"></div>
+						<div class="col-3">
+							<div :id="(diagramId + '_overview')" class="card-body" v-show="IsOverviewActive"></div>
+							<div v-show="!IsOverviewActive">
+								<test-controll :graph="graph" @active="testActiveNode"/>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<add-depend-modal-window :bus="bus"
+													 :id="diagramId + '_change'"
+													 :dependency="firstSelectNodeDependency"
+													 :show="showDependModal && !addMode"
+													 @commit-point="commitPointAndDependency"
+													 :characteristics="characteristics"
+													 :roles="roles"
+													 @close="showDependModal = false"
+													 :default-point="firstSelectNode"
+													 :togglesValues="firstSelectNodeValues"
+													 :is-modal-window="isModalWindow" />
+						</div>
+						<div class="col">
+							<!--<add-depend-modal-window :bus="bus"
+													 :id="diagramId + '_add'"
+													 :dependency="dependSelectedNodes"
+													 :show="showDependModal && addMode"
+													 @commit-point="commitPointAndDependency"
+													 :characteristics="characteristics"
+													 :roles="roles"
+													 @close="showDependModal = false"
+													 :is-modal-window="isModalWindow"
+													 :points="graph.Nodes"
+													 />-->
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<add-depend-modal-window
-			:bus="bus"
-			:id="diagramId"
-			:startpoints="selectedNodes"
-			:show.sync="showAddDependModal"
-			@addpoint="addDependentPoint"
-			:characteristics="characteristics"
-			:roles="roles"/>
 	</div>
 </template>
-<template id="test-temp">
-    <div id="watch-example">
-        <p>
-            Задайте вопрос, на который можно ответить "да" или "нет":
-            <input v-model="question">
-        </p>
-        <p>{{ answer }}</p>
-    </div>
-</template>
-
 <template id="add-depend-point">
-	<div class="modal fade" :id="('add-depend-point_' + id)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered modal-width modal-large" role="document">
+	<div :class="mainClassObject" :id="('add-depend-point_' + id)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-width" role="document" :style="{ maxWidth: modalMaxWidth }">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLongTitle">Добавить зависимость на характеристику</h5>
@@ -77,28 +108,33 @@
 											Исходные характеристики
 										</div>
 									</div>
-									<div class="card" v-for="(point, index) in startpoints">
+									<div class="card" v-for="(dep, index) in dependency">
 										<div class="card-header" id="headingOne">
 											<h5 class="mb-0">
-												<button class="btn btn-link" data-toggle="collapse" :data-target="'#collapseOne_' + index" aria-expanded="true" aria-controls="collapseOne">
-													{{point.labels[0].text}}
+												<button class="btn btn-link" data-toggle="collapse" :data-target="'#collapseOne_' + index + id" aria-expanded="true" aria-controls="collapseOne">
+													{{dep.Start.Label}}
 												</button>
 											</h5>
 										</div>
-										<div :id="'collapseOne_' + index" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+										<div :id="'collapseOne_' + index + id" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
 											<div class="card-body">
-												<rule-controll
-															   :point="point"
-															   :index="index"
-															   :values="point.Values"
+												<div class="input-group mb-3">
+													<div class="input-group-prepend">
+														<span class="input-group-text" id="inputGroup-sizing-default">Название</span>
+													</div>
+													<input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="dep.Label">
+												</div>
+												<rule-controll :point="dep.Start"
+															   :index="index + id"
 															   :roles="roles"
-															   @rule-change="onRuleChange"/>
+															   :toggles-values.sync="dep.Rules.Values"
+															   :toggles-roles.sync="dep.Rules.Roles" />
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="col-7">
+							<div class="col-7" v-if="!addExistCharacteristic">
 								<div class="container">
 									<div class="row">
 										<div class="col">
@@ -106,56 +142,69 @@
 												<div class="input-group-prepend">
 													<span class="input-group-text" id="inputGroup-sizing-default">Характеристика</span>
 												</div>
-												<input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="point">
+												<input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="point.Label">
 											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col">
 											<div class="input-group mb-3">
-												<select class="custom-select" id="inputGroupSelect01" v-model="selectedCharacteristic">
-													<option v-for="char in characteristics" :value="char">{{char.Name}}</option>
+												<select class="custom-select" :id="'inputGroupSelect' + id" v-model="point.Characteristic">
+													<option v-for="char in characteristics" :key="char.Name" :value="char">{{char.Name}}</option>
 												</select>
 											</div>
 										</div>
 									</div>
-									<div class="row" v-if="selectedCharacteristic != null">
-										<div class="col" v-if="togglesValues != null && togglesValues.length > 0">
+									<div class="row" v-if="point.Characteristic != null">
+										<div class="col" v-if="point.Values != null && point.Values.length > 0">
 											<div class="input-group mb-3">
 												<div class="input-group-prepend">
 													<label class="input-group-text" for="selectDefault">Default</label>
 												</div>
-												<select class="form-control" id="selectDefault" v-model="defaultValue">
-													<option v-for="value in togglesValues" :value="value">{{value.Name}}</option>
+												<select class="form-control" id="selectDefault" v-model="point.DefaultValue">
+													<option v-for="value in point.Values" :value="value">{{value.Name}}</option>
 												</select>
 											</div>
 										</div>
 										<div class="col">
 											<div class="form-check">
-												<input type="checkbox" class="form-check-input" id="modal-point-required" v-model="required">
+												<input type="checkbox" class="form-check-input" id="modal-point-required" v-model="point.Required">
 												<label class="form-check-label" for="modal-point-required">Обязательно</label>
 											</div>
 										</div>
 									</div>
 									<div class="row">
-										<div class="col" v-if="selectedCharacteristic != null">
-											<rule-controll :point="selectedCharacteristic"
-														   index="main"
-														   :values="selectedCharacteristic.Values"
+										<div class="col" v-if="point.Characteristic != null">
+											<rule-controll :point="point.Characteristic"
+														   :index="'main' + id"
 														   :roles="roles"
-														   @rule-change="onSelectCharRuleChange"
 														   :role-with-detail="true"
-														   :role-detail-values="togglesValues"/>
+														   :toggles-values.sync="point.Values"
+														   :toggles-roles.sync="point.Roles" 
+														   />
 										</div>
 									</div>
+								</div>
+							</div>
+							<div class="col-7" v-else>
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
+										<span class="input-group-text" id="'inputGroupSelect' + id">Характеристика</span>
+									</div>
+									<select class="custom-select" :id="'inputGroupSelect' + id" v-model="existPoint">
+										<option v-for="point in points" :key="point.name" :value="point">{{point.Label}}</option>
+									</select>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" v-if="!addExistCharacteristic" @click="() => addExistCharacteristic = true">Существующая</button>
+					<button type="button" class="btn btn-primary" v-else @click="() => addExistCharacteristic = false">Новая</button>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-					<button type="button" class="btn btn-primary" @click="addPoint">Добавить</button>
+					<button v-if="!defaultPoint" type="button" class="btn btn-primary" @click="addPoint">Добавить</button>
+					<button v-else type="button" class="btn btn-primary" @click="changePoint">Изменить</button>
 				</div>
 			</div>
 		</div>
@@ -174,8 +223,8 @@
 				<div class="container">
 					<div class="row">
 						<div class="col">
-							<div class="form-check" v-for="(char, index) in values">
-								<input type="checkbox" class="form-check-input" v-model="togglesValues" :id="'rule_value_checkbox_' + uniq + index" :value="char">
+							<div class="form-check" v-for="(char, index) in point.Values">
+								<input type="checkbox" class="form-check-input" :value="char" v-model="sync_togglesValues" :id="'rule_value_checkbox_' + uniq + index"/>
 								<label class="form-check-label" :for="'rule_value_checkbox_' + uniq + index">{{char.Name}}</label>
 							</div>
 						</div>
@@ -187,7 +236,7 @@
 					<div class="row">
 						<div class="col input-group">
 							<select class="custom-select" :id="'inputGroup' + uniq" v-model="selectedRole">
-								<option v-for="(role, index) in existsRoles" :value="role" :selected="index == 1 ? '' : 'false'">{{role.Name}}</option>
+								<option v-for="(role, index) in existsRoles" :value="role">{{role.Name}}</option>
 							</select>
 							<div class="input-group-append">
 								<button class="btn btn-outline-secondary" type="button" @click="onRoleSelectClick">Вибрать</button>
@@ -208,12 +257,12 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr v-for="(roleInfo, index) in togglesRoles">
+												<tr v-for="(roleInfo, index) in sync_togglesRoles">
 													<td><div class="d-flex justify-content-center">{{roleInfo.role.Name}}</div></td>
 													<td v-if="roleWithDetail">
-														<div class="input-group mb-3 d-flex justify-content-center" :disabled="roleDetailValues != null && roleDetailValues.length > 0 && roleInfo.IsChecked">
+														<div class="input-group mb-3 d-flex justify-content-center" :disabled="c_togglesValues != null && c_togglesValues.length > 0 && roleInfo.IsChecked">
 															<select class="form-control" :id="'role-selectDefault' + uniq" v-model="roleInfo.DefaultValue">
-																<option v-for="value in roleDetailValues" :value="value">{{value.Name}}</option>
+																<option v-for="value in sync_togglesValues" :value="value">{{value.Name}}</option>
 															</select>
 														</div>
 													</td>
@@ -231,6 +280,20 @@
 							</div>
 						</div>
 					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+<template id="graph-test">
+	<div class="container-fluid">
+		<div class="row" v-for="(point, index) in activePoints" :key="point.name">
+			<div class="col">
+				<label for="exampleFormControlSelect1">{{point.Label}}</label>
+				<div class="input-group mb-3">
+					<select id="inputGroupSelectGraph1_add" class="custom-select" v-model="selectedValues[point.name]">
+						<option v-for="value in point.Values" :value="value" :key="value.Id">{{value.Name}}</option>
+					</select>
 				</div>
 			</div>
 		</div>

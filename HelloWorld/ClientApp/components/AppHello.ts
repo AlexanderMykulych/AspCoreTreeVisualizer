@@ -8,6 +8,7 @@ import * as graph from "../Store/GraphStore";
 import { BasePoint } from "../Model/BasePoint";
 import { Dependency } from "../Model/Dependency";
 import { PointType } from "../Model/PointType";
+import { uniqId } from "../mixins/IdGenerator";
 
 
 var store = createStore();
@@ -20,6 +21,9 @@ export default Vue.extend({
 		};
 	},
 	computed: {
+		test() {
+			return graph.readGraph(this.$store)[0].Points.map(x => x.Label);
+		},
 		diagrams() {
 			return graph.readGraph(this.$store).map(x => graph.getSyncfusiongGraphByGraph(this.$store)(x));
 		},
@@ -31,16 +35,14 @@ export default Vue.extend({
 		}
 	},
 	methods: {
-		addGraph: function () {
+		addGraph() {
 			graph.addGraph(this.$store, {
 				Name: "Graph" + (graph.readGraphCount(this.$store) + 1),
 				Points: [{
-					name: "Start",
+					name: uniqId(),
 					offsetX: 500,
 					offsetY: 20,
-					labels: [{
-						text: "Start Point"
-					}],
+					Label: "Start",
 					Options: {
 						type: PointType.start
 					}
@@ -48,14 +50,20 @@ export default Vue.extend({
 				Dependencies: []
 			});
 		},
-		addNode: function (node: { graph: string, point: BasePoint }) {
+		addNode(node: { graph: string, point: BasePoint }) {
 			graph.addPoint(this.$store, node);
 		},
-		addConnection: function (connect: { graph: string, dep: Dependency }) {
+		addConnection(connect: { graph: string, dep: Dependency }) {
 			graph.addDependency(this.$store, connect);
 		},
-		onNodePropChange: function (options: { graph: string, name: string, propName: string, newValue: any }) {
+		onNodePropChange(options: { graph: string, name: string, propName: string, newValue: any }) {
 			graph.changeNodeProperty(this.$store, options);
+		},
+		removeConnection(options: {graph: string, connectorName: string}) {
+			graph.removeConnection(this.$store, options);
+		},
+		removeNode(options: { graph: string, nodeName: string }) {
+			graph.removeNode(this.$store, options);
 		}
 	},
     components: {

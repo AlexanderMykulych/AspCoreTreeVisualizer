@@ -1,3 +1,4 @@
 ﻿export interface CharacteristicValue {
-	Value: string;
+	Id: string;
+	Name: string;
 }

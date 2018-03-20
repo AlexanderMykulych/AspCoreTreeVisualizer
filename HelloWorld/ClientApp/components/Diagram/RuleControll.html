@@ -11,8 +11,8 @@
 				<div class="container">
 					<div class="row">
 						<div class="col">
-							<div class="form-check" v-for="(char, index) in values">
-								<input type="checkbox" class="form-check-input" v-model="togglesValues" :id="'rule_value_checkbox_' + uniq + index" :value="char">
+							<div class="form-check" v-for="(char, index) in point.Values">
+								<input type="checkbox" class="form-check-input" :value="char" v-model="sync_togglesValues" :id="'rule_value_checkbox_' + uniq + index"/>
 								<label class="form-check-label" :for="'rule_value_checkbox_' + uniq + index">{{char.Name}}</label>
 							</div>
 						</div>
@@ -45,12 +45,12 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr v-for="(roleInfo, index) in togglesRoles">
+												<tr v-for="(roleInfo, index) in sync_togglesRoles">
 													<td><div class="d-flex justify-content-center">{{roleInfo.role.Name}}</div></td>
 													<td v-if="roleWithDetail">
-														<div class="input-group mb-3 d-flex justify-content-center" :disabled="roleDetailValues != null && roleDetailValues.length > 0 && roleInfo.IsChecked">
+														<div class="input-group mb-3 d-flex justify-content-center" :disabled="c_togglesValues != null && c_togglesValues.length > 0 && roleInfo.IsChecked">
 															<select class="form-control" :id="'role-selectDefault' + uniq" v-model="roleInfo.DefaultValue">
-																<option v-for="value in roleDetailValues" :value="value">{{value.Name}}</option>
+																<option v-for="value in sync_togglesValues" :value="value">{{value.Name}}</option>
 															</select>
 														</div>
 													</td>

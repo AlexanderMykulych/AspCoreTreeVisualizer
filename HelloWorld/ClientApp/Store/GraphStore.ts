@@ -11,6 +11,7 @@ import { Connector } from "../Model/SyncfusionGraph/Connector";
 import { connect } from "http2";
 import { Dependency } from "../Model/Dependency";
 import { PointType } from "../Model/PointType";
+import { uniqId } from "../mixins/IdGenerator";
 
 type GraphContext = ActionContext<RootState, RootState>;
 
@@ -22,10 +23,8 @@ export const graphModule = {
 			Name: "Graph1",
 			Points: [
 				{
-					name: "Start",
-					labels: [{
-						text: "Start Point"
-					}],
+					name: uniqId(),
+					Label: "Start",
 					offsetX: 500,
 					offsetY: 60,
 					Options: {
@@ -39,54 +38,71 @@ export const graphModule = {
 			{
 				Name: "Char 1",
 				Values: [{
+					Id: uniqId(),
 					Name: "Char 1. Value 1"
 				}, {
+					Id: uniqId(),
 					Name: "Char 1. Value 2"
 				}]
 			},
 			{
 				Name: "Char 2",
 				Values: [{
-						Name: "Char 2. Value 1"
-					}, {
-						Name: "Char 2. Value 2"
-					}, {
-						Name: "Char 2. Value 3"
-					}
+					Id: uniqId(),
+					Name: "Char 2. Value 1"
+				}, {
+					Id: uniqId(),
+					Name: "Char 2. Value 2"
+				}, {
+					Id: uniqId(),
+					Name: "Char 2. Value 3"
+				}
 				]
 			},
 			{
 				Name: "Char 3",
 				Values: [{
-						Name: "Char 3. Value 1"
-					}, {
-						Name: "Char 3. Value 2"
-					}, {
-						Name: "Char 3. Value 3"
-					}, {
-						Name: "Char 3. Value 4"
-					}, {
-						Name: "Char 3. Value 5"
-					}, {
-						Name: "Char 3. Value 6"
-					}, {
-						Name: "Char 3. Value 7"
-					}, {
-						Name: "Char 3. Value 8"
-					}, {
-						Name: "Char 3. Value 9"
-					}
+					Id: uniqId(),
+					Name: "Char 3. Value 1"
+				}, {
+					Id: uniqId(),
+					Name: "Char 3. Value 2"
+				}, {
+					Id: uniqId(),
+					Name: "Char 3. Value 3"
+				}, {
+					Id: uniqId(),
+					Name: "Char 3. Value 4"
+				}, {
+					Id: uniqId(),
+					Name: "Char 3. Value 5"
+				}, {
+					Id: uniqId(),
+					Name: "Char 3. Value 6"
+				}, {
+					Id: uniqId(),
+					Name: "Char 3. Value 7"
+				}, {
+					Id: uniqId(),
+					Name: "Char 3. Value 8"
+				}, {
+					Id: uniqId(),
+					Name: "Char 3. Value 9"
+				}
 				]
 			}
 		],
 		Roles: [
 			{
+				Id: uniqId(),
 				Name: "Role 1"
 			},
 			{
+				Id: uniqId(),
 				Name: "Role 2"
 			},
 			{
+				Id: uniqId(),
 				Name: "Role 3"
 			}
 		]
@@ -112,8 +128,8 @@ export const graphModule = {
 					Connectors: _.map(graph.Dependencies, function (con) {
 						return _.merge({
 							name: con.Name,
-							sourceNode: con.Start,
-							targetNode: con.End
+							sourceNode: con.Start ? con.Start.name : null,
+							targetNode: con.End ? con.End.name: null
 						}, con);
 					})
 				};
@@ -131,15 +147,41 @@ export const graphModule = {
 			state.Graphs.push(item);
 		},
 		addPoint(state: RootState, item: { graph: string, point: BasePoint }) {
-			state.Graphs.filter(x => x.Name === item.graph)[0].Points.push(item.point);
+			var graph = _.find(state.Graphs, x => x.Name === item.graph);
+			var duplicatePointIndex = _.findIndex(graph.Points, x => x.name === item.point.name);
+
+			if (duplicatePointIndex < 0) {
+				graph.Points.push(item.point);
+			} else {
+				var duplicatePoint = graph.Points[duplicatePointIndex];
+				_.assign(duplicatePoint, item.point);
+				graph.Points.splice(duplicatePointIndex, 1, duplicatePoint);
+			}
 		},
 		addDependency(state: RootState, item: { graph: string, dep: Dependency }) {
-			state.Graphs.filter(x => x.Name === item.graph)[0].Dependencies.push(item.dep);
+			//TODO: Применить измение к диаграме
+			var graph = _.find(state.Graphs, x => x.Name === item.graph);
+			var duplicateDepIndex = _.findIndex(graph.Dependencies, x => x.Name === item.dep.Name);
+			if (duplicateDepIndex < 0) {
+				graph.Dependencies.push(item.dep);
+			} else {
+				var duplicateDep = graph.Dependencies[duplicateDepIndex];
+				_.assign(duplicateDep, item.dep);
+				graph.Dependencies.splice(duplicateDepIndex, 1, duplicateDep);
+			}
 		},
 		changeNodeProperty(state: RootState, item: { graph: string, name: string, propName: string, newValue: any }) {
 			var points = _.find(state.Graphs, x => x.Name === item.graph).Points;
 			var point = _.find(points, x => x.name === item.name);
 			Vue.set(point, item.propName, item.newValue);
+		},
+		removeConnection(state: RootState, options: { graph: string, connectorName: string }) {
+			var graph = _.find(state.Graphs, x => x.Name === options.graph);
+			_.remove(graph.Dependencies, x => x.Name === options.connectorName);
+		},
+		removeNode(state: RootState, options: { graph: string, nodeName: string }) {
+			var graph = _.find(state.Graphs, x => x.Name === options.graph);
+			_.remove(graph.Points, x => x.name === options.nodeName);
 		}
 	}
 };
@@ -158,3 +200,5 @@ export const addGraph = commit(graphModule.mutations.addGraph);
 export const addPoint = commit(graphModule.mutations.addPoint);
 export const addDependency = commit(graphModule.mutations.addDependency);
 export const changeNodeProperty = commit(graphModule.mutations.changeNodeProperty);
+export const removeConnection = commit(graphModule.mutations.removeConnection);
+export const removeNode = commit(graphModule.mutations.removeNode);
