@@ -242,3 +242,14 @@
 /HelloWorld/node_modules/vuex-persist/rollup.config.js
 /HelloWorld/node_modules/vuex-persist/test.json
 /HelloWorld/node_modules/vuex-persist/tslint.json
+HelloWorld/obj/Debug/netcoreapp2.0/HelloWorld.csproj.CoreCompileInputs.cache
+/HelloWorld/obj/HelloWorld.csproj.nuget.cache
+/HelloWorld/obj/HelloWorld.csproj.nuget.g.props
+/HelloWorld/obj/project.assets.json
+/HelloWorld/wwwroot/dist/app-templates.html
+/HelloWorld/wwwroot/dist/jquery.easing.min.js
+/HelloWorld/wwwroot/dist/main.css
+/HelloWorld/wwwroot/dist/main.min.css
+/HelloWorld/wwwroot/dist/vendor1.min.js
+/HelloWorld/wwwroot/dist/vendor2.min.js
+/HelloWorld/wwwroot/dist/vuex-persist.js
