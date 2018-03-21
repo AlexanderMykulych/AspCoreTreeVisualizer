@@ -10,7 +10,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Models;
 using Oracle.ManagedDataAccess.Client;
+using Repositories;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace HelloWorld {
@@ -20,19 +22,21 @@ namespace HelloWorld {
 		}
 
 		public IConfiguration Configuration { get; }
-
-		// This method gets called by the runtime. Use this method to add services to the container.
+		
 		public void ConfigureServices(IServiceCollection services) {
 			var connectionString = Configuration["OracleConnectionString"];
 			services.AddSingleton<IDbConnection>(context => new OracleConnection(connectionString));
 			services.AddSingleton<CharacteristicRepository>();
+			services.AddSingleton<CategoryRepository>();
+			services.AddSingleton<BaseRepository<CharacteristicLookupValue>>();
+			services.AddSingleton<BaseRepository<CharacteristicType>>();
+
 			services.AddSwaggerGen(c => {
 				c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
 			});
 			services.AddMvc();
 		}
-
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+		
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
 			TypeMapper.Initialize("Models");
 			var provider = new FileExtensionContentTypeProvider();
