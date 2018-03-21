@@ -30,6 +30,7 @@ namespace HelloWorld {
 			services.AddSingleton<CategoryRepository>();
 			services.AddSingleton<BaseRepository<CharacteristicLookupValue>>();
 			services.AddSingleton<BaseRepository<CharacteristicType>>();
+			services.AddSingleton<RoleRepository>();
 
 			services.AddSwaggerGen(c => {
 				c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });

@@ -6,14 +6,14 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HelloWorld.Services {
+namespace Services {
 
-	public abstract class BaseEntityController<T2>: Controller where T2:BaseRepository<T2> {
-		protected IDbConnection _dbConnection;
-		protected BaseRepository<T2> _repository;
+	public abstract class BaseEntityController<T1,T2>: Controller 
+														where T1:BaseRepository<T2>
+														where T2:class { 
+		protected T1 _repository;
 
-		public BaseEntityController(IDbConnection dbConnection, BaseRepository<T2> repository) {
-			_dbConnection = dbConnection;
+		public BaseEntityController(T1 repository) {
 			_repository = repository;
 		}
 		[HttpGet]
