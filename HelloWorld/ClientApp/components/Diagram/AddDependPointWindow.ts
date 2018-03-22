@@ -2,13 +2,11 @@
 import _ from 'lodash';
 import RuleControll from "./RuleControll";
 import { uniqId } from "../../mixins/IdGenerator";
-import { PointType, AggregationType } from "../../Model/PointType";
-import AsyncSelect from "../AsyncSelect/AsyncSelectComponent";
-import axios from "axios";
+import { PointType, AggregationType, CharacteristicType } from "../../Model/PointType";
+import AnyValue from "../Diagram/AnyValueControll";
 declare const $: any;
 declare const Object: any;
 var _Vue: any = Vue;
-var _axios: any = axios;
 
 function getDefaultValue() {
 	return {
@@ -18,6 +16,7 @@ function getDefaultValue() {
 			Label: null,
 			Characteristic: null,
 			Values: [],
+			Value: null,
 			Roles: null,
 			Required: false,
 			Options: {
@@ -37,7 +36,8 @@ export default _Vue.extend({
 	template: "#add-depend-point",
 	props: ["show", "id", "default_dependency", "roles", "defaultPoint", "defaultDependency", "isModalWindow", "points", "characteristics"],
 	components: {
-		RuleControll
+		RuleControll,
+		AnyValue
 	},
 	computed: {
 		elId() {
@@ -69,24 +69,25 @@ export default _Vue.extend({
 		},
 		aggregationLabel() {
 			return this.aggregation === AggregationType.And ? "And" : "Or";
+		},
+		isPointCharacteristicLookup() {
+			return this.point.Characteristic && this.point.Characteristic.characteristicType === CharacteristicType.Lookup;
+		},
+		characteristicType() {
+			return this.point.Characteristic ? this.point.Characteristic.characteristicType : null;
 		}
 	},
 	asyncComputed: {
 		characteristicValues() {
 			return new Promise(resolve => {
 				if (this.characterValueUrl) {
-					_axios.get(this.characterValueUrl, {
-						data: {},
-						transformResponse: _axios.defaults.transformResponse.concat((data) => {
-							return data.map(x => {
-								return {
-									Id: x.id,
-									Name: x.name
-								};
-							});
-						})
-					})
-						.then(response => resolve(response.data))
+					this.$http.get(this.characterValueUrl)
+						.then(response => resolve(response.data.map(x => {
+							return {
+								Id: x.id,
+								Name: x.name
+							};
+						})));
 				} else {
 					resolve();
 				}

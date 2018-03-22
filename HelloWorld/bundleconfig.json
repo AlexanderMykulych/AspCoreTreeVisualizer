@@ -205,5 +205,16 @@
       "renameLocals": true
     },
     "sourceMap": true
+  },
+  {
+    "outputFileName": "wwwroot/dist/vue-resource.js",
+    "inputFiles": [
+      "node_modules/vue-resource/dist/vue-resource.min.js"
+    ],
+    "minify": {
+      "enabled": false,
+      "renameLocals": true
+    },
+    "sourceMap": true
   }
 ]

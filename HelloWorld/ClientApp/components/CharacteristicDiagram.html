@@ -4,6 +4,12 @@
 			<div class="card-header container-fluid">
 				<div class="row">
 					<div class="col-1">{{diagramId}}</div>
+					<div class="col-2">
+						<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Аналітика</button>
+					</div>
+					<div class="col-1">
+						<button type="button" class="btn btn-primary" @click="saveGraph">Зберегти</button>
+					</div>
 					<div class="col"></div>
 					<div class="col-1">
 						<div class="custom-control custom-checkbox">
@@ -16,6 +22,28 @@
 						<button type="button" class="btn btn-primary" @click="goOverview" v-else>Огляд</button>
 					</div>
 				</div>
+				<div class="collapse multi-collapse" id="multiCollapseExample2">
+					<div class="row">
+						<div class="col">
+							<div class="widget-small primary coloured-icon">
+								<i class="icon fa fa-users fa-3x"></i>
+								<div class="info">
+									<h4>Кількість справочних характеристик</h4>
+									<p><b>123</b></p>
+								</div>
+							</div>
+						</div>
+						<div class="col">
+							<div class="widget-small primary coloured-icon">
+								<i class="icon fa fa-users fa-3x"></i>
+								<div class="info">
+									<h4>Кількість простих характеристик</h4>
+									<p><b>1233</b></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="card-body">
 				<div class="container-fluid">
@@ -24,7 +52,7 @@
 						<div class="col-3">
 							<div :id="(diagramId + '_overview')" class="card-body" v-show="IsOverviewActive"></div>
 							<div v-show="!IsOverviewActive">
-								<test-controll :graph="graph" @active="testActiveNode"/>
+								<test-controll :graph="graph" @active="testActiveNode" />
 							</div>
 						</div>
 					</div>

@@ -3,10 +3,14 @@
 		<div class="row" v-for="(point, index) in activeCharacteristics" :key="point.name">
 			<div class="col">
 				<label for="exampleFormControlSelect1">{{point.Label}}</label>
-				<div class="input-group mb-3">
+				<div class="input-group mb-3" v-if="isLookup(point)">
 					<select id="inputGroupSelectGraph1_add" class="custom-select" v-model="selectedValues[point.name]">
 						<option v-for="value in point.Values" :value="value" :key="value.Id">{{value.Name}}</option>
 					</select>
+
+				</div>
+				<div v-else>
+					<any-value :type="getPointType(point)" v-model="selectedValues[point.name]" />
 				</div>
 			</div>
 		</div>

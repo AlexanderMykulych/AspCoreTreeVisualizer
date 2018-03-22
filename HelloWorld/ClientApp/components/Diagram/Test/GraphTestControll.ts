@@ -1,10 +1,14 @@
 ﻿import Vue from "vue";
-import { PointType, AggregationType } from "../../../Model/PointType";
+import { PointType, AggregationType, CharacteristicType } from "../../../Model/PointType";
 import _ from "lodash";
+import AnyValue from "../AnyValueControll";
 
 export default Vue.extend({
 	template: "#graph-test",
 	props: ["graph"],
+	components: {
+		AnyValue
+	},
 	data() {
 		return {
 			selectedValues: [],
@@ -96,6 +100,12 @@ export default Vue.extend({
 			if (point.Options.type === PointType.aggregator && point.Options.aggregation === AggregationType.And) {
 				return _.every(deps, dep => this.isDependencyPass(dep));
 			}
+		},
+		isLookup(point) {
+			return point.Characteristic ? point.Characteristic.characteristicType === CharacteristicType.Lookup : false;
+		},
+		getPointType(point) {
+			return point.Characteristic ? point.Characteristic.characteristicType : null;
 		}
 	},
 	watch: {

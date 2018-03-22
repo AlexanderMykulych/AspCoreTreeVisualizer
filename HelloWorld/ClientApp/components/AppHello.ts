@@ -10,9 +10,7 @@ import { Dependency } from "../Model/Dependency";
 import { PointType } from "../Model/PointType";
 import { uniqId } from "../mixins/IdGenerator";
 import StandartModalWindow from "../components/ModalWindow/Standart/StandartModalWindow";
-import axios from "axios";
 var _Vue: any = Vue;
-var _axios: any = axios;
 
 var store = createStore();
 export default _Vue.extend({
@@ -40,20 +38,18 @@ export default _Vue.extend({
 		},
 		categoryUrl() {
 			return "api/GetCategory";
-		},
+		}
 	},
 	asyncData: {
 		characteristics() {
 			return new Promise((resolve, reject) => {
-				_axios({
-					url: this.characteristicUrl,
-					data: {}
-				})
+				this.$http.get(this.characteristicUrl)
 				.then(response => resolve(response.data.map(x => {
 						return {
 							Id: x.id,
 							Name: x.name,
-							lookupName: x.lookupName
+							lookupName: x.lookupName,
+							characteristicType: x.characteristicType
 						};
 					}))
 				)
@@ -61,18 +57,13 @@ export default _Vue.extend({
 		},
 		categories() {
 			return new Promise((resolve, reject) => {
-				_axios.get(this.categoryUrl, {
-					data: {},
-					transformResponse: _axios.defaults.transformResponse.concat((data) => {
-						return data.map(x => {
-							return {
-								Id: x.id,
-								Name: x.name
-							};
-						});
-					})
-				})
-					.then(response => resolve(response.data))
+				this.$http.get(this.categoryUrl)
+					.then(response => resolve(response.data.map(x => {
+						return {
+							Id: x.id,
+							Name: x.name
+						};
+					})))
 			});
 		}
 	},
@@ -116,5 +107,10 @@ export default _Vue.extend({
     components: {
 		CharacteristicDiagram,
 		StandartModalWindow
-    }
+	},
+	watch: {
+		diagrams(val) {
+			console.log(val);
+		}
+	}
 });

@@ -6,7 +6,7 @@ import addDependModalWindow from "./Diagram/AddDependPointWindow";
 import createAddDependPointHandler from "./Diagram/Handler/AddDependedPoint";
 import createChangePointSettingHandler from "./Diagram/Handler/ChangePointSettingHandler";
 import { connect } from "http2";
-import { PointType } from "../Model/PointType";
+import { PointType, CharacteristicType } from "../Model/PointType";
 import { uniqId } from "../mixins/IdGenerator";
 import { BasePoint } from "../Model/BasePoint";
 import testControll from "./Diagram/Test/GraphTestControll";
@@ -54,16 +54,18 @@ export default Vue.extend({
 			return this.graph && this.firstSelectNode ? this.graph.Connectors.filter(x => x.End.name === this.firstSelectNode.name) : null;
 		},
 		dependSelectedNodes() {
-			return this.selectedNodes ? this.selectedNodes.map(x => {
-				return {
-					Name: uniqId(),
-					Start: x,
-					End: null,
-					Rules: {
-						Values: [],
-						Roles: []
-					}
-				};
+			return this.selectedNodes ? this.selectedNodes
+				.filter(x => x.Options.type != PointType.characteristic || x.Characteristic.characteristicType === CharacteristicType.Lookup)
+				.map(x => {
+					return {
+						Name: uniqId(),
+						Start: x,
+						End: null,
+						Rules: {
+							Values: [],
+							Roles: []
+						}
+					};
 			}) : null;
 		},
 		connectors() {
@@ -73,6 +75,9 @@ export default Vue.extend({
 		nodes() {
 			this.graph.Nodes.forEach(x => this.updateNodeLabel(x));
 			return this.graph.Nodes;
+		},
+		saveGraphUrl() {
+			return "api/SettingsTreeConfig";
 		}
 	},
 	methods: {
@@ -186,7 +191,7 @@ export default Vue.extend({
 					}
 				case PointType.characteristic:
 					return {
-						fillColor: "#2085c9",
+						fillColor: node.Characteristic.characteristicType === CharacteristicType.Lookup ? "#2085c9" : "#f55710",
 						shape: "rectangle"
 					}
 				case PointType.aggregator:
@@ -225,6 +230,11 @@ export default Vue.extend({
 				graph: this.graph.Name,
 				dep
 			});
+		},
+		saveGraph() {
+			var jGraph = JSON.stringify(this.graph);
+			this.$http.post(this.saveGraphUrl, jGraph)
+				.than(response => alert("Збереження пройшло успішно!"), error => alert(error));
 		}
 	},
 	mounted() {
