@@ -4,3 +4,8 @@ export enum PointType {
 	characteristic,
 	aggregator
 }
+
+export enum AggregationType {
+	And = 0,
+	Or
+}

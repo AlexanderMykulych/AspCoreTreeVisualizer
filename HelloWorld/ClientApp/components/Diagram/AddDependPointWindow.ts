@@ -2,10 +2,13 @@
 import _ from 'lodash';
 import RuleControll from "./RuleControll";
 import { uniqId } from "../../mixins/IdGenerator";
-import { PointType } from "../../Model/PointType";
+import { PointType, AggregationType } from "../../Model/PointType";
 import AsyncSelect from "../AsyncSelect/AsyncSelectComponent";
+import axios from "axios";
 declare const $: any;
 declare const Object: any;
+var _Vue: any = Vue;
+var _axios: any = axios;
 
 function getDefaultValue() {
 	return {
@@ -24,13 +27,15 @@ function getDefaultValue() {
 		uniqId: uniqId(),
 		offsetYDelta: 250,
 		addExistCharacteristic: false,
-		existPoint: null
+		existPoint: null,
+		dependency: null,
+		aggregation: AggregationType.And
 	};
 }
 
-export default Vue.extend({
+export default _Vue.extend({
 	template: "#add-depend-point",
-	props: ["show", "id", "dependency", "roles", "defaultPoint", "defaultDependency", "isModalWindow", "points", "characteristics"],
+	props: ["show", "id", "default_dependency", "roles", "defaultPoint", "defaultDependency", "isModalWindow", "points", "characteristics"],
 	components: {
 		RuleControll
 	},
@@ -49,6 +54,43 @@ export default Vue.extend({
 		},
 		endPoint() {
 			return this.addExistCharacteristic ? this.existPoint : _.merge(this.point, { name: uniqId() });
+		},
+		characterValueUrl() {
+			return this.point.Characteristic ? "api/CharacteristicLookupValue/" + this.point.Characteristic.lookupName : null;
+		},
+		isAggregationNeed() {
+			return this.dependency && this.dependency.length > 1;
+		},
+		pointTypeAnd() {
+			return AggregationType.And;
+		},
+		pointTypeOr() {
+			return AggregationType.Or;
+		},
+		aggregationLabel() {
+			return this.aggregation === AggregationType.And ? "And" : "Or";
+		}
+	},
+	asyncComputed: {
+		characteristicValues() {
+			return new Promise(resolve => {
+				if (this.characterValueUrl) {
+					_axios.get(this.characterValueUrl, {
+						data: {},
+						transformResponse: _axios.defaults.transformResponse.concat((data) => {
+							return data.map(x => {
+								return {
+									Id: x.id,
+									Name: x.name
+								};
+							});
+						})
+					})
+						.then(response => resolve(response.data))
+				} else {
+					resolve();
+				}
+			});
 		}
 	},
 	data: getDefaultValue,
@@ -76,9 +118,10 @@ export default Vue.extend({
 			if (dependency.length > 1) {
 				var addPoint = {
 					name: uniqId(),
-					Label: "And",
+					Label: this.aggregationLabel,
 					Options: {
-						type: PointType.aggregator
+						type: PointType.aggregator,
+						aggregation: this.aggregation
 					},
 					offsetX: offset.x,
 					offsetY: offset.y + this.offsetYDelta / 2
@@ -133,6 +176,9 @@ export default Vue.extend({
 			if (defaultPoint) {
 				this.point = defaultPoint;
 			}
+		},
+		default_dependency(dep) {
+			this.dependency = _Vue.util.extend([], dep);
 		}
 	}
 });

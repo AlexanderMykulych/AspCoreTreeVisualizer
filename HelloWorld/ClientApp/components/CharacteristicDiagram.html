@@ -32,7 +32,7 @@
 						<div class="col">
 							<add-depend-modal-window :bus="bus"
 													 :id="diagramId + '_change'"
-													 :dependency="firstSelectNodeDependency"
+													 :default_dependency="firstSelectNodeDependency"
 													 :show="showDependModal && !addMode"
 													 @commit-point="commitPointAndDependency"
 													 :characteristics="characteristics"
@@ -45,7 +45,7 @@
 						<div class="col">
 							<add-depend-modal-window :bus="bus"
 													 :id="diagramId + '_add'"
-													 :dependency="dependSelectedNodes"
+													 :default_dependency="dependSelectedNodes"
 													 :show="showDependModal && addMode"
 													 @commit-point="commitPointAndDependency"
 													 :characteristics="characteristics"

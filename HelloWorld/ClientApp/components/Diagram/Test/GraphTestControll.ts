@@ -1,5 +1,5 @@
 ﻿import Vue from "vue";
-import { PointType } from "../../../Model/PointType";
+import { PointType, AggregationType } from "../../../Model/PointType";
 import _ from "lodash";
 
 export default Vue.extend({
@@ -18,8 +18,12 @@ export default Vue.extend({
 			var result = [];
 			if (this.points) {
 				var startPoint = _.find(this.points, p => p.Options.type === PointType.start);
-				result = this.getVisibleChildrens(startPoint).filter(x => x.Options.type === PointType.characteristic);
+				result = this.getVisibleChildrens(startPoint);
 			}
+			return result;
+		},
+		activeCharacteristics() {
+			var result = this.activePoints.filter(x => x.Options.type === PointType.characteristic);
 			this.$emit("active", result);
 			return result;
 		},
@@ -78,18 +82,20 @@ export default Vue.extend({
 					return false;
 				}
 				var deps = this.getPointInDependencies(x);
-				switch (x.Options.type) {
-					case PointType.characteristic:
-					case PointType.start:
-						return _.findIndex(deps, dep => this.isDependencyPass(dep)) >= 0;
-					case PointType.aggregator: {
-						return _.every(deps, dep => this.isDependencyPass(dep));
-					}
-				}
+				return this.checkDependency(x, deps);
 			});
 			var activeChildrens = [];
 			actives.forEach(x => activeChildrens = _.concat(activeChildrens, this.getVisibleChildrens(x)));
 			return _.union(actives, activeChildrens);
+		},
+		checkDependency(point, deps) {
+			if (_.includes([PointType.characteristic, PointType.start], point.Options.type) ||
+				(point.Options.type === PointType.aggregator && point.Options.aggregation === AggregationType.Or)) {
+				return _.some(deps, dep => this.isDependencyPass(dep));
+			}
+			if (point.Options.type === PointType.aggregator && point.Options.aggregation === AggregationType.And) {
+				return _.every(deps, dep => this.isDependencyPass(dep));
+			}
 		}
 	},
 	watch: {

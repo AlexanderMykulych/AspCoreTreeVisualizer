@@ -8,7 +8,7 @@ var VueP: any = Vue;
 export default VueP.extend({
 	template: "#rule-controll",
 	props: {
-		point: Object,
+		values: Array,
 		index: [Number, String],
 		roles: Array,
 		roleWithDetail: {

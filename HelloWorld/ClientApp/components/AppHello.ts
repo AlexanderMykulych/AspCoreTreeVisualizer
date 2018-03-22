@@ -52,7 +52,8 @@ export default _Vue.extend({
 				.then(response => resolve(response.data.map(x => {
 						return {
 							Id: x.id,
-							Name: x.name
+							Name: x.name,
+							lookupName: x.lookupName
 						};
 					}))
 				)
@@ -80,6 +81,7 @@ export default _Vue.extend({
 			this.showAddGraph = true;
 		},
 		addGraph() {
+			this.showAddGraph = false;
 			graph.addGraph(this.$store, {
 				Name: "Graph_" + uniqId(),
 				Points: [{
