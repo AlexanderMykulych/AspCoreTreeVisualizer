@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace Repositories {
 	public class CharacteristicLookupValueRepository : BaseRepository<CharacteristicLookupValue> {
-		public CharacteristicLookupValueRepository(IDbConnection dbConnection) : base(dbConnection) { }
+		public CharacteristicLookupValueRepository(IDbConnection dbConnection, string tableName) : base(dbConnection) {
+			_tableName = tableName;
+		}
 	}
 }

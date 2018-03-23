@@ -11,8 +11,7 @@ namespace HelloWorld.Services {
 		public CharacteristicRepository(IDbConnection dbConnection) : base(dbConnection) {
 			_tableName = "TsiCaseCharacteristic";
 		}
-		public override IEnumerable<Characteristic> GetAll(string tableName = "") {
-			var tableNameEntry = _tableName ?? tableName;
+		public override IEnumerable<Characteristic> GetAll() {
 			string queryBody = "SELECT \"Characteristic\".*, \"CharacteristicType\".* FROM \"TsiCaseCharacteristic\" \"Characteristic\"" +
 								"JOIN \"TsiCharType\" \"CharacteristicType\" ON \"CharacteristicType\".\"Id\" = \"Characteristic\".\"TsiCaseCharTypeId\"";
 			return _dbConnection.Query<Characteristic, CharacteristicType, Characteristic>(
@@ -23,8 +22,7 @@ namespace HelloWorld.Services {
 				}
 			);
 		}
-		public override Characteristic Get(string id, string tableName = "") {
-			var tableNameEntry = _tableName ?? tableName;
+		public override Characteristic Get(string id) {
 			string queryBody = "SELECT \"Characteristic\".*, \"CharacteristicType\".* FROM \"TsiCaseCharacteristic\" \"Characteristic\"" +
 								"JOIN \"TsiCharType\" \"CharacteristicType\" ON \"CharacteristicType\".\"Id\" = \"Characteristic\".\"TsiCaseCharTypeId\"" +
 								$"WHERE \"Characteristic\".\"Id\" = '{id}'";

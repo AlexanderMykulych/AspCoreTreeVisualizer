@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using DapperAttributeMapping;
@@ -14,6 +15,7 @@ using Models;
 using Oracle.ManagedDataAccess.Client;
 using Repositories;
 using Swashbuckle.AspNetCore.Swagger;
+using Utils;
 
 namespace HelloWorld {
 	public class Startup {
@@ -29,9 +31,15 @@ namespace HelloWorld {
 			services.AddSingleton<CharacteristicRepository>();
 			services.AddSingleton<CategoryRepository>();
 			services.AddSingleton<BaseRepository<CharacteristicLookupValue>>();
-			services.AddSingleton<BaseRepository<CharacteristicType>>();
 			services.AddSingleton<RoleRepository>();
-
+			services.AddTransient(provider => {
+				return new Func<string, BaseRepository<CharacteristicLookupValue>>(tableName => new CharacteristicLookupValueRepository(
+					provider.GetService<IDbConnection>(), tableName));
+			});
+			services.AddTransient(provider => {
+				return new Func<Graph, Utils.BaseSettingsTreeConfigHandler>(graph => new BaseSettingsTreeConfigHandler(
+					provider, graph));
+			});
 			services.AddSwaggerGen(c => {
 				c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
 			});
@@ -39,6 +47,11 @@ namespace HelloWorld {
 		}
 		
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+
+			var jsonBody = File.ReadAllText(@"C:\Users\I.Chernyushok\Downloads\Telegram Desktop\tree.json");
+			//JsonParser parser = new JsonParser();
+			//parser.Convert(jsonBody);
+
 			TypeMapper.Initialize("Models");
 			var provider = new FileExtensionContentTypeProvider();
 			provider.Mappings[".ts"] = "application/x-typescript";

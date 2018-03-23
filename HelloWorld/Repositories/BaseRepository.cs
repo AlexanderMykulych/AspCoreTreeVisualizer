@@ -14,14 +14,12 @@ namespace Repositories {
 			_dbConnection = dbConnection;
 		}
 
-		public virtual IEnumerable<T> GetAll(string tableName = "") {
-			var tableNameEntry = _tableName ?? tableName;
-			string queryBody = $"SELECT * FROM \"{tableNameEntry}\"";
+		public virtual IEnumerable<T> GetAll() {
+			string queryBody = $"SELECT * FROM \"{_tableName}\"";
 			return _dbConnection.Query<T>(queryBody);
 		}
-		public virtual  T Get(string id, string tableName = "") {
-			var tableNameEntry = _tableName ?? tableName;
-			string queryBody = $"SELECT * FROM \"{tableNameEntry}\"" +
+		public virtual  T Get(string id) {
+			string queryBody = $"SELECT * FROM \"{_tableName}\"" +
 								$"WHERE \"Id\" = '{id}'";
 			var result = _dbConnection.Query<T>(queryBody).AsList();
 			return result.Any() ? result.First() : null;

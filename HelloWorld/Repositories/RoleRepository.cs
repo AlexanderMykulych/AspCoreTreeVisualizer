@@ -13,15 +13,13 @@ namespace Repositories
 			_tableName = "SysAdminUnit";
 		}
 
-		public override IEnumerable<Role> GetAll(string tableName = "") {
-			var tableNameEntry = _tableName ?? tableName;
-			string queryBody = $"SELECT * FROM \"{tableNameEntry}\"" +
+		public override IEnumerable<Role> GetAll() {
+			string queryBody = $"SELECT * FROM \"{_tableName}\"" +
 								"WHERE \"SysAdminUnitTypeValue\" = 0 OR \"SysAdminUnitTypeValue\" = 6";
 			return _dbConnection.Query<Role>(queryBody);
 		}
-		public override Role Get(string id, string tableName = "") {
-			var tableNameEntry = _tableName ?? tableName;
-			string queryBody = $"SELECT * FROM \"{tableNameEntry}\"" +
+		public override Role Get(string id) {
+			string queryBody = $"SELECT * FROM \"{_tableName}\"" +
 								"WHERE \"SysAdminUnitTypeValue\" = 0 OR \"SysAdminUnitTypeValue\" = 6"+
 								$"AND \"Id\" = '{id}'";
 			var result = _dbConnection.Query<Role>(queryBody).AsList();
