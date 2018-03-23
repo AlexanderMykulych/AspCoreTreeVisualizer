@@ -209,7 +209,7 @@
   {
     "outputFileName": "wwwroot/dist/vue-resource.js",
     "inputFiles": [
-      "node_modules/vue-resource/dist/vue-resource.min.js"
+      "node_modules/vue-resource/dist/vue-resource.js"
     ],
     "minify": {
       "enabled": false,

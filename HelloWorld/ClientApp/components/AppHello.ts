@@ -43,7 +43,11 @@ export default _Vue.extend({
 	asyncData: {
 		characteristics() {
 			return new Promise((resolve, reject) => {
-				this.$http.get(this.characteristicUrl)
+				this.$http.get(this.characteristicUrl, {
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
 				.then(response => resolve(response.data.map(x => {
 						return {
 							Id: x.id,
@@ -107,10 +111,5 @@ export default _Vue.extend({
     components: {
 		CharacteristicDiagram,
 		StandartModalWindow
-	},
-	watch: {
-		diagrams(val) {
-			console.log(val);
-		}
 	}
 });

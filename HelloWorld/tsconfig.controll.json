@@ -12,7 +12,7 @@
       "es6"
     ],
     "module": "system",
-    "outFile": "wwwroot/dist/app-bandle.js",
+    "outFile": "wwwroot/dist/app-bandle-controll.js",
     "moduleResolution": "node",
     "inlineSourceMap": true,
     "inlineSources": true
@@ -20,8 +20,6 @@
   "exclude": [
     "node_modules",
     "wwwroot",
-    "ClientApp/css/*.css",
-    "ClientApp/indexCharTree.ts"
-  ],
-  "compileOnSave": true
+    "ClientApp/index.ts"
+  ]
 }

@@ -11,6 +11,7 @@ import { uniqId } from "../mixins/IdGenerator";
 import { BasePoint } from "../Model/BasePoint";
 import testControll from "./Diagram/Test/GraphTestControll";
 declare const ej: any;
+var _Vue: any = Vue;
 var constraints = ej.datavisualization.Diagram.DiagramConstraints.Default | ej.datavisualization.Diagram.DiagramConstraints.FloatElements;
 
 export default Vue.extend({
@@ -232,9 +233,18 @@ export default Vue.extend({
 			});
 		},
 		saveGraph() {
+			var preparedGraph = this.prepareGraphForSave(this.graph);
 			var jGraph = JSON.stringify(this.graph);
+			
 			this.$http.post(this.saveGraphUrl, jGraph)
 				.than(response => alert("Збереження пройшло успішно!"), error => alert(error));
+		},
+		prepareGraphForSave(graph) {
+			var preparedGraph = _Vue.util.extend({}, this.graph);
+			preparedGraph.Nodes = preparedGraph.Nodes.map(x => _.merge(x, {
+				pointType: x.Options.type
+			}))
+			return preparedGraph;
 		}
 	},
 	mounted() {

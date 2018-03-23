@@ -12,11 +12,11 @@ namespace Repositories {
 			_dbConnection = dbConnection;
 		}
 
-		public IEnumerable<T> GetAll() {
+		public virtual IEnumerable<T> GetAll() {
 			string queryBody = $"SELECT * FROM \"{_tableName}\"";
 			return _dbConnection.Query<T>(queryBody);
 		}
-		public T Get(string id) {
+		public virtual T Get(string id) {
 			string queryBody = $"SELECT * FROM \"{_tableName}\"" +
 								$"WHERE \"Id\" = '{id}'";
 			var result = _dbConnection.Query<T>(queryBody).AsList();

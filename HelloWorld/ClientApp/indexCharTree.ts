@@ -23,10 +23,10 @@ _Vue.http.interceptors.push((request, next) => {
 _Vue.http.options.root = document.location.origin;
 //Root Component
 let v = new Vue({
-    el: "#app-root",
+	el: "#app-root",
 	template: '<AppHello/>',
-    //render: h => h(AppHelloComponent),
-    components: {
+	//render: h => h(AppHelloComponent),
+	components: {
 		AppHello
-    }
+	}
 });

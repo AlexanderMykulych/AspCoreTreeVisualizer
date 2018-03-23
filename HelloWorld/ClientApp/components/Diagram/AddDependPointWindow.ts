@@ -81,7 +81,11 @@ export default _Vue.extend({
 		characteristicValues() {
 			return new Promise(resolve => {
 				if (this.characterValueUrl) {
-					this.$http.get(this.characterValueUrl)
+					this.$http.get(this.characterValueUrl, {
+						headers: {
+							"Content-Type": "application/json"
+						}
+					})
 						.then(response => resolve(response.data.map(x => {
 							return {
 								Id: x.id,

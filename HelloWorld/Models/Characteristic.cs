@@ -11,7 +11,10 @@ namespace Models {
 		}
 		[Column("TsiCaseCharTypeId")]
 		public string CharacteristicTypeId {
-			get;set;
+			get; set;
+		}
+		public string CharacteristicType {
+			get; set;
 		}
 		[Column("TsiLookupName")]
 		public string LookupName {

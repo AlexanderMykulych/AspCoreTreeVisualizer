@@ -6,7 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HelloWorld.Services {
+namespace Services {
 
 	public abstract class BaseEntityController<T2>: Controller where T2:BaseRepository<T2> {
 		protected IDbConnection _dbConnection;

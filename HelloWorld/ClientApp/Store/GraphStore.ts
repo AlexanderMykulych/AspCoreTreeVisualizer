@@ -20,21 +20,6 @@ export const graphModule = {
 
 	state: {
 		Graphs: [
-		//	{
-		//	Name: "Graph1",
-		//	Points: [
-		//		{
-		//			name: uniqId(),
-		//			Label: "Start",
-		//			offsetX: 500,
-		//			offsetY: 60,
-		//			Options: {
-		//				type: PointType.start
-		//			}
-		//		}
-		//	],
-		//	Dependencies: []
-		//}
 		],
 		Characteristics: [
 			{
