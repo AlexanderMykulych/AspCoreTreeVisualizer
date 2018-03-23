@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using Utils;
-using Newtonsoft.Json;
 
 namespace Models {
-	public class PointType {
+	public class PointRole {
 		public string Id {
+			get;set;
+		}
+		public Role Role {
+			get;set;
+		}
+		[Column("TsiIsRequired")]
+		public bool IsRequired {
 			get; set;
 		}
-		[Column("TsiName")]
-		public string Name {
-			get; set;
-		}
-		[JsonProperty(PropertyName = "value")]
-		public PointTypeEnum pointTypeEnum{
+		public PointValue DefaultPointValue {
 			get;set;
 		}
 	}
