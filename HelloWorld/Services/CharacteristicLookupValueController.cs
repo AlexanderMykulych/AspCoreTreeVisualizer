@@ -9,14 +9,15 @@ using Models;
 namespace HelloWorld.Services {
 	[Route("api/[controller]")]
 	public class CharacteristicLookupValueController {
-		private BaseRepository<CharacteristicLookupValue> _repository;
-		public CharacteristicLookupValueController(BaseRepository<CharacteristicLookupValue> repository) {
-			_repository = repository;
+		private Func<string, BaseRepository<CharacteristicLookupValue>> _repositoryProvider;
+
+		public CharacteristicLookupValueController(Func<string, BaseRepository<CharacteristicLookupValue>> repositoryProvider) {
+			_repositoryProvider = repositoryProvider;
 		}
 
 		[HttpGet("{tableName}")]
 		public IEnumerable<CharacteristicLookupValue> Get(String tableName) {
-			return _repository.GetAll(tableName);
+			return _repositoryProvider(tableName).GetAll();
 		}
 	}
 }
