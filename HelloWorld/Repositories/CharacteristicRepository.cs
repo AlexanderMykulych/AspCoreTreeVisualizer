@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace HelloWorld.Services {
+namespace Services {
 	public class CharacteristicRepository : BaseRepository<Characteristic> {
 		public CharacteristicRepository(IDbConnection dbConnection) : base(dbConnection) {
 			_tableName = "TsiCaseCharacteristic";

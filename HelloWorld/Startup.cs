@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using DapperAttributeMapping;
@@ -47,11 +46,6 @@ namespace HelloWorld {
 		}
 		
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
-
-			var jsonBody = File.ReadAllText(@"C:\Users\I.Chernyushok\Downloads\Telegram Desktop\tree.json");
-			//JsonParser parser = new JsonParser();
-			//parser.Convert(jsonBody);
-
 			TypeMapper.Initialize("Models");
 			var provider = new FileExtensionContentTypeProvider();
 			provider.Mappings[".ts"] = "application/x-typescript";

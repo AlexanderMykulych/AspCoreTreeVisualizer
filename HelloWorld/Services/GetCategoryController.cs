@@ -7,20 +7,23 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HelloWorld.Services {
+namespace HelloWorld.Services
+{
 	[Route("api/[controller]")]
 	public class GetCategoryController : Controller {
-		private CategoryRepository _repository;
-		public GetCategoryController(CategoryRepository repository) {
-			_repository = repository;
+		private IDbConnection _dbConnection;
+		public GetCategoryController(IDbConnection dbConnection) {
+			_dbConnection = dbConnection;
 		}
 		[HttpGet]
 		public IEnumerable<Category> Get() {
-			return _repository.GetAll();
+			CategoryRepository categoryRepository = new CategoryRepository(_dbConnection);
+			return categoryRepository.GetAll();
 		}
 		[HttpGet("{id}")]
 		public Category Get(String id) {
-			return _repository.Get(id);
+			CategoryRepository categoryRepository = new CategoryRepository(_dbConnection);
+			return categoryRepository.Get(id);
 		}
 	}
 }
