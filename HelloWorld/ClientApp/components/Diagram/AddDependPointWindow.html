@@ -13,28 +13,9 @@
 						<div class="row">
 							<div class="col-5">
 								<div id="accordion">
-									<div class="card text-white bg-dark mb-3 container-fluid">
-										<div class="card-header row align-items-center">
-											<div class="col-5">
-												Исходные характеристики
-											</div>
-											<div class="col"></div>
-											<div class="col-2" v-if="isAggregationNeed">
-												<div class="input-group">
-													<input type="radio" name="exampleRadios" id="exampleRadios1" :value="pointTypeAnd" checked v-model="aggregation">
-													<label for="exampleRadios1">
-														And
-													</label>
-												</div>
-											</div>
-											<div class="col-2" v-if="isAggregationNeed">
-												<div class="input-group">
-													<input type="radio" name="exampleRadios" id="exampleRadios2" :value="pointTypeOr" v-model="aggregation">
-													<label for="exampleRadios2">
-														Or
-													</label>
-												</div>
-											</div>
+									<div class="card text-white bg-dark mb-3">
+										<div class="card-header">
+											Исходные характеристики
 										</div>
 									</div>
 									<div class="card" v-for="(dep, index) in dependency">
@@ -53,8 +34,8 @@
 													</div>
 													<input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="dep.Label">
 												</div>
-												<rule-controll :values="dep.Start.Values"
-															   :index="'index' + id"
+												<rule-controll :point="dep.Start"
+															   :index="index + id"
 															   :roles="roles"
 															   :toggles-values.sync="dep.Rules.Values"
 															   :toggles-roles.sync="dep.Rules.Roles" />
@@ -84,10 +65,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="row" v-if="!isPointCharacteristicLookup">
-										<div class="col"><any-value :type="characteristicType" label="Значення" v-model="point.Value"/></div>
-									</div>
-									<div class="row" v-if="isPointCharacteristicLookup">
+									<div class="row" v-if="point.Characteristic != null">
 										<div class="col" v-if="point.Values != null && point.Values.length > 0">
 											<div class="input-group mb-3">
 												<div class="input-group-prepend">
@@ -105,14 +83,15 @@
 											</div>
 										</div>
 									</div>
-									<div class="row" v-if="isPointCharacteristicLookup">
+									<div class="row">
 										<div class="col" v-if="point.Characteristic != null">
-											<rule-controll :values="characteristicValues"
+											<rule-controll :point="point.Characteristic"
 														   :index="'main' + id"
 														   :roles="roles"
 														   :role-with-detail="true"
 														   :toggles-values.sync="point.Values"
-														   :toggles-roles.sync="point.Roles" />
+														   :toggles-roles.sync="point.Roles" 
+														   />
 										</div>
 									</div>
 								</div>

@@ -50,6 +50,9 @@
     <TypeScriptCompile Include="ClientApp\Store\RootStore.ts" />
     <TypeScriptCompile Include="node_modules\%40types\syncfusion\index.d.ts" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ClientApp\TestControl\" />
+  </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES5</TypeScriptTarget>

@@ -15,7 +15,7 @@ export const createStore = function () {
 		modules: {
 			graph
 		},
-		//plugins: [vuexLocal.plugin],
+		plugins: [vuexLocal.plugin],
 		strict: true
 	})
 };

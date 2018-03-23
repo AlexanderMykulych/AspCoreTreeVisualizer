@@ -4,15 +4,3 @@ export enum PointType {
 	characteristic,
 	aggregator
 }
-
-export enum AggregationType {
-	And = 0,
-	Or
-}
-
-export enum CharacteristicType {
-	Lookup = "TsiGuidValue",
-	String = "TsiStringValue",
-	Int = "TsiIntValue",
-	DateTime = "TsiDateTimeValue"
-}

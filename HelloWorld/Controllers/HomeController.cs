@@ -19,7 +19,6 @@ namespace HelloWorld.Controllers
 		}
 		public IActionResult Index()
         {
-			//return Content(_env.WebRootPath);
 			return View();
         }
 

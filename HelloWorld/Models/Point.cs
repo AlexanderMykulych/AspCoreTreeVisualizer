@@ -4,7 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Models {
-	public class Point {
+	public class Point: ICloneable {
+		public string Id {
+			get; set;
+		}
 		public Characteristic Characteristic {
 			get;set;
 		}
@@ -14,11 +17,30 @@ namespace Models {
 		public bool IsRequired {
 			get;set;
 		}
-		public Category Category {
+		public PointValue DefaultValue {
 			get;set;
 		}
-		public PointValue DefaultPointValue {
+		public string Label {
 			get;set;
+		}
+		public List<PointValue> Values {
+			get; set;
+		}
+		public List<PointRole> PointRoles {
+			get; set;
+		}
+
+		public object Clone() {
+			return new Point() {
+				Id = this.Id,
+				Characteristic = this.Characteristic,
+				PointType = this.PointType,
+				IsRequired = this.IsRequired,
+				DefaultValue = null,
+				Label = this.Label,
+				Values = new List<PointValue>(),
+				PointRoles = new List<PointRole>()
+			};
 		}
 	}
 }

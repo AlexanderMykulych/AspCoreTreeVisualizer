@@ -1,8 +1,0 @@
-﻿<template id="any-value">
-	<div v-if="controllType" class="input-group mb-3">
-		<div class="input-group-prepend" v-if="label">
-			<label class="input-group-text" for="inputGroupSelect01">{{label}}</label>
-		</div>
-		<input :type="controllType" :value="value" @input="updateValue($event.target.value)" class="form-control"/>
-	</div>
-</template>

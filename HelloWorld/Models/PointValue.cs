@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Models {
@@ -24,7 +25,12 @@ namespace Models {
 			get;set;
 		}
 		[Column("TsiGuidValue")]
+		[JsonProperty(PropertyName = "Id")]
 		public string GuidValue {
+			get;set;
+		}
+		[JsonProperty(PropertyName = "Name")]
+		public string DisplayValue {
 			get;set;
 		}
 		public string PointId {

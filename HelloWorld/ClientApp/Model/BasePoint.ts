@@ -1,5 +1,5 @@
 ﻿import { Dependency } from "./Dependency";
-import { PointType, AggregationType } from "./PointType";
+import { PointType } from "./PointType";
 
 export interface BasePoint {
 	name: string;
@@ -7,7 +7,6 @@ export interface BasePoint {
 	offsetY: any;
 	Options: {
 		type: PointType;
-		aggregation?: AggregationType;
 	},
 	Label: string;
 	Category: {
